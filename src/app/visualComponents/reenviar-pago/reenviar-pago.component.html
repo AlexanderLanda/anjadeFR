@@ -1,0 +1,24 @@
+<div class="container">
+    <h1 class="title">Completar Pago Pendiente</h1>
+    
+    <div class="description">
+      <p>Para completar su pago pendiente, por favor elija una de las siguientes opciones de pago. Ambos métodos son seguros y procesarán su pago de inmediato.</p>
+    </div>
+  
+    <div class="button-container">
+      <button (click)="pagarConTarjeta()" class="payment-button">
+        <i class="fas fa-credit-card"></i> Pagar con Tarjeta
+      </button>
+      <button (click)="pagarConBizum()" class="payment-button">
+        <i class="fas fa-mobile-alt"></i> Pagar con Bizum
+      </button>
+    </div>
+  
+    <div class="alternative-payment">
+      <h2>Otras formas de pago</h2>
+      <p>Si prefiere realizar una transferencia bancaria o pagar en caja, por favor póngase en contacto con nuestra administración para recibir instrucciones detalladas. Puede enviar el comprobante de pago a:</p>
+      <a href="mailto:anjade@anjade.es" class="email-link">anjade@anjade.es</a>
+    </div>
+  </div>
+  
+  <div [innerHTML]="formHtml | safeHtml"></div>

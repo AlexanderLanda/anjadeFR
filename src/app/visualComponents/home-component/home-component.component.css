@@ -1,0 +1,143 @@
+
+  
+ .img-container {
+  margin-top: 100px;
+  width: 100%; /* Ajusta el valor según sea necesario para dejar espacio entre el navbar y el formulario */
+}
+
+.img-principal{
+  width: 100%;
+}
+
+
+
+  
+#descripcionSiglas{
+    font-size: 60vw; /* Tamaño de fuente del cartel */
+    margin-top: 10px; /* Margen superior */
+    text-align: center;
+}
+
+
+.titulo-principal{
+    
+    font-size: 3vw;
+    margin-top: 25px; /* Tamaño de fuente del cartel */
+}
+
+.titulo-cartas{
+  font-size: 3vw;
+}
+#botonRegistro{
+    position: fixed;        /* Posición fija */
+    bottom: 20px;           /* Espacio desde la parte inferior de la página */
+    right: 20px;            /* Espacio desde la parte derecha de la página */
+    background-color: red;  /* Fondo rojo */
+    color: white;           /* Texto blanco */
+    border: none;           /* Sin borde */
+    padding: 10px 20px;     /* Espaciado interno */
+    font-size: 16px;        /* Tamaño de fuente */
+    cursor: pointer;        /* Cambiar cursor al pasar sobre el botón */
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3); /* Sombra para darle un efecto de flotación */
+    z-index: 1000;    
+    
+}
+.texto-carta{
+    width: 100%;
+    display: block;
+    margin: 0;
+    margin-left: auto; 
+    margin-right: auto;
+    margin-top: 10px;
+    text-align: left;
+    font-size: 1.2vw;
+
+}
+.texto-carta-firma{
+  width: 100%;
+  display: block;
+  margin: 0;
+  margin-left: auto; 
+  margin-right: auto;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 1.2vw;
+
+}
+
+  .floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+  }
+  
+  
+  .content {
+    height: 2000px; /* Solo para demostrar el efecto de scroll */
+  }
+  @media (max-width: 768px) {
+    .texto-carta {
+        font-size: 0.875rem; /* Tamaño de fuente más pequeño para móviles */
+    }
+
+    .titulo-cartas {
+        font-size: 1.25rem; /* Tamaño de fuente para los títulos en móviles */
+    }
+
+    .texto-carta-firma {
+        font-size: 0.875rem; /* Tamaño de fuente para las firmas en móviles */
+    }
+
+    #botonRegistro {
+        font-size: 1rem; /* Asegurar que el botón también se vea bien en móviles */
+    }
+
+    #descripcionSiglas h1 {
+        font-size: 1.25rem; /* Ajustar el tamaño del título principal en móviles */
+    }
+}
+
+/* Estilos para tablets */
+@media (min-width: 769px) and (max-width: 992px) {
+    .texto-carta {
+        font-size: 1rem; /* Tamaño de fuente ajustado para tablets */
+    }
+
+    .titulo-cartas {
+        font-size: 1.5rem; /* Tamaño de fuente para los títulos en tablets */
+    }
+
+    .texto-carta-firma {
+        font-size: 1rem; /* Tamaño de fuente para las firmas en tablets */
+    }
+
+    #botonRegistro {
+        font-size: 1.125rem; /* Asegurar que el botón también se vea bien en tablets */
+    }
+
+    #descripcionSiglas h1 {
+        font-size: 1.5rem; /* Ajustar el tamaño del título principal en tablets */
+    }
+
+
+}
+/*MODAL NAVIDAD*/
+.modal-content {
+    background-color: #fff;
+    border-radius: 10px;
+  }
+  
+  .modal-body img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  

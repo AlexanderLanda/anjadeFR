@@ -1,0 +1,10 @@
+.fechaComentario {
+    display: block;   /* Hace que el elemento <span> se comporte como un bloque */
+    text-align: right;  /* Alinea el texto a la izquierda */
+    margin-left: 0;   /* Asegura que no haya márgenes que desalineen el texto */
+}
+.button-container {
+    display: flex;                /* Usa flexbox para distribuir los botones */
+    justify-content: space-between;  /* Distribuye los botones a los extremos */
+    width: 100%;                  /* Asegura que el contenedor ocupe todo el ancho */
+  }

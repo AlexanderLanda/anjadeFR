@@ -1,0 +1,11 @@
+<div class="container mt-4 pt-5 formulario-container">
+  <h2>Detalles del Cuestionario</h2>
+  @for (cuestionario of cuestionarios; track cuestionario) {
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">{{ cuestionario.pregunta }}</h5>
+        <p class="card-text">Respuesta: {{cuestionario.respuesta !== null && cuestionario.respuesta !== '' ? cuestionario.respuesta : '-'  }}</p>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,89 @@
+<div class="container py-4 formulario-container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title text-center">Creación Reportes</h5>
+        </div>
+        <div class="card-body">
+          @if (mensajeExito) {
+            <div class="alert alert-success" role="alert">
+              {{ mensajeExito }}
+            </div>
+          }
+          <form [formGroup]="reportForm" name="reportForm" (ngSubmit)="onSubmit()" class="mt-4">
+            <div class="row mb-3">
+              <div class="col-3">
+                <label for="afiliacionId" class="form-label">ID de Afiliación</label>
+                <input id="afiliacionId" formControlName="afiliacionId" type="text"
+                  class="form-control">
+                </div>
+                <div class="col-3">
+                  <label for="nombre" class="form-label">Nombre</label>
+                  <input id="nombre" formControlName="nombre" type="text" class="form-control">
+                </div>
+                <div class="col-6">
+                  <label for="apellidos" class="form-label">Apellidos</label>
+                  <input id="apellidos" formControlName="apellidos" type="text" class="form-control">
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-3">
+                  <label for="telefono" class="form-label">Teléfono</label>
+                  <input id="telefono" formControlName="telefono" type="text" class="form-control">
+                </div>
+                <div class="col-9">
+                  <label for="email" class="form-label">Email</label>
+                  <input id="email" formControlName="email" type="text" class="form-control">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-6">
+                  <label for="">Provincia</label>
+                  <select formControlName="provincia" [(value)]="selectedProvincia" class="form-select"
+                    placeholder="Provincia"><!-- (selectionChange)="updateLocalidades($event.value)" -->
+                    @for (option of provincias; track option) {
+                      <option [value]="option.id">{{ option.descripcion
+                        }}
+                      </option>
+                    }
+                  </select>
+                </div>
+                <div class="col-6">
+                  <label for="">Deportes</label>
+                  <select formControlName="deporte" [(value)]="selectedDeporte" class="form-select"
+                    placeholder="Deportes"><!-- (selectionChange)="updateLocalidades($event.value)" -->
+                    @for (option of deportes; track option) {
+                      <option [value]="option.id">{{ option.nombre }}
+                      </option>
+                    }
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <textarea id="descripcion" formControlName="descripcion" class="form-control"
+                rows="5"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="files" class="form-label">Documentos Adjuntos</label>
+                <input type="file" id="files" (change)="onFileChange($event)" multiple class="form-control">
+              </div>
+              <div class="mb-3 text-center">
+                <button type="submit" class="btn btn-primary">Enviar</button>
+              </div>
+              <!-- Barra de carga -->
+              @if (cargando) {
+                <div class="progress mb-3">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%">
+                    Enviando...
+                  </div>
+                </div>
+              }
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

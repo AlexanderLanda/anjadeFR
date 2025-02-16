@@ -1,0 +1,58 @@
+<div class="container mt-4 pt-5 tabla-container">
+  <h5 class="card-title filtro-card text-end">Lista de Reportes</h5>
+  <div class="card filtro-card">
+    <div class="card-body">
+      <div class="mb-3">
+        <label for="filtro" class="form-label">Filtro</label>
+        <input type="text" class="form-control" id="filtro" (keyup)="filtrar($event)"
+          placeholder="Teclee el valor de la columna por la que desee filtrar" required />
+          <div class="invalid-feedback">Se requiere un valor para filtrar</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Afiliación ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellidos</th>
+                <th scope="col">Email</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Detalles</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (report of getPaginatedData(); track report) {
+                <tr>
+                  <td>{{ report.id }}</td>
+                  <td>{{ report.afiliacionId }}</td>
+                  <td>{{ report.nombre }}</td>
+                  <td>{{ report.apellidos }}</td>
+                  <td>{{ report.email }}</td>
+                  <td>{{ report.telefono }}</td>
+                  <td>{{ report.descripcion | slice:0:50 }}...</td>
+                  <td>
+                    <button class="btn btn-outline-primary btn-sm" (click)="viewDetails(report.id)">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <nav aria-label="Page navigation example">
+          <mat-paginator [length]="dataSource.filteredData.length" [pageSize]="10"
+          [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </nav>
+      </div>
+    </div>
+
+
+  </div>

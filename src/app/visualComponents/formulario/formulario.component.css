@@ -1,0 +1,55 @@
+/*
+.formulario {
+    width: 400px;
+    margin: auto;
+  }
+  .header{
+    text-align: center;
+
+  }
+  .full-width {
+    width: 400px;
+    padding: 6px;
+    border-radius: 5px;
+  }
+  .full-width-select{
+    width: 400px;
+    border-radius: 5px;
+  }
+  
+  .campo {
+    margin-bottom: 10px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .button_registrar{
+  margin: 20px auto 0;
+  }
+  .cuestionario {
+    max-width: 500px;
+    margin: 2em auto;
+    text-align: center;
+    max-height: 1800px;
+  }
+  */
+.formulario-container {
+  margin-top: 80px; /* Ajusta el valor según sea necesario para dejar espacio entre el navbar y el formulario */
+}
+
+.error-message {
+  color: red;
+  margin-top: 5px;
+  font-size: 0.9em;
+}
+

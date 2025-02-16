@@ -1,0 +1,301 @@
+<div class="container py-4 formulario-container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title text-center">Cuestionario de Afiliación</h5>
+        </div>
+        <div class="header text-center">
+          <label>"No es de obligado cumplimiento"</label><a href="/home">Omitir</a>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onRegistrarFormulario()" name="formularioForm" [formGroup]="formularioForm">
+            <div class="row">
+              <div class=" mb-3 col-6 ">
+                <label>Número de Afiliación</label>
+                <input type="text" class="form-control col-3 text-center" formControlName="idAfiliacion"
+                  id="idAfiliacion" placeholder="Ingresa tu número de afiliación" (input)="onIdAfiliacionChange()">
+                  @if (formularioForm.get('idAfiliacion')?.hasError('idNotExists')) {
+                    <div>
+                      <small class="error-message">El ID de Afiliación no existe</small>
+                    </div>
+                  }
+                  @if (formularioForm.get('idAfiliacion')?.hasError('idExists') && formularioForm.get('idAfiliacion')?.touched) {
+                    <div>
+                      <small class="error">EL ID de Afiliación ya ha respondido el Cuestionario</small>
+                    </div>
+                  }
+                </div>
+                <div class=" mb-3 col-6 ">
+                  <label for="">Profesion Laboral</label>
+                  <input type="text" class="form-control col-3" formControlName="profesionLaboral" id="profesion"
+                    placeholder="Ingresa tu profesión laboral">
+                  </div>
+                </div>
+                <!--
+                <div class="row">
+                  <div class="col-6">
+                    <label for="">Deportes</label>
+                    <select formControlName="deporte" [(value)]="selectedDeporte" class="form-select"
+                      aria-label="Default select example" placeholder="Deporte" >
+                      <option *ngFor="let option of deportes" [value]="option.id">{{ option.nombre }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-6 ">
+                    <label for="">Situación Actual:</label>
+                    <div class="form-check ">
+                      <input class="form-check-input " type="radio" value="activo"
+                        formControlName="situacionActual" id="flexChecActivo">
+                        <label class="form-check-label" for="flexCheckDefault">
+                          Activo
+                        </label>
+                      </div>
+                      <div class="form-check col-3">
+                        <input class="form-check-input" type="radio" value="Ex" formControlName="situacionActual"
+                          id="flexCheckEx" checked>
+                          <label class="form-check-label" for="flexCheckChecked">
+                            Ex
+                          </label>
+                        </div>
+                      </div>
+
+                    </div>
+                    -->
+
+                    <div class="mb-3  ">
+                      <label for="">Años en Activo y Categorías:</label>
+                      <input type="text" class="form-control " formControlName="anosActivoCategorias" id="anosActivoCategorias"
+                        placeholder="Ingresa cada categoria y sus años de desempeño">
+                      </div>
+                      <div class=" mb-3 ">
+                        <label for="">Otras Actividades que Practicas:</label>
+                        <input type="text" class="form-control col-3" formControlName="otrasActividades" id="otrasActividades"
+                          placeholder="Comente brevemente">
+                        </div>
+                        <div class="row mb-3">
+                          <div class="col-6 center-text">
+                            <label for="">Quieres colaborar con la asociación:</label>
+                            <div class="form-check col-6 center-text">
+                              <input class="form-check-input" type="radio" value="true" formControlName="colaborarAsociacion"
+                                id="colaborarAsociacion">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                  Si
+                                </label>
+                              </div>
+                              <div class="form-check col-6">
+                                <input class="form-check-input" type="radio" value="false" formControlName="colaborarAsociacion"
+                                  id="colaborarAsociacion" checked>
+                                  <label class="form-check-label" for="flexCheckChecked">
+                                    No
+                                  </label>
+                                </div>
+                              </div>
+                              <div class=" mb-3 col-6 ">
+                                <label for="">En qué te gustaría colaborar:</label>
+                                <input type="text" class="form-control col-3" formControlName="tipoColaboracion" id="tipoColaboracion"
+                                  placeholder="Comente al respecto">
+                                </div>
+                              </div>
+                              <div class="row mb-3">
+                                <div class=" mb-3 col-6 text-center">
+                                  <label for="">En qué comisión te gustaría colaborar:</label>
+                                  <input type="text" class="form-control col-3" formControlName="comisionColaboracion" id="comisionColaboracion"
+                                    placeholder="Ingresa tus apellidos">
+                                  </div>
+                                  <div class="col-6">
+                                    <label for="">Qué idiomas practicas:</label>
+                                    <select formControlName="idiomas" class="form-select" aria-label="Default select example"
+                                      placeholder="idiomas">
+                                      @for (idioma of idiomasLista; track idioma) {
+                                        <option [value]="idioma.descripcion">{{ idioma.descripcion }}
+                                        </option>
+                                      }
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="row mb-3">
+                                  <div class="col-6 ">
+                                    <label for="">Tienes tiempo libre:</label>
+                                    <div class="form-check col-3 center-text">
+                                      <input class="form-check-input" type="radio" value="true" formControlName="tiempoLibre"
+                                        id="tiempoLibre">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Si
+                                        </label>
+                                      </div>
+                                      <div class="form-check col-3">
+                                        <input class="form-check-input" type="radio" value="false" formControlName="tiempoLibre"
+                                          id="tiempoLibre" checked>
+                                          <label class="form-check-label" for="flexCheckChecked">
+                                            No
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-6 ">
+                                        <label for="">Puedes desplazarte:</label>
+                                        <div class="form-check col-3 center-text">
+                                          <input class="form-check-input" type="radio" value="true" formControlName="desplazamiento"
+                                            id="flexChecActivo">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                              Si
+                                            </label>
+                                          </div>
+                                          <div class="form-check col-3">
+                                            <input class="form-check-input" type="radio" value="false" formControlName="desplazamiento"
+                                              id="flexCheckEx" checked>
+                                              <label class="form-check-label" for="flexCheckChecked">
+                                                No
+                                              </label>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                          <div class="col-6 ">
+                                            <label for="">Quieres colaborar en una delegación:</label>
+                                            <div class="form-check col-3 center-text">
+                                              <input class="form-check-input" type="radio" value="true" formControlName="delegacionColaboracion"
+                                                id="flexChecActivo">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                  Si
+                                                </label>
+                                              </div>
+                                              <div class="form-check col-3">
+                                                <input class="form-check-input" type="radio" value="false" formControlName="delegacionColaboracion"
+                                                  id="flexCheckEx" checked>
+                                                  <label class="form-check-label" for="flexCheckChecked">
+                                                    No
+                                                  </label>
+                                                </div>
+                                              </div>
+
+                                              <div class="col-6 ">
+                                                <label for="">Te gustaría dar clases:</label>
+                                                <div class="form-check col-3 center-text">
+                                                  <input class="form-check-input" type="radio" value="true" formControlName="selectedDarClases"
+                                                    id="selectedDarClases">
+                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                      Si
+                                                    </label>
+                                                  </div>
+                                                  <div class="form-check col-3">
+                                                    <input class="form-check-input" type="radio" value="false" formControlName="selectedDarClases"
+                                                      id="selectedDarClases" checked>
+                                                      <label class="form-check-label" for="flexCheckChecked">
+                                                        No
+                                                      </label>
+                                                    </div>
+                                                  </div>
+                                                </div>
+
+                                                <div class=" mb-3 ">
+                                                  <label for="">Clases de qué:</label>
+                                                  <input type="text" class="form-control" formControlName="darClases" id="darClases"
+                                                    placeholder="Comente al respecto">
+                                                  </div>
+                                                  <div class="row mb-3">
+                                                    <div class="col-6 ">
+                                                      <label for="">Te interesa organizar eventos deportivos:</label>
+                                                      <div class="form-check col-6 ">
+                                                        <input class="form-check-input" type="radio" value="true" formControlName="organizarEventosDeportivos"
+                                                          id="organizarEventosDeportivos">
+                                                          <label class="form-check-label" for="flexCheckDefault">
+                                                            Si
+                                                          </label>
+                                                        </div>
+                                                        <div class="form-check col-3">
+                                                          <input class="form-check-input" type="radio" value="false" formControlName="organizarEventosDeportivos"
+                                                            id="organizarEventosDeportivos" checked>
+                                                            <label class="form-check-label" for="flexCheckChecked">
+                                                              No
+                                                            </label>
+                                                          </div>
+                                                        </div>
+
+                                                        <div class="col-6 ">
+                                                          <label for="">Te interesa organizar reuniones de la asociación:</label>
+                                                          <div class="form-check col-3 center-text">
+                                                            <input class="form-check-input" type="radio" value="true" formControlName="reunionesAsociacion"
+                                                              id="reunionesAsociacion">
+                                                              <label class="form-check-label" for="flexCheckDefault">
+                                                                Si
+                                                              </label>
+                                                            </div>
+                                                            <div class="form-check col-3">
+                                                              <input class="form-check-input" type="radio" value="false" formControlName="reunionesAsociacion"
+                                                                id="reunionesAsociacion" checked>
+                                                                <label class="form-check-label" for="flexCheckChecked">
+                                                                  No
+                                                                </label>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                          <div class="row mb-3">
+                                                            <div class="col-6 ">
+                                                              <label for="">Te gusta participar como mediador:</label>
+                                                              <div class="form-check col-3 center-text">
+                                                                <input class="form-check-input" type="radio" value="true" formControlName="mediador"
+                                                                  id="mediador">
+                                                                  <label class="form-check-label" for="flexCheckDefault">
+                                                                    Si
+                                                                  </label>
+                                                                </div>
+                                                                <div class="form-check col-3">
+                                                                  <input class="form-check-input" type="radio" value="false" formControlName="mediador"
+                                                                    id="mediador" checked>
+                                                                    <label class="form-check-label" for="flexCheckChecked">
+                                                                      No
+                                                                    </label>
+                                                                  </div>
+                                                                </div>
+
+                                                                <div class="col-6 ">
+                                                                  <label for="">Te gusta ayudar cuando hay agresiones:</label>
+                                                                  <div class="form-check col-3 center-text">
+                                                                    <input class="form-check-input" type="radio" value="true" formControlName="ayudaAgresiones"
+                                                                      id="ayudaAgresiones">
+                                                                      <label class="form-check-label" for="flexCheckDefault">
+                                                                        Si
+                                                                      </label>
+                                                                    </div>
+                                                                    <div class="form-check col-3">
+                                                                      <input class="form-check-input" type="radio" value="false" formControlName="ayudaAgresiones"
+                                                                        id="ayudaAgresiones" checked>
+                                                                        <label class="form-check-label" for="flexCheckChecked">
+                                                                          No
+                                                                        </label>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                  <div class=" mb-3 ">
+                                                                    <label for="">Qué representa para ti la asociación:</label>
+                                                                    <input type="text" class="form-control " formControlName="opinionAsociacion" id="opinionAsociacion"
+                                                                      placeholder="Comente">
+                                                                    </div>
+                                                                    <div class=" mb-3 ">
+                                                                      <label for="">En qué debería mejorar la asociación:</label>
+                                                                      <input type="text" class="form-control " formControlName="mejorasAsociacion" id="mejorasAsociacion"
+                                                                        placeholder="Comente">
+                                                                      </div>
+                                                                      <div class="mb-3 text-center">
+                                                                        @if (!isLoading) {
+                                                                          <button type="submit" class="btn btn-primary">Registrarse</button>
+                                                                        }
+                                                                      </div>
+                                                                    </form>
+                                                                    @if (isLoading) {
+                                                                      <div class="text-center">
+                                                                        <div class="spinner-border" role="status">
+                                                                          <span class="sr-only">Cargando...</span>
+                                                                        </div>
+                                                                      </div>
+                                                                    }
+                                                                  </div>
+
+                                                                </div>
+                                                                <!--CONTENIDO CARD-->
+                                                              </div>
+                                                            </div>
+                                                          </div>

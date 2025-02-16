@@ -1,0 +1,109 @@
+{
+    "files": [
+      {
+        "name": " Código Hockey Hielo 6-8-20",
+        "type": "application/pdf",
+        "path": "assets/documentos/Reglamentos deportivos/0.-Codigo-Hockey-Hielo-CD-6-8-20.pdf",
+        "deporte": "Hockey sobre Hielo"
+      },
+      {
+        "name": "Normativa Competiciones 24-25 RFEDH",
+        "type": "application/pdf",
+        "path": "assets/documentos/Reglamentos deportivos/1.-Normativa-Competiciones-24-25 RFEDH.pdf",
+        "deporte": "Hockey sobre Hielo"
+      },
+      {
+        "name": "Actualizaciones Octubre 2023",
+        "type": "application/pdf",
+        "path": "assets/documentos/Reglamentos deportivos/Actualizaciones-Octubre-2023.pdf",
+        "deporte": ""
+      },
+  {
+        "name": "Reglas de Juego 06-22",
+        "type": "application/pdf",
+        "path": "assets/documentos/Reglamentos deportivos/balonmano_2022.pdf",
+        "deporte": "Balonmano"
+      },
+  {
+        "name": "CTA Circular Nº3",
+        "type": "application/pdf",
+        "path": "assets/documentos/Reglamentos deportivos/CIRCULAR 3 24-25.pdf",
+        "deporte": ""
+      },
+  {
+        "name": "Normativa de Disciplina Deportiva",
+        "type": "application/pdf",
+        "path": "assets/documentos/Reglamentos deportivos/disciplina-deportiva.pdf",
+        "deporte": "Taekwondo"
+      },
+  {
+        "name": "Programa Oficial de Examen De Cinturones Negros Del 1er Dan al 9º Dan",
+        "type": "application/pdf",
+        "path": "assets/documentos/Reglamentos deportivos/examen taekwondo 1-9 dan.pdf",
+        "deporte": "Taekwondo"
+      },
+  {
+        "name": "Reglamento Técnico Exhibición Categoría Adulto",
+        "type": "application/pdf",
+        "path": "assets/documentos/Reglamentos deportivos/Exhibición-Adulto-REVISADO.pdf",
+        "deporte": "Taekwondo"
+      },
+  {
+        "name": "Reglamento Técnico Exhibición Categoría Cadete",
+        "type": "application/pdf",
+        "path": "assets/documentos/Reglamentos deportivos/Exhibicion-Cadete-REVISADO.pdf",
+        "deporte": "Taekwondo"
+      },
+  {
+        "name": "Reglamento Técnico Exhibición Categoría Infantil",
+        "type": "application/pdf",
+        "path": "assets/documentos/Reglamentos deportivos/Exhibicion-Infantil-REVISADO.pdf",
+        "deporte": "Taekwondo"
+      },
+  {
+        "name": "Reglamento Oficial IIHF /RFEDH 2023/24",
+        "type": "application/pdf",
+        "path": "assets/documentos/Reglamentos deportivos/hokey sobre hieloReglamento Oficial IIHF RFEDH 2024.pdf",
+        "deporte": "Hockey sobre Hielo"
+      },
+  {
+  
+        "name": "Reglamento de Waterpolo 2022-2024",
+        "type": "application/pdf",
+        "path": "assets/documentos/Reglamentos deportivos/natacion Reglamento WP RFEN 2022-2024 1.pdf",
+        "deporte": "Natacion"
+      },
+  {
+  
+        "name": "Programa Oficial de Exámen de Cinturones Negros del 1er Pum al 3er Pum",
+        "type": "application/pdf",
+        "path": "assets/documentos/Reglamentos deportivos/R.F.E.T-Normativa-examen-1o-a-3o-pum.pdf",
+        "deporte": "Taekwondo"
+      },
+    {
+        "name": "Reglamento General Hockey Sobre Hielo Temporada 2021/22",
+        "type": "application/pdf",
+        "path": "assets/documentos/Reglamentos deportivos/reglamento-general-hockey-hielo.pdf",
+        "deporte": "Hockey sobre Hielo"
+      },
+  {
+        "name": "Reglamento de Disciplina Deportiva FEDHIELO",
+        "type": "application/pdf",
+        "path": "assets/documentos/Reglamentos deportivos/RFEDH-Reglamento-de-Disciplina-aprobadoCSD14.03.2022-CD-14.07.23.pdf",
+        "deporte": "Hockey sobre Hielo"
+      },
+      {
+          "name": "Reglas del juego IFAB 2024/25",
+          "type": "application/pdf",
+          "path": "assets/documentos/Reglamentos deportivos/Cambios en las Reglas futbol 2024_25.pdf",
+          "deporte": "Futbol"
+        },
+    {
+          "name": "Cambios en las Reglas IFAB 2024/25",
+          "type": "application/pdf",
+          "path": "assets/documentos/Reglamentos deportivos/Cambios en las Reglas futbol 2024_25.pdf",
+          "deporte": "Futbol"
+        }
+    ]
+  }
+  

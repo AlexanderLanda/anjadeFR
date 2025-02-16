@@ -1,0 +1,73 @@
+<div class="container mt-4 pt-5 tabla-container filtro-card">
+  <button class="btn btn-link back-button" (click)="goBack()">
+    <i class="fas fa-arrow-left"></i> Volver a la lista
+  </button>
+
+  <div class="card filtro-card">
+    <div class="card-body">
+      @if (report) {
+        <div>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="mb-0">Detalles del Reporte</h2>
+            <button class="btn btn-primary" (click)="editar()">
+              <i class="fas fa-edit"></i> Editar
+            </button>
+          </div>
+          <dl class="row">
+            <dt class="col-sm-1">ID:</dt>
+            <dd class="col-sm-1">{{ report.id }}</dd>
+            <dt class="col-sm-2">Afiliación ID:</dt>
+            <dd class="col-sm-2">{{ report.afiliacionId }}</dd>
+            <dt class="col-sm-2">Nombre:</dt>
+            <dd class="col-sm-3">{{ report.nombre }} {{ report.apellidos }}</dd>
+            <dt class="col-sm-2">Teléfono:</dt>
+            <dd class="col-sm-2">{{ report.telefono }}</dd>
+            <dt class="col-sm-1">Email:</dt>
+            <dd class="col-sm-4">{{ report.email }}</dd>
+          </dl>
+          <h3>Archivos Adjuntos</h3>
+          <div class="file-gallery">
+            @if (isLoading) {
+              <div class="loading-overlay">
+                <div class="loading-content">
+                  <p>Cargando archivos...</p>
+                  <div class="progress-bar">
+                    <div class="progress" [style.width.%]="loadingProgress"></div>
+                  </div>
+                  <p>{{ loadingProgress }}%</p>
+                </div>
+              </div>
+            }
+            <div class="file-grid">
+              @for (file of paginatedFiles; track file) {
+                <div class="file-item">
+                  <img [src]="file.thumbnail" [alt]="file.fileName" (click)="openFile(file)">
+                  <p>{{ file.fileName }}</p>
+                  <div class="file-actions">
+                    <button (click)="downloadFile(file)">Descargar</button>
+                  </div>
+                </div>
+              }
+            </div>
+            @if (totalPages > 1) {
+              <div class="pagination-container">
+                <div class="pagination">
+                  <button (click)="prevPage()" [disabled]="currentPage === 1" class="pagination-button">
+                    <span class="arrow">&#9664;</span> Anterior
+                  </button>
+                  <span class="page-info">Página {{ currentPage }} de {{ totalPages }}</span>
+                  <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="pagination-button">
+                    Siguiente <span class="arrow">&#9654;</span>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+          <dl class="row">
+            <dt class="col-sm-2">Descripción:</dt>
+            <dd class="col-sm-9">{{ report.descripcion }}</dd>
+          </dl>
+        </div>
+      }
+    </div>
+  </div>

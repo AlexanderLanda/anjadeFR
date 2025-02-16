@@ -1,0 +1,222 @@
+
+
+
+<div class="container py-4 formulario-container">
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title text-center">Solicitud de Afiliación</h5>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onRegistro()" name="registroForm" [formGroup]="registroForm">
+            <div class=" mb-3">
+              <label for="">Apellidos</label>
+              <input type="text" class="form-control" formControlName="apellidos" id="apellidos"
+                placeholder="Escribe tus apellidos">
+              </div>
+              <div class="row">
+                <div class=" mb-3 col-9 ">
+                  <label for="">Nombre</label>
+                  <input type="text" class="form-control" formControlName="nombre" id="nombre"
+                    placeholder="Escribe tu nombre">
+                  </div>
+                  <div class="col-3">
+                    <label for="">Fecha de Nacimiento</label>
+                    <div class="input-group date col-3" id="datepicker" data-target-input="nearest">
+                      <input type="date" class="form-control " data-target="#datepicker" formControlName="fechaNacimiento"
+                        placeholder="Selecciona tu fecha de nacimiento" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class=" mb-3 row g-3">
+                    <div class="col-6">
+                      <label for="">Tipo de documentación</label>
+                      <select formControlName="tipoDocumento" [(value)]="selectedTipoDocumento" class="form-select"
+                        aria-label="Default select example" placeholder="Tipo de Documento">
+                        @for (option of tiposDocumentaciones; track option) {
+                          <option [value]="option.id">{{ option.descripcion }}
+                          </option>
+                        }
+                      </select>
+
+                    </div>
+
+                    <div class="col-6">
+                      <label for="">Número de documentación</label>
+                      <input type="text" class="form-control" id="documentación" placeholder="Escribe tu número"
+                        formControlName="documento">
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="">Email</label>
+                      <input type="email" class="form-control" formControlName="correo" id="email"
+                        placeholder="Escribe tu correo" (input)="onEmailChange()">
+                        @if (registroForm.get('correo')?.hasError('emailExists')) {
+                          <div>
+                            <small class="error-message">El correo electrónico ya existe</small>
+                          </div>
+                        }
+                        @if (registroForm.get('correo')?.hasError('email') && registroForm.get('correo')?.touched) {
+                          <div>
+                            <small class="error">Correo electrónico no válido</small>
+                          </div>
+                        }
+
+
+                      </div>
+                      <div class="mb-3">
+                        <label for="">Teléfono</label>
+                        <input type="text" class="form-control" formControlName="telefono" id="telefono"
+                          placeholder="Escribe tu teléfono">
+                        </div>
+                        <div class="mb-3 row">
+                          <div class="col-9">
+                            <label for="">Dirección</label>
+                            <input type="text" class="form-control" formControlName="direccion" id="direccion"
+                              placeholder="Escribe tu dirección">
+                            </div>
+                            <div class="col-3">
+                              <label for="">Codigo Postal</label>
+                              <input type="text" class="form-control" formControlName="codigoPostal" id="codigoPostal"
+                                placeholder="Escribe tu C.P">
+                              </div>
+                            </div>
+                            <div class="mb-3 row">
+                              <div class="col-6">
+                                <label for="">Población</label>
+                                <input formControlName="localidad" [(value)]="selectedLocalidad" class="form-control"
+                                  aria-label="Default select example" placeholder="Escribe tu población">
+                                </div>
+                                <div class="col-6">
+                                  <label for="">Provincia</label>
+                                  <select formControlName="provincia" [(value)]="selectedProvincia" class="form-select"
+                                    placeholder="Provincia"><!-- (selectionChange)="updateLocalidades($event.value)" -->
+                                    @for (option of provincias; track option) {
+                                      <option [value]="option.id">{{ option.descripcion }}
+                                      </option>
+                                    }
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="mb-3 row">
+                                <div class="col-6">
+                                  <label for="">Deporte</label>
+                                  <input type="text" id="deporte" class="form-control" formControlName="deporte"
+                                    placeholder="Escribe el deporte..." (keyup)="filterDeportes($event)">
+                                    <div>
+                                      <ul class="list-group mt-2">
+                                        @for (deporte of filteredDeportes; track deporte) {
+                                          <li class="list-group-item" (click)="seleccionarDeporte(deporte)">{{ deporte.nombre }}</li>
+                                        }
+                                      </ul>
+                                    </div>
+                                  </div>
+                                  <div class="col-6">
+                                    <label for="">Actividad</label>
+                                    <select formControlName="afiliadosFuncion" [(value)]="selectedFuncion" class="form-select"
+                                      aria-label="Default select example" placeholder="Tipo de Documento">
+                                      @for (option of afiliadosFunciones; track option) {
+                                        <option [value]="option.id">{{ option.descripcion }}
+                                        </option>
+                                      }
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="mb-3 row">
+                                  <div class="col-6">
+                                    <label for="">Categoría</label>
+
+                                    <select formControlName="afiliadosCategoria" [(value)]="selectedafiliadosCategoria" class="form-select"
+                                      aria-label="Default select example" placeholder="Categoria">
+                                      @for (option of categorias; track option) {
+                                        <option [value]="option.id">{{ option.descripcion }}
+                                        </option>
+                                      }
+                                    </select>
+                                  </div>
+                                  <div class="col-6 center-text">
+                                    <label for="">Situación Actual:</label>
+                                    <div class="form-check col-3 center-text">
+                                      <input class="form-check-input" type="radio" value="activo" formControlName="situacionActual"
+                                        id="flexChecActivo">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                          Activo
+                                        </label>
+                                      </div>
+                                      <div class="form-check col-3">
+                                        <input class="form-check-input" type="radio" value="Ex" formControlName="situacionActual"
+                                          id="flexCheckEx" checked>
+                                          <label class="form-check-label" for="flexCheckChecked">
+                                            Ex
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="card mb-3">
+                                      <div class="card-body text-center">
+                                        <p class="card-text">Deberás abonar 5 euros por afiliarte (correspondiente a insignia y tarjeta de
+                                        afiliación) más una cuota anual de 20 euros.</p>
+                                        <!--<h5 class="card-title">Forma de pago</h5>-->
+                                        <div class="card mb-3">
+                                          <div class="card-body text-center">
+                                            <p class="card-text">Forma de Pago</p>
+                                            <div class="form-check form-check-inline ">
+                                              <input class="form-check-input" type="radio" name="tipoPago" id="pagoTarjeta"
+                                                formControlName="tipoPago"  [value]="1">
+                                                <label class="form-check-label" for="pagoTarjeta">
+                                                  Tarjeta de Crédito
+                                                </label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="tipoPago" id="pagoBizum"
+                                                  formControlName="tipoPago"  [value]="2">
+                                                  <label class="form-check-label" for="pagoBizum">
+                                                    Bizum
+                                                  </label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio" name="tipoPago" id="pagoTransferencia"
+                                                    formControlName="tipoPago"  [value]="3">
+                                                    <label class="form-check-label" for="pagoTransferencia">
+                                                      Transferencia Bancaria
+                                                    </label>
+                                                  </div>
+                                                  <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="tipoPago" id="pagoCaja"
+                                                      formControlName="tipoPago"  [value]="4">
+                                                      <label class="form-check-label" for="pagoCaja">
+                                                        Caja
+                                                      </label>
+                                                    </div>
+                                                    <p class="card-text font-weight-bold">Cuenta CaixaBank: ES-90-2100-3421-54-2200159778</p>
+                                                  </div>
+                                                </div>
+
+                                              </div>
+                                            </div>
+
+
+                                            <div class="mb-3 text-center">
+                                              @if (!isLoading) {
+                                                <button type="submit" class="btn btn-primary">Registrarse</button>
+                                              }
+                                            </div>
+
+
+                                          </form>
+                                          @if (isLoading) {
+                                            <div class="text-center">
+                                              <div class="spinner-border" role="status">
+                                                <span class="sr-only">Cargando...</span>
+                                              </div>
+                                            </div>
+                                          }
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+

@@ -1,0 +1,30 @@
+<!-- Botón flotante de ayuda -->
+@if (ayudas.length > 0) {
+  <div  id="help-button" (click)="toggleChatbot()">
+    <i class="fa fa-question-circle"></i>
+  </div>
+}
+
+<!-- Contenedor del chatbot -->
+@if (isChatbotOpen) {
+  <div id="chatbot-container">
+    <div id="chatbot-header">
+      <span>Centro de Ayuda</span>
+      <button (click)="toggleChatbot()">X</button>
+    </div>
+    <div id="chatbot-body">
+      <ul>
+        @for (question of ayudas; track question) {
+          <li (click)="selectQuestion(question)">
+            {{ question.pregunta }}
+          </li>
+        }
+      </ul>
+      @if (selectedAnswer) {
+        <div class="answer">
+          <p>{{ selectedAnswer }}</p>
+        </div>
+      }
+    </div>
+  </div>
+}

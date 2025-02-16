@@ -1,0 +1,34 @@
+.navbar .dropdown-menu {
+    background-color: #343a40; /* Fondo oscuro */
+  }
+  
+  .navbar .dropdown-item {
+    color: #ffffff; /* Texto en blanco */
+  }
+  
+  .navbar .dropdown-item:hover,
+  .navbar .dropdown-item:focus {
+    background-color: #343a40; /* Mantener el fondo oscuro al pasar el mouse */
+    color: #ffffff; /* Mantener el texto en blanco al pasar el mouse */
+  }
+
+ .navbar{
+    margin-bottom: 1cm; /* Ajusta el valor según sea necesario para dejar espacio entre el navbar y el formulario */
+  
+ }
+ @media (max-width: 1199px) {
+  .navbar-nav {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  .navbar-collapse {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #343a40;
+    padding: 1rem;
+  }
+}
+  

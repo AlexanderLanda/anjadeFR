@@ -1,0 +1,75 @@
+<div class="container mt-4 pt-5 tabla-container">
+  <button class="btn btn-link back-button" (click)="goBack()">
+    <i class="fas fa-arrow-left"></i> Volver a la lista
+  </button>
+  @if (user) {
+    <div class="card mt-3">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="mb-4">Detalles del Afiliado: {{ user.nombre }} {{ user.apellidos }}</h2>
+          @if (hasCuestionario) {
+            <button class="btn btn-primary" (click)="verCuestionario()">
+              Ver Cuestionario
+            </button>
+          }
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <strong>ID de Afiliación:</strong> {{ user.idAfiliacion }}
+          </div>
+          <div class="col-md-6">
+            <strong>Fecha de Nacimiento:</strong> {{ user.fechaNacimiento | date }}
+          </div>
+          <div class="col-md-6">
+            <strong>Dirección:</strong> {{ user.direccion }}
+          </div>
+          <div class="col-md-6">
+            <strong>Correo:</strong> {{ user.correo }}
+          </div>
+          <div class="col-md-6">
+            <strong>Teléfono:</strong> {{ user.telefono }}
+          </div>
+          <div class="col-md-6">
+            <strong>Deporte:</strong> {{ user.deporte.nombre }}
+          </div>
+          <div class="col-md-6">
+            <strong>Localidad:</strong> {{ user.localidad }}
+          </div>
+          <div class="col-md-6">
+            <strong>Tipo de Documento:</strong> {{ user.tipoDocumento.descripcion }}
+          </div>
+          <div class="col-md-6">
+            <strong>Documento:</strong> {{ user.documento }}
+          </div>
+          <div class="col-md-6">
+            <strong>Tipo de Pago:</strong> {{ user.tipoPago.descripcion }}
+          </div>
+          <div class="col-md-6">
+            <strong>Código Postal:</strong> {{ user.codigoPostal }}
+          </div>
+          <div class="col-md-6">
+            <strong>Provincia:</strong> {{ user.provincia.descripcion }}
+          </div>
+          <div class="col-md-6">
+            <strong>Función del Afiliado:</strong> {{ user.afiliadosFuncion.descripcion }}
+          </div>
+          <div class="col-md-6">
+            <strong>Categoría del Afiliado:</strong> {{ user.afiliadosCategoria.descripcion }}
+          </div>
+          <div class="col-md-6">
+            <strong>Rol de Usuario:</strong> {{ user.usuariorol.descripcion }}
+          </div>
+          <div class="col-md-6">
+            <strong>Estado de la Cuenta:</strong> {{ user.estadoCuenta.estado }}
+          </div>
+          <div class="col-md-6">
+            <strong>Situación Actual:</strong> {{ user.situacionActual }}
+          </div>
+          <div class="col-md-6">
+            <strong>Fecha de Afiliación:</strong> {{ user.fechaAfiliacion | date }}
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

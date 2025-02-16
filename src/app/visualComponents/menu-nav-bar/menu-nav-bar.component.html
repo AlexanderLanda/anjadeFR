@@ -1,0 +1,93 @@
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top" ngbNavbar>
+  <div class="container">
+    <button class="navbar-toggler d-xl-none" type="button" (click)="toggleNavbar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center" [ngbCollapse]="isNavbarCollapsed">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home" (click)="collapseNavbar()">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/registro" (click)="collapseNavbar()">Afiliación</a>
+        </li>
+        <li class="nav-item dropdown" ngbDropdown>
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle id="navbarDropdownInfo">
+            Información
+          </a>
+          <div ngbDropdownMenu aria-labelledby="navbarDropdownInfo">
+            <a ngbDropdownItem routerLink="/home" (click)="scrollToCartaPresentacion()">Carta de Presentación</a>
+            <a ngbDropdownItem routerLink="/home" (click)="scrollToCartaArbitros()">Carta a Arbitros(a) y Jueces(a)</a>
+            <a ngbDropdownItem routerLink="/junta" (click)="collapseNavbar()">Junta Directiva</a>
+            <a ngbDropdownItem (click)="downloadEstatutos()">Estatutos</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown" ngbDropdown>
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle id="navbarDropdownNoticias">
+            Noticias
+          </a>
+          <div ngbDropdownMenu aria-labelledby="navbarDropdownNoticias">
+            <a ngbDropdownItem routerLink="/noticias-anjade" (click)="collapseNavbar()">Noticias Anjade</a>
+            <a ngbDropdownItem routerLink="/noticias-deportivas" (click)="collapseNavbar()">Noticias Deportivas</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown" ngbDropdown>
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle id="navbarDropdownSugerencias">
+            Incidencias
+          </a>
+          <div ngbDropdownMenu aria-labelledby="navbarDropdownSugerencias">
+            <a ngbDropdownItem routerLink="/create-report" (click)="collapseNavbar()">Comunicación Incidencias</a>
+            <a ngbDropdownItem routerLink="/noticias-incidencias" (click)="collapseNavbar()">Noticias de Incidencias</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown" ngbDropdown>
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle id="navbarDropdownJuridico">Deportes</a>
+          <div ngbDropdownMenu aria-labelledby="navbarDropdownJuridico">
+            <a ngbDropdownItem routerLink="/reglamentos-deportivos" (click)="collapseNavbar()">Reglamentos Deportivos</a>
+          </div>
+        </li>
+        <!--
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/formacion" (click)="collapseNavbar()">Formación</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/Multimedia" (click)="collapseNavbar()">Multimedia</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/delegaciones" (click)="collapseNavbar()">Delegaciones</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/comisiones" (click)="collapseNavbar()">Comisiones</a>
+        </li>
+        -->
+        <li class="nav-item">
+          <a class="nav-link" (click)="scrollToFooter()">Contacto</a>
+        </li>
+        @if (loggedIn && isAdmin) {
+          <li class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link dropdown-toggle" ngbDropdownToggle id="navbarDropdownAdmin">
+              Administración
+            </a>
+            <div ngbDropdownMenu aria-labelledby="navbarDropdownAdmin">
+              <a ngbDropdownItem routerLink="/listausuarios" (click)="collapseNavbar()">Administración de Afiliados</a>
+              <a ngbDropdownItem routerLink="/reports" (click)="collapseNavbar()">Administración de Incidencias</a>
+              <a ngbDropdownItem routerLink="/crear-noticia" (click)="collapseNavbar()">Insertar Noticias</a>
+            </div>
+          </li>
+        }
+        @if (loggedIn) {
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()">Cerrar Sesión</a>
+          </li>
+        }
+        @if (!loggedIn) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/login" (click)="collapseNavbar()">Iniciar Sesión</a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</nav>

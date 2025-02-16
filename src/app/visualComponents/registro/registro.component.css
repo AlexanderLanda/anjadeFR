@@ -1,0 +1,52 @@
+
+.formulario-container {
+  margin-top: 80px; /* Ajusta el valor según sea necesario para dejar espacio entre el navbar y el formulario */
+}
+
+/* Media Queries para móviles */
+@media (max-width: 768px) {
+  .col-md-8 {
+    width: 100%; /* Asegura que la columna ocupe todo el ancho en móviles */
+  }
+
+  .row > div[class*='col-'] {
+    width: 100%; /* Asegura que cada elemento dentro de .row ocupe una fila completa */
+  }
+
+  .col-9, .col-3, .col-8, .col-4, .col-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+/* Media Queries para tablets */
+@media (min-width: 769px) and (max-width: 992px) {
+  .col-md-8 {
+    width: 100%; /* Asegura que la columna ocupe todo el ancho en tablets */
+  }
+
+  .row > div[class*='col-'] {
+    width: 100%; /* Asegura que cada elemento dentro de .row ocupe una fila completa */
+  }
+
+  .col-9, .col-3, .col-8, .col-4, .col-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+.error-message {
+  color: red;
+  margin-top: 5px;
+  font-size: 0.9em;
+}
+.list-group {
+  position: absolute;
+  z-index: 1000;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.list-group-item {
+  cursor: pointer;
+}

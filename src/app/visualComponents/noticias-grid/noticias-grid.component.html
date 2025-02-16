@@ -1,0 +1,53 @@
+<div class="component-container">
+  <div class="container">
+    <!-- Título dinámico basado en el tipo de noticia -->
+    <h2 class="mt-5 mb-4">
+      {{
+      tipoNoticia === 'PARTICULAR'
+      ? 'Últimas Noticias Anjade'
+      : 'Últimas Noticias Deportivas'
+
+      }}
+    </h2>
+
+    <!-- Contenedor de noticias: 3 por fila -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <!-- Recorremos las noticias -->
+      @for (noticia of noticias; track noticia) {
+        <div class="col">
+          <div class="noticia">
+            <!-- Imagen principal -->
+            <img [src]="getImageUrl(noticia)" (error)="handleImageError(noticia)"
+              alt="Imagen de la noticia" class="img-fluid">
+            <!-- Información de la noticia -->
+            <div class="noticia-info mt-3">
+              <h3>{{ noticia.titulo }}</h3>
+              <p>{{ noticia.descripcion }}</p>
+              <div class="noticia-footer">
+                <a [href]="noticia.linkOriginal" class="btn btn-primary" target="_blank">Leer más</a>
+                <span class="fecha-noticia">{{ noticia.fechaInsercion | date: 'longDate' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Paginación -->
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="paginaActual === 0">
+          <a class="page-link" (click)="cambiarPagina(paginaActual - 1)" tabindex="-1">Anterior</a>
+        </li>
+        @for (pagina of paginas; track pagina; let i = $index) {
+          <li class="page-item" [class.active]="paginaActual === i">
+            <a class="page-link" (click)="cambiarPagina(i)">{{ i + 1 }}</a>
+          </li>
+        }
+        <li class="page-item" [class.disabled]="paginaActual === totalPaginas - 1">
+          <a class="page-link" (click)="cambiarPagina(paginaActual + 1)">Siguiente</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <h5 class="modal-title">Enviar Correo</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="emailSubject" class="form-label">Asunto</label>
+        <input
+          type="text"
+          class="form-control"
+          id="emailSubject"
+          [(ngModel)]="emailSubject"
+          name="emailSubject"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="emailBody" class="form-label">Cuerpo del Correo</label>
+        <textarea
+          class="form-control"
+          id="emailBody"
+          rows="5"
+          [(ngModel)]="emailBody"
+          name="emailBody"
+          required
+        ></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="emailAttachments" class="form-label">Archivos Adjuntos</label>
+        <input
+          type="file"
+          class="form-control"
+          id="emailAttachments"
+          (change)="handleFileInput($event)"
+          multiple
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="close()">Cancelar</button>
+    <button class="btn btn-primary" (click)="sendEmail()">Enviar</button>
+  </div>
+  

@@ -1,0 +1,56 @@
+.component-container {
+  margin-top: 80px; /* Ajusta el valor según sea necesario */
+}
+
+.carousel-inner img {
+  width: 100%;
+  height: 300px; /* Ajusta la altura según tus necesidades */
+  object-fit: cover;
+  border-radius: 15px; /* Ajusta el valor según la redondez que desees */
+  overflow: hidden; /* Asegura que las esquinas queden recortadas */
+}
+
+.noticia img {
+  width: 100%;
+  height: 300px; /* Ajusta la altura según tus necesidades */
+  border-radius: 15px; /* Ajusta el valor según la redondez que desees */
+  overflow: hidden; /* Asegura que las esquinas queden recortadas */
+}
+
+.pagination {
+  margin-top: 20px;
+}
+
+.page-link {
+  cursor: pointer;
+}
+
+.comentario{
+  margin-top: 10px;
+}
+
+.noticia {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* Combina con el borde redondeado */
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #fff; /* Agrega un fondo blanco para destacar */
+}
+
+/* Estilo del contenedor de botón y fecha */
+/* Fecha */
+.noticia-footer {
+  display: flex;
+  justify-content: flex-end; /* Solo muestra la fecha alineada a la derecha */
+  margin-top: 15px;
+}
+
+
+.noticia-titulo a {
+  text-decoration: none; /* Sin subrayado */
+  color: #007bff; /* Color inicial del enlace (azul) */
+  transition: color 0.3s ease; /* Efecto suave al cambiar de color */
+}
+.noticia-titulo a:hover {
+  color: #0056b3; /* Color más oscuro al pasar el mouse */
+}

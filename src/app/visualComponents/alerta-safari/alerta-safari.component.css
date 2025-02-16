@@ -1,0 +1,15 @@
+        .alerta-navegador {
+            background-color: #ffcccb;
+            color: #d8000c;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #d8000c;
+            border-radius: 5px;
+        }
+        .alerta-navegador img {
+            width: 20px;
+            vertical-align: middle;
+        }
+        .formulario-container {
+            margin-top: 80px; /* Ajusta el valor según sea necesario para dejar espacio entre el navbar y el formulario */
+          }

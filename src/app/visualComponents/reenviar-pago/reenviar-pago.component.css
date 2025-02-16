@@ -1,0 +1,66 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 80px;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  color: #0056b3;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.description {
+  background-color: #f8f9fa;
+  border-left: 4px solid #0056b3;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.payment-button {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 5px;
+  flex-basis: 48%;
+}
+
+.payment-button:hover {
+  background-color: #003d82;
+}
+
+.payment-button i {
+  margin-right: 10px;
+}
+
+.alternative-payment {
+  background-color: #e9ecef;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.alternative-payment h2 {
+  color: #0056b3;
+  margin-top: 0;
+}
+
+.email-link {
+  color: #0056b3;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.email-link:hover {
+  text-decoration: underline;
+}

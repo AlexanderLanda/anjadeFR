@@ -1,0 +1,50 @@
+<div class="container mt-4 pt-5" #topOfGallery>
+  <div class="card">
+    <div class="card-body">
+      <div class="mb-3">
+        <label for="filtro" class="form-label">Filtro</label>
+        <input type="text" class="form-control" id="filtro" (keyup)="filterFiles($event)"
+          placeholder="Filtre por nombre de documento o deporte" required />
+      </div>
+    </div>
+    <div class="file-gallery"  >
+      @if (isLoading) {
+        <div class="loading-overlay">
+          <div class="loading-content">
+            <p>Cargando archivos...</p>
+            <div class="progress-bar">
+              <div class="progress" [style.width.%]="loadingProgress"></div>
+            </div>
+            <p>{{ loadingProgress }}%</p>
+          </div>
+        </div>
+      }
+      <div class="file-grid">
+        @for (file of paginatedFiles; track file) {
+          <div class="file-item">
+            <img [src]="file.thumbnail" [alt]="file.name" (click)="openFile(file)">
+            <p>{{ file.name }}</p>
+            <p><strong>Deporte:</strong> {{ file.deporte }}</p>
+            <div class="file-actions">
+              <button (click)="downloadFile(file)">Descargar</button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="pagination-container">
+        <div class="pagination">
+          <button (click)="prevPage()" [disabled]="currentPage === 1" class="pagination-button">
+            <span class="arrow">&#9664;</span> Anterior
+          </button>
+          <span class="page-info">Página {{ currentPage }} de {{ totalPages }}</span>
+          <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="pagination-button">
+            Siguiente <span class="arrow">&#9654;</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

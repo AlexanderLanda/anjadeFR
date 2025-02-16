@@ -1,0 +1,125 @@
+<div class="component-container">
+  <div class="container">
+    <h2 class="mt-5 mb-4">
+      {{
+      tipoNoticia === 'PARTICULAR'
+      ? 'Últimas Noticias Anjade'
+      : tipoNoticia === 'GENERAL'
+      ? 'Últimas Noticias Deportivas'
+      : 'Últimas Noticias Incidencias'
+      }}
+    </h2>
+
+
+    @for (noticia of noticias; track noticia) {
+      <div class="container py-4">
+        <div class="noticia">
+          <div class="row">
+            <div class="col-md-4">
+              @if (noticia.imagenes.length > 1) {
+                <div [id]="'carouselNoticia' + noticia.id"
+                  class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                    @for (imagen of noticia.imagenes; track imagen; let i = $index) {
+                      <div
+                        [class]="'carousel-item ' + (i === 0 ? 'active' : '')">
+                        <img [src]="imagen" class="d-block w-100"
+                          [alt]="'Imagen ' + (i + 1) + ' de la noticia'">
+                        </div>
+                      }
+                    </div>
+                    <button class="carousel-control-prev" type="button"
+                      [attr.data-bs-target]="'#carouselNoticia' + noticia.id" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button"
+                      [attr.data-bs-target]="'#carouselNoticia' + noticia.id" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+                } @else {
+                  <img [src]="getImageUrl(noticia)" (error)="handleImageError(noticia)"
+                    alt="Imagen de la noticia" class="img-fluid">
+                  }
+                </div>
+                <div class="col-md-8">
+                  <h3 class="noticia-titulo">
+                    <a [href]="noticia.linkOriginal" target="_blank">{{ noticia.titulo }}</a>
+                  </h3>
+                  <p>{{ noticia.descripcion }}</p>
+                  <div class="noticia-footer">
+                    <span class="fecha-noticia">{{ noticia.fechaInsercion | date: 'longDate' }}</span>
+                  </div>
+                  @if (tipoNoticia === 'INCIDENCIAS') {
+                    <div class="card-footer">
+                      <div style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; position: relative; max-width: 100%; margin-top: 20px;">
+                        <div style="position: absolute; top: -12px; left: 16px; background-color: white; padding: 0 8px; font-weight: bold; color: #333;">
+                          Comentarios
+                        </div>
+                        <p style="margin: 16px 0 0; font-size: 16px; color: #555;">
+                          {{ noticia.comentarios[0]?.texto || 'No hay comentarios disponibles.' }}
+                        </p>
+                      </div>
+                      @if (noticia.comentarios?.length > 0) {
+                        <button class="btn btn-sm btn-primary comentario" (click)="mostrarComentarios(noticia)">
+                          Ver todos los comentarios ({{ noticia.comentarios?.length }})
+                        </button>
+                      }
+                      <!-- Mostrar "Agregar comentario" si no hay comentarios -->
+                      @if (noticia.comentarios?.length === 0) {
+                        <button class="btn btn-sm btn-secondary comentario" (click)="toggleComentarioForm(noticia)">
+                          Agregar comentario
+                        </button>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+              <!-- Sección de Comentarios: Solo para noticias de tipo INCIDENCIAS -->
+              @if (tipoNoticia === 'INCIDENCIAS') {
+                <div class="card-footer">
+                  @if (noticia.ultimoComentario) {
+                    <div>
+                      <p><strong>Último comentario:</strong> {{ noticia.ultimoComentario.texto }}</p>
+                    </div>
+                  }
+                  <!-- Formulario para agregar comentarios -->
+                  @if (noticia.mostrarFormulario) {
+                    <div class="mt-3">
+                      <textarea [(ngModel)]="comentarioTexto" class="form-control" rows="3"
+                      placeholder="Escribe tu comentario aquí"></textarea>
+                      @if (!isUserLoggedIn) {
+                        <div class="mt-2">
+                          <input [(ngModel)]="idAfiliacion" class="form-control"
+                            placeholder="Número de afiliación" />
+                          </div>
+                        }
+                        <button class="btn btn-sm btn-success mt-2" (click)="agregarComentario(noticia)">Enviar
+                        comentario</button>
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+        <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" [class.disabled]="paginaActual === 0">
+              <a class="page-link" (click)="cambiarPagina(paginaActual - 1)" tabindex="-1">Anterior</a>
+            </li>
+            @for (pagina of paginas; track pagina; let i = $index) {
+              <li class="page-item" [class.active]="paginaActual === i">
+                <a class="page-link" (click)="cambiarPagina(i)">{{ i + 1 }}</a>
+              </li>
+            }
+            <li class="page-item" [class.disabled]="paginaActual === totalPaginas - 1">
+              <a class="page-link" (click)="cambiarPagina(paginaActual + 1)">Siguiente</a>
+            </li>
+          </ul>
+        </nav>
+      </div>

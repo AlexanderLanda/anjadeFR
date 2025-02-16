@@ -1,0 +1,74 @@
+/* Custom styles for estadoCuenta */
+.bg-danger {
+  background-color: #dc3545 !important;
+}
+
+.bg-warning {
+  background-color: #ffc107 !important;
+}
+
+/* Custom styles for leyenda items */
+.leyenda {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leyenda-item {
+  display: flex;
+  align-items: center;
+}
+
+.cuadrado {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.cuadrado.rojo {
+  background-color: #dc3545;
+}
+
+.cuadrado.amarillo {
+  background-color: #ffc107;
+}
+
+#texto-pendiente {
+  margin-right: 15px;
+}
+.filtro-card {
+  margin-top: 20px; /* Ajusta el valor según sea necesario para dejar espacio entre el navbar y el formulario */
+}
+/* Estilo para mantener "Pendiente de pago" y "Pendiente de revisión" en la misma fila */
+.leyendas-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Espaciado entre las etiquetas */
+}
+
+.leyendas-container .me-2 {
+  flex: 1; /* Ajuste automático del ancho */
+  text-align: center; /* Centra el texto dentro del contenedor */
+}
+
+/* Estilo para los botones */
+.botones-container .btn {
+  width: 100%; /* Ocupan todo el ancho */
+  margin-bottom: 10px; /* Espaciado entre botones */
+}
+
+@media (max-width: 768px) {
+  .leyendas-container {
+    flex-wrap: nowrap; /* Fuerza las etiquetas en una sola fila */
+  }
+  .d-flex {
+    flex-direction: column; /* Apilar botones verticalmente en móviles */
+    gap: 10px; /* Espaciado entre botones */
+    
+  }
+  
+  .d-flex .btn {
+    width: 100%; /* Ocupan el ancho completo */
+    margin-bottom: 10px;
+  }
+}

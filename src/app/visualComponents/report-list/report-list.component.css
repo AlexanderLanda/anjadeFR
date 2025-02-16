@@ -1,0 +1,66 @@
+/* Custom styles for the table container */
+.tabla-container {
+    margin-top: 20px;
+  }
+  
+  .filtro-card {
+    margin-top: 20px;
+  }
+  
+  /* Custom styles for the table */
+  .table-responsive {
+    overflow-x: auto;
+  }
+  
+  .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+  }
+  
+  .table th,
+  .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+  }
+  
+  .table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+  }
+  
+  .table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+  }
+  
+  /* Custom styles for buttons */
+  .btn-outline-primary {
+    color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-outline-primary:hover {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  /* Custom styles for icons */
+  .bi {
+    vertical-align: -.125em;
+    fill: currentColor;
+  }
+  
+  /* Custom styles for the download button */
+  .btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-primary:hover {
+    color: #fff;
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }

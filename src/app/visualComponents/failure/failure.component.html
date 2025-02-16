@@ -1,0 +1,14 @@
+<div  class="modal">
+    <div class="modal-content">
+      <h1>Pago rechazado</h1>
+      <h2>Su pago ha sido rechazado. Puede volver a intentarlo seleccionando la forma de pago y accione el boton pagar.
+         O si sigue teniendo problemas para realizar la operación, pongase en contacto con administración y seleccione <a href="/home">Omitir</a>
+      </h2>
+
+      <div>
+        <mat-radio-group  [(ngModel)]="selectedFormaPago">
+        </mat-radio-group>
+      </div>
+      <button (click)="closeModal()">Pagar</button>
+    </div>
+  </div>
