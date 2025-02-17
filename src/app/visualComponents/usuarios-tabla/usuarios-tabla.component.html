@@ -1,26 +1,39 @@
-<div class="container mt-4 pt-5 tabla-container">
-  <h5 class="card-title filtro-card text-end">{{userlogin?.nombre}} {{userlogin?.apellidos}} - {{userlogin?.usuariorol?.descripcion}}</h5>
-  <div class="card filtro-card">
-    <div class="card-body">
-      <div class="mb-3">
-        <label for="filtro" class="form-label">Filtro</label>
+<div class="container-fluid mt-4 pt-5">
+  <h5 class="card-title text-end">{{userlogin?.nombre}} {{userlogin?.apellidos}} - {{userlogin?.usuariorol?.descripcion}}</h5>
+
+  <div class="row">
+    <!-- Columna de botones (col-3) -->
+    <div class="col-md-3 pe-0 order-1 order-md-0">
+      <div class="card p-3 mb-3">
+        <h5 class="text-center">Filtro</h5>
         <input type="text" class="form-control" id="filtro" (keyup)="filtrar($event)"
           placeholder="Teclee el valor de la columna por la que desee filtrar" required />
-          <div class="invalid-feedback">Se requiere teléfono numérico</div>
-        </div>
+      </div>
+      <div class="card p-3 mb-3">
+        <h5 class="text-center">Acciones</h5>
+        <button class="btn btn-primary w-100 mb-2" (click)="openEmailModal()">
+          <i class="fas fa-envelope me-2"></i> Comunicación Email
+        </button>
+        <button class="btn btn-success w-100 mb-2" (click)="downloadExcel()">
+          <i class="fas fa-file-excel me-2"></i> Descargar Lista
+        </button>
+        <button class="btn btn-danger w-100" (click)="enviarRecordatorioPago()">
+          <i class="fas fa-exclamation-circle me-2"></i> Recordatorio de Pago
+        </button>
       </div>
     </div>
 
-    <div class="card mt-3">
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th scope="col">
-                  <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="allRowsSelected()" />
+    <!-- Columna de la tabla (col-9) -->
+    <div class="col-md-9 order-0 order-md-1">
+      <div class="card">
+        <div class="card-body">
+          
 
-                  </th>
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th scope="col"><input type="checkbox" (change)="toggleSelectAll($event)" [checked]="allRowsSelected()" /></th>
                   <th scope="col">No. Afilición</th>
                   <th scope="col">Apellidos</th>
                   <th scope="col">Nombre</th>
@@ -31,17 +44,14 @@
                   <th scope="col">Provincia</th>
                   <th scope="col">Estado cuenta</th>
                   <th scope="col">Rol de Afiliado</th>
-                  <th scope ="col">Detalles</th>
+                  <th scope="col">Detalles</th>
                   <th scope="col">Editar</th>
-
                 </tr>
               </thead>
               <tbody>
                 @for (element of getPaginatedData(); track element) {
                   <tr [ngClass]="getEstadoCuentaClass(element.estadoCuenta.id)">
-                    <td>
-                      <input type="checkbox" [(ngModel)]="element.selected" />
-                    </td>
+                    <td><input type="checkbox" [(ngModel)]="element.selected" /></td>
                     <td>{{element.idAfiliacion}}</td>
                     <td>{{element.apellidos}}</td>
                     <td>{{element.nombre}}</td>
@@ -67,16 +77,11 @@
               </tbody>
             </table>
           </div>
-          <nav aria-label="Page navigation example">
+
+          <nav aria-label="Page navigation">
             <mat-paginator [length]="dataSource.filteredData.length" [pageSize]="10"
-            [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-
+              [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
           </nav>
-        </div>
-      </div>
-
-      <div class="mt-3">
-        <div class="d-flex justify-content-between align-items-center">
           <div class="d-flex">
             <div class="me-2" id="paymentReminderDiv">
               <div class="bg-danger text-white p-2" (click)="enviarRecordatorioPago()">Pendiente de pago</div>
@@ -85,16 +90,11 @@
               <div class="bg-warning text-dark p-2">Pendiente de revisión</div>
             </div>
           </div>
-          <div>
-            <button class="btn btn-primary me-2" (click)="openEmailModal()">
-              <i class="fas fa-envelope me-2"></i> Comunicación Email
-            </button>
-            <button class="btn btn-primary" (click)="downloadExcel()">
-              <i class="fas fa-file-excel me-2"></i> Descargar Lista
-            </button>
-            <!-- Aquí puedes agregar más botones en el futuro -->
-          </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
+
+   
