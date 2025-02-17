@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Noticia } from '../../Core/Model/NoticiaDto';
 import { AuthService } from '../../Core/Service/Implements/AuthService';
 import { NoticiaServiceImpl } from '../../Core/Service/Implements/NoticiaServiceImpl';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-noticias-grid',
@@ -11,7 +12,7 @@ import { NoticiaServiceImpl } from '../../Core/Service/Implements/NoticiaService
   imports: [
     // Lista de componentes, directivas y pipes que este componente utiliza
     // Por ejemplo:
-    // CommonModule,
+    CommonModule,
     // OtroComponente,
     // OtraDirectiva,
     // OtroPipe
@@ -59,9 +60,12 @@ export class NoticiasGridComponent implements OnInit {
 
   ordenarNoticiasPorFecha(): void {
     this.noticias.sort(
-      (a, b) =>
-        new Date(b.fechaInsercion).getTime() - new Date(a.fechaInsercion).getTime()
-    );
+      (a, b) =>{
+        const fechaA = a.fechaInsercion ? new Date(a.fechaInsercion).getTime() : 0;
+    const fechaB = b.fechaInsercion ? new Date(b.fechaInsercion).getTime() : 0;
+    
+    return fechaB - fechaA;
+  });
   }
 
   calcularPaginacion(): void {
@@ -84,10 +88,10 @@ export class NoticiasGridComponent implements OnInit {
       if (imagen.urlImagen) {
         return imagen.urlImagen;
       } else if (imagen.name) {
-        return `assets/imagen/noticias/${imagen.name}`;
+        return `imagen/noticias/${imagen.name}`;
       }
     }
-    return 'assets/imagen/noticias/default.jpg';
+    return 'imagen/noticias/default.jpg';
   }
 
   handleImageError(noticia: any) {
@@ -100,5 +104,8 @@ export class NoticiasGridComponent implements OnInit {
         imagen.urlImagen = null;
       }
     }
+  }
+  trackQuestion(index: number, question: any) {
+    return question.id; // Retorna un identificador único para cada pregunta
   }
 }

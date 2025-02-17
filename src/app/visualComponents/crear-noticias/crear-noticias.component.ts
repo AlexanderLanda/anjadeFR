@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, ReactiveFormsModule]
 })
 export class CrearNoticiasComponent implements OnInit {
-  noticiaForm: FormGroup | undefined;
+  noticiaForm: FormGroup;
   archivos: File[] = []; // Almacena los archivos seleccionados
   cargando = false; // Indicador de carga
   mensajeExito = ''; // Mensaje de éxito
@@ -25,6 +25,9 @@ export class CrearNoticiasComponent implements OnInit {
       tipo: ['', Validators.required],
       imagenesLinks: ['']
     });
+  }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
 
   onSubmit() {

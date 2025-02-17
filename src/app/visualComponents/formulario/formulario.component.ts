@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './formulario.component.html',
   styleUrls: ['./formulario.component.css'],
   standalone: true,
-  imports: []
+  imports: [CommonModule,FormsModule,ReactiveFormsModule]
 })
 export  class FormularioComponent implements OnInit{
 

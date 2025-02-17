@@ -7,10 +7,10 @@
     <div class="collapse navbar-collapse justify-content-center" [ngbCollapse]="isNavbarCollapsed">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/home" (click)="collapseNavbar()">Inicio</a>
+          <a class="nav-link" [routerLink]="['/home']" (click)="collapseNavbar()">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/registro" (click)="collapseNavbar()">Afiliación</a>
+          <a class="nav-link" [routerLink]="['/registro']" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="collapseNavbar()">Afiliación</a>
         </li>
         <li class="nav-item dropdown" ngbDropdown>
           <a class="nav-link dropdown-toggle" ngbDropdownToggle id="navbarDropdownInfo">

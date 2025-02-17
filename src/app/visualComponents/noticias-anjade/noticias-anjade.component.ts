@@ -7,6 +7,8 @@ import { AuthService } from '../../Core/Service/Implements/AuthService';
 import { ComentariosModalComponent } from '../comentarios-modal/comentarios-modal.component';
 import { Noticia } from '../../Core/Model/NoticiaDto';
 import { Comentario } from '../../Core/Model/ComentarioDto';
+import { FormsModule } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-noticias-anjade',
@@ -15,7 +17,7 @@ import { Comentario } from '../../Core/Model/ComentarioDto';
   standalone: true,
   imports: [
     CommonModule,
-    ComentariosModalComponent,
+    FormsModule ,
     // Otras importaciones necesarias
   ],
 })
@@ -38,6 +40,8 @@ export class NoticiasAnjadeComponent {
   comentarioTexto = '';
   idAfiliacion = '';
   isUserLoggedIn = false;
+  private modalService = inject(NgbModal);
+
 
   constructor() {
     this.route.data.subscribe((data) => {
@@ -84,10 +88,10 @@ export class NoticiasAnjadeComponent {
       if (imagen.urlImagen) {
         return imagen.urlImagen;
       } else if (imagen.name) {
-        return `assets/imagen/noticias/${imagen.name}`;
+        return `imagen/noticias/${imagen.name}`;
       }
     }
-    return 'assets/imagen/noticias/' + noticia.imagenes[0].name + '.jpg';
+    return 'imagen/noticias/' + noticia.imagenes[0].name + '.jpg';
   }
 
   handleImageError(noticia: any) {
@@ -103,11 +107,26 @@ export class NoticiasAnjadeComponent {
   }
 
   mostrarComentarios(noticia: Noticia): void {
+    if (!noticia.id) {
+      console.error('La noticia no tiene un ID válido.');
+      return;
+    }
     this.noticiaService.obtenerComentarios(noticia.id).subscribe((comentarios) => {
       if (comentarios.length > 0) {
+        const modalRef = this.modalService.open(ComentariosModalComponent, {
+          size: 'lg' // Aquí puedes especificar el tamaño u otras opciones de configuración.
+        });
+        
+        // Luego, pasas los datos al modalRef
+        modalRef.componentInstance.data = {
+          comentarios: comentarios,
+          noticiaId: noticia.id
+        };
+        
+/*
         this.dialog.open(ComentariosModalComponent, {
           data: { comentarios: comentarios, noticiaId: noticia.id },
-        });
+        });*/
       } else {
         alert('No hay comentarios para esta publicación.');
       }
@@ -138,6 +157,10 @@ export class NoticiasAnjadeComponent {
     };
 
     console.log('NOTICIA ID: ' + noticia.id);
+    if (!noticia.id) {
+      console.error('La noticia no tiene un ID válido.');
+      return;
+    }
     this.noticiaService.agregarComentario(noticia.id, comentario).subscribe(
       (response) => {
         noticia.mostrarFormulario = !noticia.mostrarFormulario;

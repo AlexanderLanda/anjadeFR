@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -29,6 +29,7 @@ import { CATEGORIAS } from '../../constants/afiliadoscategoria';
 import { DEPORTES } from '../../constants/deportes';
 import { FUNCIONES } from '../../constants/afiliadosFunciones';
 import { SendEmailServiceImpl } from '../../Core/Service/Implements/SendEmailServiceImpl';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-registro',
@@ -56,8 +57,7 @@ import { SendEmailServiceImpl } from '../../Core/Service/Implements/SendEmailSer
     Router,
   ],
   imports: [
-    // Importa aquí los módulos necesarios, como FormsModule, ReactiveFormsModule, etc.
-  ],
+CommonModule,ReactiveFormsModule    ],
 })
 export class RegistroComponent {
   emailExists = false;

@@ -1,10 +1,24 @@
+/* Alinea la fecha del comentario a la derecha */
 .fechaComentario {
-    display: block;   /* Hace que el elemento <span> se comporte como un bloque */
-    text-align: right;  /* Alinea el texto a la izquierda */
-    margin-left: 0;   /* Asegura que no haya márgenes que desalineen el texto */
-}
-.button-container {
-    display: flex;                /* Usa flexbox para distribuir los botones */
-    justify-content: space-between;  /* Distribuye los botones a los extremos */
-    width: 100%;                  /* Asegura que el contenedor ocupe todo el ancho */
+    display: block;
+    text-align: right;
+    margin-left: 0;
   }
+  
+  /* Contenedor de botones para que se distribuyan correctamente */
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .mat-dialog-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .modal-body {
+    max-height: 60vh; /* 60% de la altura de la pantalla */
+    overflow-y: auto; /* Habilita el scroll vertical solo en el área de los comentarios */
+  }
+  

@@ -8,7 +8,7 @@ import { HomeComponentComponent } from "./visualComponents/home-component/home-c
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MenuNavBarComponent, AyudaChatComponent, FooterComponent, HomeComponentComponent],
+  imports: [RouterOutlet, MenuNavBarComponent, AyudaChatComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

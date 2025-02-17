@@ -28,11 +28,16 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../../Core/Service/Implements/DataService';
 import { ConstantPool } from '@angular/compiler';
 import { CuestionarioServiceImpl } from '../../Core/Service/Implements/CuestionarioServiceImpl';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-modal-editar',
   templateUrl: './modal-editar.component.html',
-  styleUrls: ['./modal-editar.component.css']
+  styleUrls: ['./modal-editar.component.css'],
+  standalone:true,
+  imports:[CommonModule,FormsModule,ReactiveFormsModule 
+    
+  ]
 })
 export class ModalEditarComponent {
 

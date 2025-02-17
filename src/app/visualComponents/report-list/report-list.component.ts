@@ -1,15 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ReportDto } from '../../Core/Model/ReportDto';
 import { ReportServiceImpl } from '../../Core/Service/Implements/ReportServiceImpl';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-report-list',
   templateUrl: './report-list.component.html',
-  styleUrls: ['./report-list.component.css']
+  styleUrls: ['./report-list.component.css'],
+  standalone: true, 
+  imports:[CommonModule ,MatPaginatorModule,MatTableModule        ]
 })
 export class ReportListComponent implements OnInit {
   reports: any[] = [];

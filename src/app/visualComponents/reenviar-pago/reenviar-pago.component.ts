@@ -2,11 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PaymentService } from '../../Core/Service/PaymentService';
+import { SafeHtmlPipe } from '../safe-html.pipe';
 
 @Component({
   selector: 'app-reenviar-pago',
   templateUrl: './reenviar-pago.component.html',
-  styleUrls: ['./reenviar-pago.component.css']
+  styleUrls: ['./reenviar-pago.component.css'],
+  standalone:true,
+  imports:[SafeHtmlPipe]
 })
 export class ReenviarPagoComponent implements OnInit {
 

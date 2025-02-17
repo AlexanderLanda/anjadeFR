@@ -44,7 +44,9 @@ import { MatInputModule } from '@angular/material/input';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatInputModule
+    MatInputModule,
+    CommonModule,
+    FormsModule
   ]
 })
 export class UsuariosTablaComponent implements AfterViewInit {
@@ -55,7 +57,7 @@ export class UsuariosTablaComponent implements AfterViewInit {
   listadoUsuarios: UsuariosDto[] | undefined;
   listadoUsuariosFiltrados: UsuariosDto[] | undefined;
   dataSource: MatTableDataSource<UsuariosDto>;
-  userlogin: UsuariosDto | undefined ;
+  userlogin: UsuariosDto | undefined | null;
   selectedFuncion: number | undefined;
   afiliadosFunciones: AfiliadosFuncionDto[] | undefined;
   readonly PENDIENTE_DE_PAGO_ID = 3
@@ -239,7 +241,8 @@ export class UsuariosTablaComponent implements AfterViewInit {
       return d.toISOString().split('T')[0]; // Retorna solo la parte de la fecha
     };
 
-    const data = this.listadoUsuarios
+    type RowData = Record<string, string | undefined>; // Permite claves dinámicas
+    const data: RowData[] = this.listadoUsuarios
       .filter(user => user.usuariorol?.descripcion !== 'administrador')
       .map(user => ({
         Nombre: user.nombre,
@@ -281,9 +284,9 @@ export class UsuariosTablaComponent implements AfterViewInit {
     }
 
     // Ajustar el ancho de las columnas
-    const columnsWidth = data.reduce((width, row) => {
+    const columnsWidth = data.reduce<number[]>((width, row) => {
       Object.keys(row).forEach((key, i) => {
-        const cellLength = row[key] ? row[key].toString().length : 10;
+        const cellLength = row[key] ? row[key]!.toString().length : 10;
         width[i] = Math.max(width[i] || 0, cellLength);
       });
       return width;
@@ -318,10 +321,14 @@ export class UsuariosTablaComponent implements AfterViewInit {
     return this.dataSource.filteredData.filter(row => row.selected);
   }
 
-  toggleSelectAll(isChecked: boolean): void {
-    const filteredData = this.dataSource.filteredData;
-    filteredData.forEach((user) => (user.selected = isChecked));
+  toggleSelectAll(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input) {
+      const isChecked = input.checked;
+      this.dataSource.filteredData.forEach((user) => (user.selected = isChecked));
+    }
   }
+  
 
   allRowsSelected(): boolean {
     return this.dataSource.filteredData.every((user) => user.selected);

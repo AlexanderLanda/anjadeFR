@@ -4,4 +4,5 @@ export interface Comentario {
     idAfiliacion?: string;
     fechaComentario?: string;
     nombre?: String;
+    [key: string]: any; // Permite cualquier propiedad de tipo string
   }

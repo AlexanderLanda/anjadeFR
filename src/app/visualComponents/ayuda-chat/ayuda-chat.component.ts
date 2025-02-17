@@ -29,7 +29,6 @@ export class AyudaChatComponent implements OnInit {
     // Suscribirse a los eventos del router
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        console.log(event.urlAfterRedirects)
         this.actualizarModuloActual(event.urlAfterRedirects);
       }
     });
@@ -60,7 +59,6 @@ export class AyudaChatComponent implements OnInit {
     this.ayudaService.getAyudasByModulo(modulo).subscribe(
       (data: Ayuda[]) => {
         this.ayudas = data;
-        console.log('cargar las ayudas:', data);
       },
       (error: any) => {
         console.error('Error al cargar las ayudas:', error);
@@ -68,5 +66,7 @@ export class AyudaChatComponent implements OnInit {
       }
     );
   }
-
+  trackQuestion(index: number, question: any) {
+    return question.id; // Retorna un identificador único para cada pregunta
+  }
 }

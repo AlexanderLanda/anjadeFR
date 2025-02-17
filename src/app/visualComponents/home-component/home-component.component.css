@@ -2,11 +2,16 @@
   
  .img-container {
   margin-top: 100px;
-  width: 100%; /* Ajusta el valor según sea necesario para dejar espacio entre el navbar y el formulario */
+  width: auto; /* Ajusta el valor según sea necesario para dejar espacio entre el navbar y el formulario */
 }
 
-.img-principal{
+
+.row img{
   width: 100%;
+  height: 100%;
+  object-fit: cover; /* La imagen cubre todo el contenedor sin distorsionarse */
+  object-position: center; /* Centra la imagen dentro del contenedor */
+  border-radius: 18px;
 }
 
 

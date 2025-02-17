@@ -4,6 +4,7 @@ import { JuntaDirectivaComponent } from "../junta-directiva/junta-directiva.comp
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChristmasModalContentComponent } from '../christmas-modal-content.component';
 import { AyudaChatComponent } from '../ayuda-chat/ayuda-chat.component';
+import { RegistroComponent } from '../registro/registro.component';
 
 @Component({
   selector: 'app-home-component',

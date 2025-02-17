@@ -10,6 +10,6 @@ export class ReglamentosFileServiceImpl {
   constructor(private http: HttpClient) {}
 
   getFileList(): Observable<any> {
-    return this.http.get('assets/documentos/reglamentos-fileList.json');
+    return this.http.get('documentos/reglamentos-fileList.json');
   }
 }

@@ -26,7 +26,8 @@ export class ReglamentosFileGalleryComponent implements OnInit {
 
   constructor() {
     // Configuración de pdfjs para usar el trabajador global
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.min.js';
+   // pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+   pdfjsLib.GlobalWorkerOptions.workerSrc = `/assets/pdf.worker.mjs`;
   }
 
   ngOnInit() {
@@ -84,7 +85,7 @@ export class ReglamentosFileGalleryComponent implements OnInit {
       await page.render({ canvasContext: context!, viewport: viewport }).promise;
       return canvas.toDataURL();
     }
-    return 'assets/icons/file-icon.png';
+    return 'icons/file-icon.png';
   }
 
   // Filtrar archivos según el término de búsqueda
@@ -127,7 +128,7 @@ export class ReglamentosFileGalleryComponent implements OnInit {
   // Desplazar hacia la parte superior de la galería
   scrollToTop() {
     setTimeout(() => {
-      this.topOfGallery.nativeElement.scrollIntoView({ behavior: 'smooth' });
+      this.topOfGallery?.nativeElement.scrollIntoView({ behavior: 'smooth' });
     }, 0);
   }
 

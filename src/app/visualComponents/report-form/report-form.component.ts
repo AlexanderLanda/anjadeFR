@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { inject } from '@angular/core';
 import { ReportServiceImpl } from '../../Core/Service/Implements/ReportServiceImpl';
 import { DeporteServiceImpl } from '../../Core/Service/Implements/DeporteServiceImpl';
@@ -8,12 +8,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ProvinciaDto } from '../../Core/Model/ProvinciaDto';
 import { DeportesDto } from '../../Core/Model/DeportesDto';
 import { ReportDto } from '../../Core/Model/ReportDto';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-report-form',
   templateUrl: './report-form.component.html',
   styleUrls: ['./report-form.component.css'],
-  standalone: true
+  standalone: true,
+  imports:[CommonModule,FormsModule,ReactiveFormsModule]
 })
 export class ReportFormComponent implements OnInit {
   reportForm: FormGroup;
@@ -50,14 +52,14 @@ export class ReportFormComponent implements OnInit {
   }
 
   customValidator(group: FormGroup) {
-    const afiliacionId = group.get('afiliacionId').value;
-    const nombre = group.get('nombre').value;
-    const email = group.get('email').value;
-    const telefono = group.get('telefono').value;
-    const provincia = group.get('provincia').value;
-    const deporte = group.get('deporte').value;
+    const afiliacionId = group.get('afiliacionId')?.value;
+    const nombre = group.get('nombre')?.value;
+    const email = group.get('email')?.value;
+    const telefono = group.get('telefono')?.value;
+    const provincia = group.get('provincia')?.value;
+    const deporte = group.get('deporte')?.value;
 
-    let errors = {};
+    const errors: { [key: string]: any } = {};  // Puedes usar 'any' si no conoces las claves con anticipación
 
     if (!(afiliacionId || (nombre && email) || (nombre && telefono))) {
       errors['invalidIdentification'] = true;
@@ -120,12 +122,12 @@ export class ReportFormComponent implements OnInit {
       });
     } else {
       const errors = this.reportForm.errors;
-      if (errors['invalidIdentification']) {
+      if (errors &&errors['invalidIdentification']) {
         this.cargando = false; 
         console.error('Por favor, complete el ID de Afiliación, o el Nombre junto con el Email o Teléfono.');
         alert('Por favor, complete el ID de Afiliación, o el Nombre junto con el Email o Teléfono.');
       }
-      if (errors['invalidSelection']) {
+      if (errors && errors['invalidSelection']) {
         this.cargando = false; 
         console.error('Por favor, seleccione una provincia y un deporte.');
         alert('Es obligatorio seleccionar una provincia y un deporte para crear el reporte.');

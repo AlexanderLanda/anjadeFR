@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UsuariosServiceImpl } from '../../Core/Service/Implements/UsuariosServiceImpl';
 import { UsuariosDto } from '../../Core/Model/UsuariosDto';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { UserCuestionarioServiceImpl } from '../../Core/Service/Implements/UserCuestionarioServiceImpl';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
-  styleUrls: ['./user-details.component.css']
+  styleUrls: ['./user-details.component.css'],
+  standalone:true,
+  imports:[CommonModule ]
 })
 export class UserDetailsComponent implements OnInit {
   user: UsuariosDto | null = null;
@@ -50,7 +52,7 @@ export class UserDetailsComponent implements OnInit {
 
   verCuestionario() {
     if (this.hasCuestionario) {
-      this.router.navigate(['/user-cuestionario', this.user.id_user]);
+      this.router.navigate(['/user-cuestionario', this.user?.id_user]);
     }
   }
 }

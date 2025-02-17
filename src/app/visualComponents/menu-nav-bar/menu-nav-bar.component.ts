@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy, Inject, inject } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../Core/Service/Implements/AuthService';
 import { Subscription } from 'rxjs';
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { RegistroComponent } from '../registro/registro.component';
 
 
 
@@ -11,7 +12,9 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './menu-nav-bar.component.html',
   styleUrls: ['./menu-nav-bar.component.css'],
   standalone: true,
-  imports: [NgbCollapseModule]
+  imports: [NgbCollapseModule,NgbDropdownModule,
+    NgbCollapseModule, RouterLink, RouterLinkActive,RouterModule
+]
 })
 export class MenuNavBarComponent implements OnInit, OnDestroy {
 
@@ -67,7 +70,7 @@ export class MenuNavBarComponent implements OnInit, OnDestroy {
   }
 
   downloadEstatutos() {
-    const url = '/assets/documentos/estatutos.docx';
+    const url = 'documentos/estatutos.docx';
     window.location.href = url;
     console.log('Descarga realizada con éxito');
   }
