@@ -70,7 +70,6 @@ export class ReportListComponent implements OnInit {
       this.dataSource.data = this.listadoReportes;
       this.dataSource.paginator = this.paginator; // Asegúrate de actualizar el paginador después de cargar los datos
       this.dataSource.sort = this.sort; // Asegúrate de actualizar el ordenamiento después de cargar los datos
-      console.log(this.listadoReportes);
     });
   }
 }

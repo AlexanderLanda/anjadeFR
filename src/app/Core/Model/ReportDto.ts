@@ -12,5 +12,9 @@ export interface ReportDto {
     email: string;
     provincia: ProvinciaDto;
     deporte: DeportesDto;
+    createDate: Date;
+    referenciaReporte: string;
+
+
   }
   

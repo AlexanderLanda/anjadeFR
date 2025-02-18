@@ -26,7 +26,7 @@ export class ReportDetailsComponent implements OnInit {
   private route = inject(ActivatedRoute);
 
   constructor() {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.min.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = './assets/pdf.worker.min.js';
   }
 
   ngOnInit() {

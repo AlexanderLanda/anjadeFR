@@ -13,18 +13,20 @@
               <i class="fas fa-edit"></i> Editar
             </button>
           </div>
-          <dl class="row">
-            <dt class="col-sm-1">ID:</dt>
-            <dd class="col-sm-1">{{ report.id }}</dd>
-            <dt class="col-sm-2">Afiliación ID:</dt>
-            <dd class="col-sm-2">{{ report.afiliacionId }}</dd>
-            <dt class="col-sm-2">Nombre:</dt>
-            <dd class="col-sm-3">{{ report.nombre }} {{ report.apellidos }}</dd>
-            <dt class="col-sm-2">Teléfono:</dt>
-            <dd class="col-sm-2">{{ report.telefono }}</dd>
-            <dt class="col-sm-1">Email:</dt>
-            <dd class="col-sm-4">{{ report.email }}</dd>
+          <div class="row">
+            <dt class="col-3">ID: <h5>{{ report.referenciaReporte }}</h5></dt>
+            <dt class="col-3">Afiliación ID:<h5>{{ report.afiliacionId }}</h5></dt>
+            <dt class="col-3">Nombre:<h5>{{ report.nombre }} {{ report.apellidos }}</h5></dt>
+            <dt class="col-3">Teléfono:<h5>{{ report.telefono }}</h5></dt>
+           
+          </div>
+          <dt class="col-12">Email:<h5>{{ report.email }}</h5></dt>
+          
+          <dl class="row card filtro-card ">
+            <dt class="col-sm text-center justify-content-center">Descripción:</dt>
+            <dd class="col-sm-9">{{ report.descripcion }}</dd>
           </dl>
+          
           <h3>Archivos Adjuntos</h3>
           <div class="file-gallery">
             @if (isLoading) {
@@ -63,10 +65,7 @@
               </div>
             }
           </div>
-          <dl class="row">
-            <dt class="col-sm-2">Descripción:</dt>
-            <dd class="col-sm-9">{{ report.descripcion }}</dd>
-          </dl>
+          
         </div>
       }
     </div>

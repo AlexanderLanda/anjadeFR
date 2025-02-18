@@ -16,7 +16,7 @@ export class ReglamentosFileGalleryComponent implements OnInit {
   paginatedFiles: any[] = [];
   searchTerm: string = '';
   currentPage: number = 1;
-  pageSize: number = 8;
+  pageSize: number = 10;
   totalPages: number = 0;
   isLoading: boolean = true;
   loadingProgress: number = 0;
@@ -27,7 +27,7 @@ export class ReglamentosFileGalleryComponent implements OnInit {
   constructor() {
     // Configuración de pdfjs para usar el trabajador global
    // pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
-   pdfjsLib.GlobalWorkerOptions.workerSrc = `/assets/pdf.worker.mjs`;
+   pdfjsLib.GlobalWorkerOptions.workerSrc = `./assets/pdf.worker.min.js`;
   }
 
   ngOnInit() {
