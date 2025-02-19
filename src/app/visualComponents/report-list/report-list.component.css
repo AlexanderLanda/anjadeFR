@@ -1,66 +1,74 @@
-/* Custom styles for the table container */
-.tabla-container {
-    margin-top: 20px;
+/* Custom styles for estadoCuenta */
+.bg-danger {
+  background-color: #dc3545 !important;
+}
+
+.bg-warning {
+  background-color: #ffc107 !important;
+}
+
+/* Custom styles for leyenda items */
+.leyenda {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leyenda-item {
+  display: flex;
+  align-items: center;
+}
+
+.cuadrado {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.cuadrado.rojo {
+  background-color: #dc3545;
+}
+
+.cuadrado.amarillo {
+  background-color: #ffc107;
+}
+
+#texto-pendiente {
+  margin-right: 15px;
+}
+.filtro-card {
+  margin-top: 20px; /* Ajusta el valor según sea necesario para dejar espacio entre el navbar y el formulario */
+}
+/* Estilo para mantener "Pendiente de pago" y "Pendiente de revisión" en la misma fila */
+.leyendas-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Espaciado entre las etiquetas */
+}
+
+.leyendas-container .me-2 {
+  flex: 1; /* Ajuste automático del ancho */
+  text-align: center; /* Centra el texto dentro del contenedor */
+}
+
+/* Estilo para los botones */
+.botones-container .btn {
+  width: 100%; /* Ocupan todo el ancho */
+  margin-bottom: 10px; /* Espaciado entre botones */
+}
+
+@media (max-width: 768px) {
+  .leyendas-container {
+    flex-wrap: nowrap; /* Fuerza las etiquetas en una sola fila */
+  }
+  .d-flex {
+    flex-direction: column; /* Apilar botones verticalmente en móviles */
+    gap: 10px; /* Espaciado entre botones */
+    
   }
   
-  .filtro-card {
-    margin-top: 20px;
+  .d-flex .btn {
+    width: 100%; /* Ocupan el ancho completo */
+    margin-bottom: 10px;
   }
-  
-  /* Custom styles for the table */
-  .table-responsive {
-    overflow-x: auto;
-  }
-  
-  .table {
-    width: 100%;
-    margin-bottom: 1rem;
-    color: #212529;
-  }
-  
-  .table th,
-  .table td {
-    padding: 0.75rem;
-    vertical-align: top;
-    border-top: 1px solid #dee2e6;
-  }
-  
-  .table thead th {
-    vertical-align: bottom;
-    border-bottom: 2px solid #dee2e6;
-  }
-  
-  .table tbody + tbody {
-    border-top: 2px solid #dee2e6;
-  }
-  
-  /* Custom styles for buttons */
-  .btn-outline-primary {
-    color: #007bff;
-    border-color: #007bff;
-  }
-  
-  .btn-outline-primary:hover {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
-  }
-  
-  /* Custom styles for icons */
-  .bi {
-    vertical-align: -.125em;
-    fill: currentColor;
-  }
-  
-  /* Custom styles for the download button */
-  .btn-primary {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
-  }
-  
-  .btn-primary:hover {
-    color: #fff;
-    background-color: #0056b3;
-    border-color: #0056b3;
-  }
+}

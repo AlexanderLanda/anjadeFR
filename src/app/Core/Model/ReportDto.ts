@@ -16,6 +16,8 @@ export interface ReportDto {
     createDate: Date;
     referenciaReporte: string;
     isEditing?:any;
+    selected?: boolean; // Propiedad para el checkbox
+
 
 
   }

@@ -1,58 +1,75 @@
-<div class="container mt-4 pt-5 tabla-container">
-  <h5 class="card-title filtro-card text-end">Listado de Reportes</h5>
-  <div class="card filtro-card">
-    <div class="card-body">
-      <div class="mb-3">
-        <label for="filtro" class="form-label">Filtro</label>
-        <input type="text" class="form-control" id="filtro" (keyup)="filtrar($event)"
-          placeholder="Teclee el valor de la columna por la que desee filtrar" required />
-          <div class="invalid-feedback">Se requiere un valor para filtrar</div>
+
+
+  <div class="container-fluid mt-4 pt-5">
+    <div class="row">
+      <h5 class="card-title filtro-card text-end">Listado de Reportes</h5>
+    </div>
+    
+    <div class="row">
+      <!-- Columna de botones (col-3) -->
+      <div class="col-md-3 pe-0 order-1 order-md-0">
+        <div class="card p-3 mb-3">
+          <h5 class="text-center">Filtro</h5>
+          <input type="text" class="form-control" id="filtro" (keyup)="filtrar($event)"
+            placeholder="Teclee el valor de la columna por la que desee filtrar" required />
+        </div>
+        <div class="card p-3 mb-3">
+          <button class="btn btn-primary w-100 mb-2">
+            <i class="fas fa-envelope me-2"></i> Comunicación Email
+          </button>
+          <button class="btn btn-success w-100 mb-2" (click)="generateAndDownloadReport()">
+            <i class="fas fa-file-excel me-2"></i> Descargar 
+          </button>
+          
+        </div>
+      </div>
+  
+      <!-- Columna de la tabla (col-9) -->
+      <div class="col-md-9 order-0 order-md-1">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col"><input type="checkbox" (change)="toggleSelectAll($event)" [checked]="allRowsSelected()" /></th>
+                    <th scope="col">Afiliación ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Detalles</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (report of getPaginatedData(); track report) {
+                    <tr>
+                      <td><input type="checkbox" [(ngModel)]="report.selected" /></td>
+
+                      <td>{{ report.referenciaReporte }}</td>
+                      <td>{{ report.afiliacionId }}</td>
+                      <td>{{ report.nombre }}</td>
+                      <td>{{ report.apellidos }}</td>
+                      <td>{{ report.email }}</td>
+                      <td>{{ report.telefono }}</td>
+                      <td>{{ report.descripcion | slice:0:50 }}...</td>
+                      <td>
+                        <button class="btn btn-outline-primary btn-sm" (click)="viewDetails(report.id)">
+                          <i class="fas fa-eye"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            <nav aria-label="Page navigation example">
+              <mat-paginator [length]="dataSource.filteredData.length" [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+            </nav>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="card mt-3">
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Afiliación ID</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellidos</th>
-                <th scope="col">Email</th>
-                <th scope="col">Teléfono</th>
-                <th scope="col">Descripción</th>
-                <th scope="col">Detalles</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (report of getPaginatedData(); track report) {
-                <tr>
-                  <td>{{ report.referenciaReporte }}</td>
-                  <td>{{ report.afiliacionId }}</td>
-                  <td>{{ report.nombre }}</td>
-                  <td>{{ report.apellidos }}</td>
-                  <td>{{ report.email }}</td>
-                  <td>{{ report.telefono }}</td>
-                  <td>{{ report.descripcion | slice:0:50 }}...</td>
-                  <td>
-                    <button class="btn btn-outline-primary btn-sm" (click)="viewDetails(report.id)">
-                      <i class="fas fa-eye"></i>
-                    </button>
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-        <nav aria-label="Page navigation example">
-          <mat-paginator [length]="dataSource.filteredData.length" [pageSize]="10"
-          [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-        </nav>
-      </div>
-    </div>
-
-
   </div>
