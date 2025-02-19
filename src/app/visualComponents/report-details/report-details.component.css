@@ -5,7 +5,21 @@
   .filtro-card {
     margin-top: 20px;
   }
+  .card-header {
+    display: grid; /* Usa CSS Grid */
+    place-items: center; /* Centra el contenido tanto horizontal como verticalmente */
+    width: 100%;
+    background-color: #343a40;
+    color: white;
+  }
   
+  .card-header-sub {
+    display: grid; /* Usa CSS Grid */
+    place-items: center; /* Centra el contenido tanto horizontal como verticalmente */
+    width: 100%;
+    background-color: #64686c;
+    color: white;
+  }
   .card-body {
     position: relative;
   }
@@ -136,4 +150,7 @@
   
   .arrow {
     font-size: 12px;
+  }
+  body.modal-open {
+    overflow: hidden;
   }

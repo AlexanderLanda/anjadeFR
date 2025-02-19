@@ -47,4 +47,10 @@ export class ReportServiceImpl {
   getAttachments(reportId: number): Observable<any[]> {
     return this.http.get<any[]>(`${environment.apiUrl}api/v1/attachments/report/${reportId}`);
   }
+
+  updateReport(formData: FormData): Observable<ReportDto> {
+    return this.http.put<ReportDto>(`${this.apiUrl}/update`, formData);
+  }
+  
+
 }

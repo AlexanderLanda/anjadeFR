@@ -42,7 +42,12 @@
               <label for="imagenesLinks" class="form-label">Links de Imágenes (separados por comas)</label>
               <textarea id="imagenesLinks" formControlName="imagenesLinks" class="form-control" rows="3"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary" [disabled]="!noticiaForm.valid">Crear Noticia</button>
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary" [disabled]="!noticiaForm.valid">
+                Crear Noticia
+              </button>
+            </div>
+            
           </form>
         </div>
       </div>

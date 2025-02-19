@@ -21,4 +21,13 @@
     max-height: 60vh; /* 60% de la altura de la pantalla */
     overflow-y: auto; /* Habilita el scroll vertical solo en el área de los comentarios */
   }
-  
+  .modal-header {
+    display: grid; /* Usa CSS Grid */
+    place-items: center; /* Centra el contenido tanto horizontal como verticalmente */
+    width: 100%;
+    background-color: #1d1d1d;
+    color: white;
+  }
+  .btn-close{
+    background-color: rgb(129, 131, 132);
+  }

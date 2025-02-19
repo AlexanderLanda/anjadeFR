@@ -1,0 +1,81 @@
+<div class="modal fade show d-block" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header card-header">
+        <h2 class="modal-title  flex-grow-1 text-center">Editar reporte</h2>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="reportForm">
+          <div class="mb-3">
+            <div class="row card filtro-card ">
+              <dt class="card-header text-center justify-content-center">Descripción</dt>
+              <textarea class="form-control" formControlName="descripcion" rows="13"></textarea>
+            </div>
+          </div>
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item ">
+              <h2 class="accordion-header-sub ">
+                <button class="accordion-button card-header" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                  aria-expanded="true" aria-controls="collapseOne">
+                  Archivos adjuntos
+                </button>
+              </h2>
+
+              <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <div class="card-body">
+                    <div class="file-gallery">
+                      <div *ngIf="isLoading" class="loading-overlay">
+                        <div class="loading-content">
+                          <p>Cargando archivos...</p>
+                          <div class="progress-bar">
+                            <div class="progress" [style.width.%]="loadingProgress"></div>
+                          </div>
+                          <p>{{ loadingProgress }}%</p>
+                        </div>
+                      </div>
+                      <div class="file-grid">
+                        <div *ngFor="let file of paginatedFiles; let i = index" class="file-preview">
+                          <div class="file-item">
+                            <img [src]="file.thumbnail" [alt]="file.fileName" (click)="openFile(file)">
+                            <p>{{ file.fileName }}</p>
+                            <div class="file-actions">
+                              <button class="btn btn-danger btn-sm" (click)="removeAttachment(i)">Eliminar</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngIf="totalPages > 1" class="pagination-container">
+                        <div class="pagination">
+                          <button (click)="prevPage()" [disabled]="currentPage === 1" class="pagination-button">
+                            <span class="arrow">&#9664;</span> Anterior
+                          </button>
+                          <span class="page-info">Página {{ currentPage }} de {{ totalPages }}</span>
+                          <button (click)="nextPage()" [disabled]="currentPage === totalPages"
+                            class="pagination-button">
+                            Siguiente <span class="arrow">&#9654;</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <div class="row card filtro-card">
+                        <dt class="card-header text-center justify-content-center">Añadir archivos</dt>
+                        <input type="file" class="form-control" (change)="onFileSelected($event)" multiple>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="reportUpdated.emit(undefined)">Cancelar</button>
+        <button class="btn btn-primary" (click)="saveChanges()" [disabled]="reportForm.invalid">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>

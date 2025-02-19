@@ -3,6 +3,7 @@ import { ProvinciaDto } from "./ProvinciaDto";
 
 // report.model.ts
 export interface ReportDto {
+    id?: number;
     afiliacionId: string;
     nombre: string;
     apellidos: string;
@@ -14,6 +15,7 @@ export interface ReportDto {
     deporte: DeportesDto;
     createDate: Date;
     referenciaReporte: string;
+    isEditing?:any;
 
 
   }

@@ -1,3 +1,11 @@
 .formulario-container {
     margin-top: 80px; /* Ajusta el valor según sea necesario para dejar espacio entre el navbar y el formulario */
   }
+
+  .card-header {
+    display: grid; /* Usa CSS Grid */
+    place-items: center; /* Centra el contenido tanto horizontal como verticalmente */
+    width: 100%;
+    background-color: #1d1d1d;
+    color: white;
+  }

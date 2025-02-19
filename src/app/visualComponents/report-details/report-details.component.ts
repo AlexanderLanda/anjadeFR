@@ -2,14 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReportServiceImpl } from '../../Core/Service/Implements/ReportServiceImpl';
 import * as pdfjsLib from 'pdfjs-dist';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { inject } from '@angular/core';
+import { ReportEditComponent } from '../report-edit/report-edit.component';
+import { ReportDto } from '../../Core/Model/ReportDto';
 
 @Component({
   selector: 'app-report-details',
   templateUrl: './report-details.component.html',
   styleUrls: ['./report-details.component.css'],
-  standalone: true
+  standalone: true,
+  imports:[ReportEditComponent,CommonModule]
 })
 export class ReportDetailsComponent implements OnInit {
   report: any;
@@ -18,8 +21,12 @@ export class ReportDetailsComponent implements OnInit {
   isLoading: boolean = true;
   loadingProgress: number = 0;
   currentPage: number = 1;
-  pageSize: number = 4;
+  pageSize: number = 3;
   totalPages: number = 0;
+  isEditing = false;
+
+
+
 
   private reportService = inject(ReportServiceImpl);
   private location = inject(Location);
@@ -92,9 +99,13 @@ export class ReportDetailsComponent implements OnInit {
       return canvas.toDataURL();
     } else if (file.fileType === 'application/msword' || 
                file.fileType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-      return 'assets/iconos/word-icon.png';
+      return '/iconos/word-icon.png';
     }
-    return 'assets/icons/file-icon.png';
+    else if (file.fileType === 'application/vnd.ms-excel' || 
+             file.fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+      return '/iconos/excel-icon.png';
+    }
+    return '/icons/file-icon.png';
   }
 
   updatePaginatedFiles() {
@@ -144,6 +155,13 @@ export class ReportDetailsComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+  handleReportUpdated(updatedReport: ReportDto | null) {
+    if (updatedReport) {
+      this.report = updatedReport;
+      location.reload(); // Recarga la página completamente
+    }
+    this.isEditing = false;
   }
 
   editar(): void {}
