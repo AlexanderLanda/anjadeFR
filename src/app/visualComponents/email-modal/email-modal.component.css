@@ -1,0 +1,18 @@
+.modal-header {
+    display: grid; /* Usa CSS Grid */
+    place-items: center; /* Centra el contenido tanto horizontal como verticalmente */
+    width: 100%;
+    background-color: #1d1d1d;
+    color: white;
+  }
+  
+  .btn-close{
+    background-color: rgb(129, 131, 132);
+  }
+  .modal-footer {
+    display: flex;
+    justify-content: space-between; /* Un botón a la izquierda y otro a la derecha */
+    align-items: center;
+    background-color: #f8f9fa; /* Ajusta según el diseño */
+    padding: 15px;
+  }
