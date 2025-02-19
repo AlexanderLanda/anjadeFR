@@ -120,33 +120,27 @@ export class ReportListComponent implements OnInit {
     for (const report of selectedReport) {
       try {
         // Esperamos obtener el reporte con todos sus detalles y adjuntos
-        const detailedReport = await this.loadReportDetails(report.id);
+        const detailedReport: ReportDto | null = await this.loadReportDetails(report.id);
+
+        // Validar si el reporte es nulo
+        if (!detailedReport) {
+          console.error(`Error: No se pudo cargar el reporte con ID ${report.id}`);
+          continue; // Saltar al siguiente reporte
+        }
 
         const zip = new JSZip();
         const folderName = `${detailedReport?.referenciaReporte}`;
         const pdfFileName = `${detailedReport?.referenciaReporte}.pdf`;
 
         // Crear un nuevo documento PDF
-        const doc = new jsPDF();
-        doc.text(`Reporte: ${detailedReport?.referenciaReporte}`, 10, 10);
-
-        // Generar tabla con archivos adjuntos
         const attachments = detailedReport?.attachments || [];
-        const tableData = attachments.map((file, index) => [index + 1, file.name]);
+        const pdfBlob = this.generateReportPDF(detailedReport);
 
-        // Agregar la tabla al PDF con autoTable
-        (doc as any).autoTable({
-          head: [['#', 'Nombre del archivo']],
-          body: tableData,
-        });
-
-        // Convertir el PDF a Blob y agregarlo al ZIP
-        const pdfBlob = doc.output('blob');
         zip.file(`${folderName}/${pdfFileName}`, pdfBlob);
 
         // Descargar los archivos adjuntos y agregarlos al ZIP
         for (const [index, file] of attachments.entries()) {
-          const fileData = await this.downloadFile(file);  
+          const fileData = await this.downloadFile(file);
           if (fileData) {
             zip.file(`${folderName}/adjuntos/${index + 1}-${this.getName(file)}`, fileData);
           } else {
@@ -165,24 +159,109 @@ export class ReportListComponent implements OnInit {
     }
   }
 
-  getName(file:any): string|undefined{
+  getName(file: any): string | undefined {
     return file.fileName;
   }
+
+  generateReportPDF(detailedReport: ReportDto): Promise<Blob> {
+    return new Promise((resolve) => {
+      const doc = new jsPDF();
+  
+      // Estilos generales
+      doc.setFont('helvetica');
+      doc.setFontSize(12);
+  
+      // Encabezado del reporte
+      doc.setFillColor(50, 50, 50); // Fondo gris oscuro
+      doc.setTextColor(255, 255, 255); // Texto blanco
+      doc.rect(10, 10, 190, 10, 'F'); // Rectángulo de fondo
+      doc.text('Detalles del Reporte', 15, 17);
+  
+      // Texto del reporte (detalles en columnas)
+      doc.setTextColor(0, 0, 0); // Texto negro
+      doc.setFontSize(10);
+  
+      let yPosition = 30; // Control de posición vertical
+      const pageHeight = doc.internal.pageSize.height; // Altura de la página
+  
+      doc.text(`ID: ${detailedReport?.referenciaReporte}`, 15, yPosition);
+      doc.text(`Afiliación ID: ${detailedReport?.afiliacionId || 'N/A'}`, 85, yPosition);
+      doc.text(`Nombre: ${detailedReport?.nombre || 'N/A'}`, 150, yPosition);
+  
+      yPosition += 8;
+      doc.text(`Email: ${detailedReport?.email || 'N/A'}`, 15, yPosition);
+      doc.text(`Teléfono: ${detailedReport?.telefono || 'N/A'}`, 150, yPosition);
+  
+      // Descripción con fondo resaltado
+      yPosition += 10;
+      doc.setFillColor(100, 100, 100); // Fondo gris oscuro
+      doc.setTextColor(255, 255, 255);
+      doc.rect(10, yPosition, 190, 8, 'F');
+      doc.text('Descripción:', 15, yPosition + 5);
+  
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(9);
+      yPosition += 12;
+  
+      // Manejo de salto de página para la descripción
+      let textLines = doc.splitTextToSize(detailedReport?.descripcion || 'Sin descripción', 180);
+      let lineHeight = 5;
+      for (let i = 0; i < textLines.length; i++) {
+        if (yPosition + lineHeight > pageHeight - 20) { // Si no cabe más en la página actual
+          doc.addPage(); // Añadir nueva página
+          yPosition = 20; // Reiniciar posición en la nueva página
+        }
+        doc.text(textLines[i], 15, yPosition);
+        yPosition += lineHeight;
+      }
+  
+      yPosition += 10;
+      doc.setFillColor(100, 100, 100); // Fondo gris oscuro
+      doc.setTextColor(255, 255, 255);
+      doc.rect(10, yPosition, 190, 8, 'F');
+      doc.text('Archivos Adjuntos:', 15, yPosition + 5);
+      yPosition += 10;
+  
+      // Tabla de archivos adjuntos
+      const attachments = detailedReport?.attachments || [];
+      const tableData = attachments.map((file, index) => [index + 1, this.getName(file) || 'Sin nombre']);
+  
+      if (attachments.length > 0) {
+        if (yPosition + 20 > pageHeight) {
+          doc.addPage();
+          yPosition = 20;
+        }
+        (doc as any).autoTable({
+          startY: yPosition + 5,
+          head: [['#', 'Nombre del archivo']],
+          body: tableData,
+        });
+      } else {
+        doc.text('No hay archivos adjuntos.', 15, yPosition + 5);
+      }
+  
+      // Convertir el PDF a Blob y devolverlo
+      const pdfBlob = doc.output('blob');
+      resolve(pdfBlob);
+    });
+  }
+  
+
   async downloadFile(file: any): Promise<Blob | undefined> {
     if (!file || !file.data || !file.fileName || !file.fileType) {
       console.error('Archivo inválido', file);
       return;
     }
     const blob = this.base64ToBlob(file.data, file.fileType);
-  
+
     if (!blob) {
       console.error('No se pudo convertir a Blob:', file);
       return;
     }
-  
+
     return blob;
   }
-  
+
 
 
   /* async downloadFile(file: any): Promise<Blob | undefined> {
