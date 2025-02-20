@@ -88,6 +88,7 @@ export class NoticiasGridComponent implements OnInit {
       if (imagen.urlImagen) {
         return imagen.urlImagen;
       } else if (imagen.name) {
+        console.log(imagen.name)
         return `imagen/noticias/${imagen.name}`;
       }
     }
