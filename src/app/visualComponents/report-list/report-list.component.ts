@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -12,6 +12,9 @@ import JSZip, { forEach } from 'jszip';
 import { saveAs } from 'file-saver';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EmailModalComponent } from '../email-modal/email-modal.component';
+import { SendEmailServiceImpl } from '../../Core/Service/Implements/SendEmailServiceImpl';
 
 @Component({
   selector: 'app-report-list',
@@ -32,6 +35,10 @@ export class ReportListComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort | null = null;
+  private modalService = inject(NgbModal);
+  private emailService = inject(SendEmailServiceImpl);
+  
+  
 
   constructor(private reportService: ReportServiceImpl, private router: Router) {
     this.dataSource = new MatTableDataSource<ReportDto>([]);
@@ -40,6 +47,9 @@ export class ReportListComponent implements OnInit {
   ngOnInit() {
     this.loadReports();
     this.cargarListadoDeReportes();
+    this.dataSource.filterPredicate = this.createFilter();
+
+
   }
 
   ngAfterViewInit() {
@@ -90,6 +100,27 @@ export class ReportListComponent implements OnInit {
     this.router.navigate(['/report-details', reportId]);
   }
 
+  createFilter(): (data: any, filter: string) => boolean {
+    let filterFunction = function (data: any, filter: string): boolean {
+      const searchTerms = filter.toLowerCase();
+      return Object.keys(data).some((key) => {
+        if (typeof data[key] === 'object' && data[key] !== null) {
+          // Buscar en propiedades 'nombre' o 'descripcion' de objetos
+          return ['nombre', 'descripcion', 'estado'].some(prop =>
+            data[key][prop] && data[key][prop].toString().toLowerCase().includes(searchTerms)
+          );
+        } else if (typeof data[key] === 'string') {
+          return data[key].toLowerCase().includes(searchTerms);
+        } else if (data[key] !== null && data[key] !== undefined) {
+          // Para otros tipos de datos, convertir a string
+          return data[key].toString().toLowerCase().includes(searchTerms);
+        }
+        return false;
+      });
+    }
+    return filterFunction;
+  }
+
   filtrar(event: Event) {
     const filtro = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filtro.trim().toLowerCase();
@@ -110,194 +141,11 @@ export class ReportListComponent implements OnInit {
     });
   }
 
-  async generateAndDownloadReport() {
-    const selectedReport = this.dataSource.filteredData.filter((repo) => repo.selected);
-    if (selectedReport.length === 0) {
-      alert('Debe seleccionar al menos un reporte.');
-      return;
-    }
-
-    for (const report of selectedReport) {
-      try {
-        // Esperamos obtener el reporte con todos sus detalles y adjuntos
-        const detailedReport: ReportDto | null = await this.loadReportDetails(report.id);
-
-        // Validar si el reporte es nulo
-        if (!detailedReport) {
-          console.error(`Error: No se pudo cargar el reporte con ID ${report.id}`);
-          continue; // Saltar al siguiente reporte
-        }
-
-        const zip = new JSZip();
-        const folderName = `${detailedReport?.referenciaReporte}`;
-        const pdfFileName = `${detailedReport?.referenciaReporte}.pdf`;
-
-        // Crear un nuevo documento PDF
-        const attachments = detailedReport?.attachments || [];
-        const pdfBlob = this.generateReportPDF(detailedReport);
-
-        zip.file(`${folderName}/${pdfFileName}`, pdfBlob);
-
-        // Descargar los archivos adjuntos y agregarlos al ZIP
-        for (const [index, file] of attachments.entries()) {
-          const fileData = await this.downloadFile(file);
-          if (fileData) {
-            zip.file(`${folderName}/adjuntos/${index + 1}-${this.getName(file)}`, fileData);
-          } else {
-            console.error('No se pudo descargar el archivo:', file.name);
-          }
-        }
-
-        // Generar y descargar el ZIP
-        const zipBlob = await zip.generateAsync({ type: 'blob' });
-        saveAs(zipBlob, `${folderName}.zip`);
-
-        console.log(`Archivo ZIP generado para: ${detailedReport?.referenciaReporte}`);
-      } catch (error) {
-        console.error(`Error procesando el reporte ${report.id}:`, error);
+   async generateAndDownloadReport() : Promise<void> {
+       await this.reportService.generateAndDownloadReport(this.dataSource,true);
       }
-    }
-  }
 
-  getName(file: any): string | undefined {
-    return file.fileName;
-  }
-
-  generateReportPDF(detailedReport: ReportDto): Promise<Blob> {
-    return new Promise((resolve) => {
-      const doc = new jsPDF();
   
-      // Estilos generales
-      doc.setFont('helvetica');
-      doc.setFontSize(12);
-  
-      // Encabezado del reporte
-      doc.setFillColor(50, 50, 50); // Fondo gris oscuro
-      doc.setTextColor(255, 255, 255); // Texto blanco
-      doc.rect(10, 10, 190, 10, 'F'); // Rectángulo de fondo
-      doc.text('Detalles del Reporte', 15, 17);
-  
-      // Texto del reporte (detalles en columnas)
-      doc.setTextColor(0, 0, 0); // Texto negro
-      doc.setFontSize(10);
-  
-      let yPosition = 30; // Control de posición vertical
-      const pageHeight = doc.internal.pageSize.height; // Altura de la página
-  
-      doc.text(`ID: ${detailedReport?.referenciaReporte}`, 15, yPosition);
-      doc.text(`Afiliación ID: ${detailedReport?.afiliacionId || 'N/A'}`, 85, yPosition);
-      doc.text(`Nombre: ${detailedReport?.nombre || 'N/A'}`, 150, yPosition);
-  
-      yPosition += 8;
-      doc.text(`Email: ${detailedReport?.email || 'N/A'}`, 15, yPosition);
-      doc.text(`Teléfono: ${detailedReport?.telefono || 'N/A'}`, 150, yPosition);
-  
-      // Descripción con fondo resaltado
-      yPosition += 10;
-      doc.setFillColor(100, 100, 100); // Fondo gris oscuro
-      doc.setTextColor(255, 255, 255);
-      doc.rect(10, yPosition, 190, 8, 'F');
-      doc.text('Descripción:', 15, yPosition + 5);
-  
-      doc.setTextColor(0, 0, 0);
-      doc.setFontSize(9);
-      yPosition += 12;
-  
-      // Manejo de salto de página para la descripción
-      let textLines = doc.splitTextToSize(detailedReport?.descripcion || 'Sin descripción', 180);
-      let lineHeight = 5;
-      for (let i = 0; i < textLines.length; i++) {
-        if (yPosition + lineHeight > pageHeight - 20) { // Si no cabe más en la página actual
-          doc.addPage(); // Añadir nueva página
-          yPosition = 20; // Reiniciar posición en la nueva página
-        }
-        doc.text(textLines[i], 15, yPosition);
-        yPosition += lineHeight;
-      }
-  
-      yPosition += 10;
-      doc.setFillColor(100, 100, 100); // Fondo gris oscuro
-      doc.setTextColor(255, 255, 255);
-      doc.rect(10, yPosition, 190, 8, 'F');
-      doc.text('Archivos Adjuntos:', 15, yPosition + 5);
-      yPosition += 10;
-  
-      // Tabla de archivos adjuntos
-      const attachments = detailedReport?.attachments || [];
-      const tableData = attachments.map((file, index) => [index + 1, this.getName(file) || 'Sin nombre']);
-  
-      if (attachments.length > 0) {
-        if (yPosition + 20 > pageHeight) {
-          doc.addPage();
-          yPosition = 20;
-        }
-        (doc as any).autoTable({
-          startY: yPosition + 5,
-          head: [['#', 'Nombre del archivo']],
-          body: tableData,
-        });
-      } else {
-        doc.text('No hay archivos adjuntos.', 15, yPosition + 5);
-      }
-  
-      // Convertir el PDF a Blob y devolverlo
-      const pdfBlob = doc.output('blob');
-      resolve(pdfBlob);
-    });
-  }
-  
-
-  async downloadFile(file: any): Promise<Blob | undefined> {
-    if (!file || !file.data || !file.fileName || !file.fileType) {
-      console.error('Archivo inválido', file);
-      return;
-    }
-    const blob = this.base64ToBlob(file.data, file.fileType);
-
-    if (!blob) {
-      console.error('No se pudo convertir a Blob:', file);
-      return;
-    }
-
-    return blob;
-  }
-
-
-
-  /* async downloadFile(file: any): Promise<Blob | undefined> {
-    // Verifica que las propiedades necesarias estén presentes
-    if (!file || !file.data || !file.fileName || !file.fileType) {
-      console.error('Archivo inválido', file);
-      return;
-    }
-
-    // Convertir base64 a Blob
-    const blob = this.base64ToBlob(file.data, file.fileType);
-
-    // Asegurarse de que el nombre del archivo esté correctamente asignado
-    const fileName = file.fileName || 'archivo_sin_nombre';
-    console.log(`Descargando archivo: ${fileName}`);
-
-    // Crear un objeto URL para el archivo y simular la descarga
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = fileName;  // Asignar el nombre correcto del archivo
-    link.click();
-    URL.revokeObjectURL(url);
-    return;
-  }*/
-
-
-  base64ToBlob(base64: string, contentType: string): Blob {
-    const byteCharacters = atob(base64);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    return new Blob([byteArray], { type: contentType });
-  }
   toggleSelectAll(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input) {
@@ -309,14 +157,24 @@ export class ReportListComponent implements OnInit {
   allRowsSelected(): boolean {
     return this.dataSource.filteredData.every((user) => user.selected);
   }
-  /*
-    async downloadFile(url: string): Promise<Blob> {
-      try {
-        const response = await fetch(url);
-        return await response.blob();
-      } catch (error) {
-        console.error('Error descargando el archivo:', error);
-        throw error;
+
+   openEmailModal(): void {
+      const reportData = this.dataSource.filteredData.filter((repo) => repo.selected);
+      if (reportData.length === 0) {
+        alert('Debe seleccionar al menos un Reporte.');
+        return;
       }
-    }*/
+      const modalRef = this.modalService.open(EmailModalComponent, { size: 'lg' });
+      modalRef.componentInstance.reportData = reportData;
+      modalRef.componentInstance.isReportMode = true;
+  
+      modalRef.result.then((emailData) => {
+        if (emailData) {
+          this.emailService.sendEmail(emailData).subscribe({
+            next: () => alert('Correos enviados correctamente.'),
+            error: (err) => alert('Error al enviar correos: ' + err.message),
+          });
+        }
+      });
+    }
 }

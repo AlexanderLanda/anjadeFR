@@ -16,14 +16,31 @@
           <div class="d-flex justify-content-between align-items-center mb-3">
             <app-report-edit *ngIf="isEditing" [report]="report" (reportUpdated)="handleReportUpdated($event)"></app-report-edit>
           </div>
-          <div class="row">
-            <dt class="col-3">ID: <h5>{{ report.referenciaReporte }}</h5></dt>
-            <dt class="col-3">Afiliación ID:<h5>{{ report.afiliacionId }}</h5></dt>
-            <dt class="col-3">Nombre:<h5>{{ report.nombre }} {{ report.apellidos }}</h5></dt>
-            <dt class="col-3">Teléfono:<h5>{{ report.telefono }}</h5></dt>
-           
+          <div class="row" style="padding-bottom: 10px;">
+            <div class="row col-3">
+              <h5>ID: {{ report.referenciaReporte }}</h5> 
+            </div>
+            <div class="row col-3">
+              <h5>Afiliación ID: {{ report.afiliacionId}}</h5> 
+            </div>
+            <div class="row col-6">
+              <h5>Nombre: {{ report.nombre }} {{ report.apellidos }}</h5>
+            </div>  
           </div>
-          <dt class="col-12">Email:<h5>{{ report.email }}</h5></dt>
+          <div class="row" style="padding-bottom: 10px;">
+            <div class="row col-3">
+              <h5>Teléfono: {{ report.telefono }}</h5> 
+            </div>
+            <div class="row col-3">
+              <h5>Deporte: {{ report.deporte?.nombre}}</h5> 
+            </div>
+            <div class="row col-2">
+              <h5>Provincia: {{ report.provincia?.descripcion }}</h5>
+            </div>
+            <div class="row col-5" style="padding-top: 10px;">
+              <h5>Email: {{ report.email }}</h5>
+            </div>  
+          </div>
           
           <dl class="row card filtro-card ">
             <dt class="card-header-sub col-sm text-center justify-content-center">Descripción:</dt>

@@ -14,7 +14,7 @@
             placeholder="Teclee el valor de la columna por la que desee filtrar" required />
         </div>
         <div class="card p-3 mb-3">
-          <button class="btn btn-primary w-100 mb-2">
+          <button class="btn btn-primary w-100 mb-2 "(click)="openEmailModal()">
             <i class="fas fa-envelope me-2"></i> Comunicación Email
           </button>
           <button class="btn btn-success w-100 mb-2" (click)="generateAndDownloadReport()">
@@ -33,13 +33,15 @@
                 <thead>
                   <tr>
                     <th scope="col"><input type="checkbox" (change)="toggleSelectAll($event)" [checked]="allRowsSelected()" /></th>
-                    <th scope="col">Afiliación ID</th>
+                    <th scope="col">ID</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellidos</th>
                     <th scope="col">Email</th>
                     <th scope="col">Teléfono</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Detalles</th>
+                    <th scope="col">Provincia</th>
+                    <th scope="col">Deportes</th>
+                    <th scope="col">Ver</th>
+
                   </tr>
                 </thead>
                 <tbody>
@@ -48,12 +50,12 @@
                       <td><input type="checkbox" [(ngModel)]="report.selected" /></td>
 
                       <td>{{ report.referenciaReporte }}</td>
-                      <td>{{ report.afiliacionId }}</td>
                       <td>{{ report.nombre }}</td>
                       <td>{{ report.apellidos }}</td>
                       <td>{{ report.email }}</td>
                       <td>{{ report.telefono }}</td>
-                      <td>{{ report.descripcion | slice:0:50 }}...</td>
+                      <td>{{ report.provincia?.descripcion}}</td>
+                      <td>{{ report.deporte?.nombre }}</td>
                       <td>
                         <button class="btn btn-outline-primary btn-sm" (click)="viewDetails(report.id)">
                           <i class="fas fa-eye"></i>

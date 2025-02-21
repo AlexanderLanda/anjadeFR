@@ -1,9 +1,21 @@
 <div class="modal-header">
-    <h5 class="modal-title">Enviar Correo</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+  <h5 class="modal-title">{{ isReportMode ? 'Enviar Reporte' : 'Enviar Correo' }}</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
   </div>
   <div class="modal-body">
     <form>
+      <div class="mb-3" *ngIf="isReportMode">
+        <label for="inputEmail" class="form-label">Para:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputEmail"
+          [(ngModel)]="inputEmail"
+          name="inputEmail"
+          placeholder="Ingrese correos separados por coma"
+          required
+        />
+      </div>
       <div class="mb-3">
         <label for="emailSubject" class="form-label">Asunto</label>
         <input
