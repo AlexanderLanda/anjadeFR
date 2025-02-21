@@ -107,15 +107,6 @@ export class UsuariosTablaComponent implements AfterViewInit {
   }
 
   editarFila(element: any): void {
-    /*
-    const dialogRef = this.dialog.open(ModalEditarComponent, {
-      data: { fila: element }
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Modal cerrada');
-    });
-*/
     const modalRef = this.modalService.open(ModalEditarComponent);
     modalRef.componentInstance.data = element;
   }
@@ -164,7 +155,6 @@ export class UsuariosTablaComponent implements AfterViewInit {
       this.dataSource.data = this.listadoUsuarios;
       this.dataSource.paginator = this.paginator; // Asegúrate de actualizar el paginador después de cargar los datos
       this.dataSource.sort = this.sort; // Asegúrate de actualizar el ordenamiento después de cargar los datos
-      console.log(this.listadoUsuarios);
     });
 
   }

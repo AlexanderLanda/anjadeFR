@@ -68,7 +68,7 @@ export class EmailModalComponent {
 
     // Si es un reporte, generamos el ZIP y lo adjuntamos
     if (this.isReportMode && this.reportData) {
-      if (!Array.isArray(recipients) || recipients.length === 0 || !recipients[0]) {
+      if (!Array.isArray(recipients) || recipients.length === 0 || !recipients  [0]) {
         alert("Debe escribir un destinatario obligatoriamente.");
         return;
       }
