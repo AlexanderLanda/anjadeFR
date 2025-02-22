@@ -9,6 +9,8 @@ import jsPDF from 'jspdf';
 import JSZip from 'jszip';
 import saveAs from 'file-saver';
 import { MatTableDataSource } from '@angular/material/table';
+import Swal from 'sweetalert2'
+
 
 
 @Injectable({
@@ -64,7 +66,12 @@ export class ReportServiceImpl {
   
     // Validar si hay reportes seleccionados
     if (selectedReports.length === 0) {
-      alert('Debe seleccionar al menos un reporte.');
+      Swal.fire({
+        title: 'Error!',
+        text: 'Debe seleccionar al menos un Reporte.',
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
       return null;
     }
   

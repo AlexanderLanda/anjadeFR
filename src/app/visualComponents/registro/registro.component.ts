@@ -30,6 +30,7 @@ import { DEPORTES } from '../../constants/deportes';
 import { FUNCIONES } from '../../constants/afiliadosFunciones';
 import { SendEmailServiceImpl } from '../../Core/Service/Implements/SendEmailServiceImpl';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-registro',
@@ -164,7 +165,6 @@ export class RegistroComponent {
 
     this.registroForm.get('tipoPago')?.valueChanges.subscribe(value => {
       this.selectedFormaPago = value;
-      console.log(this.selectedFormaPago)
     });
   }
 
@@ -179,8 +179,6 @@ export class RegistroComponent {
     //this.cargarCategoriasDeAfiliadosComboBox();
     this.cargarFederacionesComboBox();
     this.cargarTiposDocumentacionComboBox();
-
-
   }
 
   onEmailChange() {
@@ -298,103 +296,74 @@ export class RegistroComponent {
       this.isLoading = true;
 
       const datosFormulario = this.registroForm.value;
-      // Llamar al servicio de la API para enviar los datos
-      console.info(datosFormulario)
-      // Setteo de los datos de los oject foraneos de usuarios
-      // Localidades
-      /*
-      if (typeof this.localidades !== 'undefined') {
-        const localidadObject = this.localidades.find(loc => loc.id === Number(datosFormulario.localidad));
-        console.info(localidadObject)
-        if (localidadObject) {
-          datosFormulario.localidad = localidadObject;
-        }
-      }*/
-      // Provincias
+     
       if (typeof this.provincias !== 'undefined') {
         const provinciasObject = this.provincias.find(loc => loc.id === Number(datosFormulario.provincia));
-        console.info(provinciasObject)
         if (provinciasObject) {
           datosFormulario.provincia = provinciasObject;
         }
       }
-      // Deportes
       if (typeof this.deportes !== 'undefined') {
         this.deportesService.getDeportes().subscribe(deportes => {
           this.deportes = deportes;
         })
         const deportesObject = this.deportes.find(loc => loc.nombre === datosFormulario.deporte);
-        console.info(deportesObject)
         if (deportesObject) {
           datosFormulario.deporte = deportesObject;
         }
         else {
           var deporteDto: DeportesDto = {
-            id: 0, // Aquí inicializas el id como null o como desees
+            id: 0, 
             nombre: datosFormulario.deporte
           };
           datosFormulario.deporte = deporteDto;
           
         }
       }
-        //tipo de Documentacion
         if (typeof this.tiposDocumentaciones !== 'undefined') {
           const tipoDocumentacionObject = this.tiposDocumentaciones.find(loc => loc.id === datosFormulario.tipoDocumento);
-          console.info(tipoDocumentacionObject)
           if (tipoDocumentacionObject) {
             datosFormulario.tipoDocumento = tipoDocumentacionObject;
           }
         }
-        // AfiliacionFunciones
         if (typeof this.afiliadosFunciones !== 'undefined') {
           const afiliadosFuncionObject = this.afiliadosFunciones.find(loc => loc.id === Number(datosFormulario.afiliadosFuncion));
-          console.info(afiliadosFuncionObject)
           if (afiliadosFuncionObject) {
             datosFormulario.afiliadosFuncion = afiliadosFuncionObject;
           }
         }
-        // forma pago
         if (typeof this.formaPagosList !== 'undefined') {
           const formaPagoObject = this.formaPagosList.find(loc => loc.id === datosFormulario.tipoPago);
-          console.info(formaPagoObject)
+          
           if (formaPagoObject) {
             datosFormulario.tipoPago = formaPagoObject;
           }
         }
-        // AfiliacionCategorias
         if (typeof this.categorias !== 'undefined') {
           const categoriasFuncionObject = this.categorias.find(loc => loc.id === Number(datosFormulario.afiliadosCategoria));
-          console.info(categoriasFuncionObject)
+        
           if (categoriasFuncionObject) {
             datosFormulario.afiliadosCategoria = categoriasFuncionObject;
           }
         }
-        //Asignacion por defecto de rol de Afiiado
         datosFormulario.usuariorol = { id: "3", descripcion: "afiliados" };
-        //asigancion de tipo de pago
         if (typeof this.formaPagosList !== 'undefined') {
           const tipoPagoObject = this.formaPagosList.find(loc => loc.id === datosFormulario.tipoPago);
-          console.info(tipoPagoObject)
+      
           if (tipoPagoObject) {
             datosFormulario.tipoPago = tipoPagoObject;
           }
         }
-
-        //asigancion de tipo de documento
         if (typeof this.tiposDocumentaciones !== 'undefined') {
           const tipoDocumentoObject = this.tiposDocumentaciones.find(loc => loc.id === Number(datosFormulario.tipoDocumento));
-          console.info(tipoDocumentoObject)
+      
           if (tipoDocumentoObject) {
             datosFormulario.tipoDocumento = tipoDocumentoObject;
           }
         }
-
-
-        console.info(datosFormulario)
         this.usuariosService.saveOrUpdate(datosFormulario).subscribe(
           response => {
-            console.log('Datos registrados con éxito:', response);
-            // Aquí puedes agregar cualquier otra lógica después de enviar los datos
+        
             this.usuarioRegistrado = response;
             this.usuariosService.setUsuario(response);
             if (datosFormulario.tipoPago.id === 1 || datosFormulario.tipoPago.id === 2) {
@@ -410,10 +379,7 @@ export class RegistroComponent {
           },
           error => {
             this.isLoading = false;
-            console.error('Error al registrar los datos:', error);
             this.router.navigate(['/alert-safari']);
-            //alert('Tenemos problemas al registrar los datos. Por favor refresque o actualice la página(F5) y vuelva a intentarlo. Si el problema sigue, contacte con administración.');
-            // Manejo de errores
           }
         );
       }
@@ -422,18 +388,23 @@ export class RegistroComponent {
         const campoInvalido = Object.keys(this.registroForm.controls).find(key => this.registroForm.get(key)?.invalid);
         if (campoInvalido && this.camposLegibles[campoInvalido]) {
           const nombreCampo = this.camposLegibles[campoInvalido];
-          console.error(`El ${nombreCampo} tiene error o esta vacio.`);
-          alert(`Error: El campo " ${nombreCampo} " tiene error o esta vacio.`);
+          Swal.fire({
+            title: 'Error!',
+            text: `Error: El campo " ${nombreCampo} " tiene error o esta vacio.`,
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          })
         } 
         else {
-          console.error('Formulario no válido o el correo ya existe. Revise los campos.');
-          alert('Error: El formulario no es válido, Debe completar todos los datos de caracter obligatorios(*) o el correo ya existe.');
+          Swal.fire({
+            title: 'Error!',
+            text: 'Error: El formulario no es válido, Debe completar todos los datos de caracter obligatorios(*) o el correo ya existe.',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          })
         }
       }
     }
-
-
-
     onlyNumbersValidator(control: AbstractControl): { [key: string]: any } | null {
       const inputValue: string = control.value;
       if (!/^\d+$/.test(inputValue)) {
@@ -448,11 +419,6 @@ export class RegistroComponent {
       const provinciaId = Number(this.registroForm.value.provincia); // Convertir el valor a número
       this.filteredLocalidades = this.localidades?.filter(loc => loc.id === provinciaId);
       console.info("Localidad", this.filteredLocalidades)
-      /*
-  this.filteredLocalidades = this.localidades?.find(localidad => {
-    localidad.idProvincia.id === this.registroForm.value.provincia.id
-  });*/
-
     }
 
     seleccionarDeporte(deporte: DeportesDto) {
@@ -498,9 +464,6 @@ export class RegistroComponent {
       // Generar un número de pedido único
       return 'PEDIDO_' + Math.random().toString(36).substr(2, 9);
     }
-
-    
-
   }
 
 

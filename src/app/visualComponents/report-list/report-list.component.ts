@@ -15,6 +15,9 @@ import { MatInputModule } from '@angular/material/input';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EmailModalComponent } from '../email-modal/email-modal.component';
 import { SendEmailServiceImpl } from '../../Core/Service/Implements/SendEmailServiceImpl';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import Swal from 'sweetalert2'
+
 
 @Component({
   selector: 'app-report-list',
@@ -24,7 +27,8 @@ import { SendEmailServiceImpl } from '../../Core/Service/Implements/SendEmailSer
   imports: [CommonModule, MatPaginatorModule, MatTableModule,
     MatSortModule,
     MatInputModule,
-    FormsModule]
+    FormsModule,MatProgressBarModule
+  ]
 })
 export class ReportListComponent implements OnInit {
   reports: any[] = [];
@@ -38,6 +42,7 @@ export class ReportListComponent implements OnInit {
   private modalService = inject(NgbModal);
   private emailService = inject(SendEmailServiceImpl);
   
+  isLoading = false;
   
 
   constructor(private reportService: ReportServiceImpl, private router: Router) {
@@ -70,7 +75,6 @@ export class ReportListComponent implements OnInit {
 
   async loadReportDetails(id?: number): Promise<ReportDto | null> {
     if (id === undefined) {
-      console.error("El ID del reporte es undefined.");
       return null; // Retornar null o manejar de otra forma
     }
     try {
@@ -142,7 +146,9 @@ export class ReportListComponent implements OnInit {
   }
 
    async generateAndDownloadReport() : Promise<void> {
+    this.isLoading = true;
        await this.reportService.generateAndDownloadReport(this.dataSource,true);
+       this.isLoading = false;
       }
 
   
@@ -161,7 +167,12 @@ export class ReportListComponent implements OnInit {
    openEmailModal(): void {
       const reportData = this.dataSource.filteredData.filter((repo) => repo.selected);
       if (reportData.length === 0) {
-        alert('Debe seleccionar al menos un Reporte.');
+         Swal.fire({
+                              title: 'Error!',
+                              text: 'Debe seleccionar al menos un Reporte.',
+                              icon: 'error',
+                              confirmButtonText: 'Ok'
+                            })
         return;
       }
       const modalRef = this.modalService.open(EmailModalComponent, { size: 'lg' });
@@ -170,11 +181,27 @@ export class ReportListComponent implements OnInit {
   
       modalRef.result.then((emailData) => {
         if (emailData) {
+          this.isLoading=true;
           this.emailService.sendEmail(emailData).subscribe({
-            next: () => alert('Correos enviados correctamente.'),
-            error: (err) => alert('Error al enviar correos: ' + err.message),
+            next: () => {
+              Swal.fire({
+                                    title: 'Enviado!',
+                                    text: 'Correos enviados correctamente.',
+                                    icon: 'success',
+                                    confirmButtonText: 'Ok'
+                                  })
+            },
+            error: (err) => {
+              Swal.fire({
+                                    title: 'Error!',
+                                    text: 'Error al enviar correos: ',
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok'
+                                  })
+            } 
           });
         }
+        this.isLoading=false;
       });
     }
 }

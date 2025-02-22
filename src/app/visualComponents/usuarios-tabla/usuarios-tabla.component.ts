@@ -26,6 +26,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
+import Swal from 'sweetalert2'
+
 
 
 
@@ -327,17 +329,37 @@ export class UsuariosTablaComponent implements AfterViewInit {
   openEmailModal(): void {
     const selectedUsers = this.dataSource.filteredData.filter((user) => user.selected);
     if (selectedUsers.length === 0) {
-      alert('Debe seleccionar al menos un afiliado.');
+       Swal.fire({
+                  title: 'Error!',
+                  text: 'Debe seleccionar al menos un afiliado.',
+                  icon: 'error',
+                  confirmButtonText: 'Ok'
+                })
       return;
     }
     const modalRef = this.modalService.open(EmailModalComponent, { size: 'lg' });
     modalRef.componentInstance.selectedUsers = selectedUsers;
+    modalRef.componentInstance.isReportMode = false;
+
 
     modalRef.result.then((emailData) => {
       if (emailData) {
         this.emailService.sendEmail(emailData).subscribe({
-          next: () => alert('Correos enviados correctamente.'),
-          error: (err) => alert('Error al enviar correos: ' + err.message),
+          next: () => {
+            Swal.fire({
+              text: 'Correos enviados correctamente.',
+              icon: 'success',
+              confirmButtonText: 'Ok'
+            })
+          },
+          error: (err) =>{
+            Swal.fire({
+              title: 'Error!',
+              text: 'Error al enviar correos.',
+              icon: 'error',
+              confirmButtonText: 'Ok'
+            })
+          } 
         });
       }
     });
@@ -352,8 +374,15 @@ export class UsuariosTablaComponent implements AfterViewInit {
     formData.append('users', JSON.stringify(emailData.users));
 
     this.emailService.sendEmail(formData).subscribe(
-      response => console.log('Correo enviado con éxito', response),
-      error => console.error('Error al enviar el correo', error)
+      
+      (response: any) => {
+        if (response && response.error === false) {
+
+        } else {
+        }
+      },
+      (error) => {
+      }
     );
   }
 
@@ -363,14 +392,28 @@ export class UsuariosTablaComponent implements AfterViewInit {
     }).subscribe(
       (response: any) => {
         if (response && response.error === false) {
-          alert(response.message || 'Recordatorios enviados con éxito');
+          Swal.fire({
+            text:  'Recordatorios de pagos enviados con éxito',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          })
         } else {
-          alert('Hubo un problema al enviar los recordatorios');
+          Swal.fire({
+            title: 'Erorr!',
+            text:  'Hubo un problema al enviar los recordatorios',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          })
+          
         }
       },
       (error) => {
-        console.error('Error al intentar enviar el recordatorio:', error);
-        alert('Hubo un error en la comunicación con el servidor');
+        Swal.fire({
+        title: 'Erorr!',
+        text:  'Hubo un problema al enviar los recordatorios',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      })
       }
     );
   }

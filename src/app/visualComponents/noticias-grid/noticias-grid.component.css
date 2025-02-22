@@ -1,3 +1,8 @@
+.formulario-container {
+    background-color: #f8f9fa;
+    margin-top: 20px;
+    border-radius: 18px;
+  }
 /* Contenedor principal con margen */
 .component-container {
     margin-top: 80px;

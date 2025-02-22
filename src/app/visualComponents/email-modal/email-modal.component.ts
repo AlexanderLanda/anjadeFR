@@ -6,6 +6,8 @@ import { ReportServiceImpl } from '../../Core/Service/Implements/ReportServiceIm
 import { forEach } from 'jszip';
 import { ReportDto } from '../../Core/Model/ReportDto';
 import { MatTableDataSource } from '@angular/material/table';
+import Swal from 'sweetalert2'
+
 
 @Component({
   selector: 'app-email-modal',
@@ -27,7 +29,8 @@ export class EmailModalComponent {
   constructor(public activeModal: NgbActiveModal, private reportService: ReportServiceImpl) {}
 
   ngOnInit(): void {
-    if (this.reportData) {
+    
+    if (this.isReportMode === true) {
       this.dataSource = new MatTableDataSource(this.reportData);
       this.isReportMode = true; 
       const referenceNumbers = this.reportData.map((report: { referenciaReporte: any; }) => report.referenciaReporte);
@@ -46,22 +49,23 @@ export class EmailModalComponent {
   }
 
   async sendEmail(): Promise<void> {
-    const userMessage = this.emailBody;  
-    const footerMessage = `           **************Adjunto carpeta report.zip con los reportes.************ `;
-    const fullMessage = userMessage + footerMessage;
-
     const formData = new FormData();
     formData.append('subject', this.emailSubject);
     
-    formData.append('body', fullMessage);
-    
+    const userMessage = this.emailBody;  
+
 
     let recipients = [];
     if (this.isReportMode) {
+      
+    const footerMessage = `           **************Adjunto carpeta report.zip con los reportes.************ `;
+    const fullMessage = userMessage + footerMessage;
+    formData.append('body', fullMessage);
+
       // Si estamos en modo reporte, tomamos los correos ingresados manualmente
       recipients = this.inputEmail.split(',').map(email => email.trim());
     } else {
-      // Modo normal: Tomamos los correos de los usuarios seleccionados
+      formData.append('body', userMessage);
       recipients = this.selectedUsers.map(u => u.correo);
     }
     formData.append('recipients', JSON.stringify(recipients));
@@ -69,7 +73,12 @@ export class EmailModalComponent {
     // Si es un reporte, generamos el ZIP y lo adjuntamos
     if (this.isReportMode && this.reportData) {
       if (!Array.isArray(recipients) || recipients.length === 0 || !recipients  [0]) {
-        alert("Debe escribir un destinatario obligatoriamente.");
+        Swal.fire({
+                                      title: 'Error!',
+                                      text: 'Debe escribir un destinatario obligatoriamente.',
+                                      icon: 'error',
+                                      confirmButtonText: 'Ok'
+                                    })
         return;
       }
 

@@ -9,6 +9,8 @@ import { ProvinciaDto } from '../../Core/Model/ProvinciaDto';
 import { DeportesDto } from '../../Core/Model/DeportesDto';
 import { ReportDto } from '../../Core/Model/ReportDto';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2'
+
 
 @Component({
   selector: 'app-report-form',
@@ -89,7 +91,6 @@ export class ReportFormComponent implements OnInit {
 
       if (typeof this.provincias !== 'undefined') {
         const provinciasObject = this.provincias.find(loc => loc.id === Number(report.provincia));
-        console.info(provinciasObject)
         if (provinciasObject) {
           report.provincia = provinciasObject;
         }
@@ -97,7 +98,6 @@ export class ReportFormComponent implements OnInit {
 
       if (typeof this.deportes !== 'undefined') {
         const deportesObject = this.deportes.find(loc => loc.id === Number(report.deporte));
-        console.info(deportesObject)
         if (deportesObject) {
           report.deporte = deportesObject;
         }
@@ -106,12 +106,22 @@ export class ReportFormComponent implements OnInit {
       this.reportService.createReport(report).subscribe({
         next: (response) => {
           this.cargando = false; 
-          this.mensajeExito = 'Creacion de Reporte sobre suceso correctamente';
+          Swal.fire({
+                      title: 'Reportado!',
+                      text: 'Se ha creado correctamente el reporte sobre la incidencia',
+                      icon: 'success',
+                      confirmButtonText: 'Ok'
+                    })
           this.reportForm.reset();
-          console.log('Reporte enviado con éxito', response);
         },
         error: (error: HttpErrorResponse) => {
           this.cargando = false; 
+          Swal.fire({
+            title: 'Error!',
+            text: 'Error al enviar el reporte',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          })
           console.error('Error al enviar el reporte', error);
           if (error.status === 0) {
             console.error('Ha ocurrido un error de red. Por favor, verifica tu conexión.');
@@ -124,13 +134,21 @@ export class ReportFormComponent implements OnInit {
       const errors = this.reportForm.errors;
       if (errors &&errors['invalidIdentification']) {
         this.cargando = false; 
-        console.error('Por favor, complete el ID de Afiliación, o el Nombre junto con el Email o Teléfono.');
-        alert('Por favor, complete el ID de Afiliación, o el Nombre junto con el Email o Teléfono.');
+        Swal.fire({
+          title: 'Error!',
+          text: 'Por favor, complete el ID de Afiliación, o el Nombre junto con el Email o Teléfono.',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        })
       }
       if (errors && errors['invalidSelection']) {
         this.cargando = false; 
-        console.error('Por favor, seleccione una provincia y un deporte.');
-        alert('Es obligatorio seleccionar una provincia y un deporte para crear el reporte.');
+        Swal.fire({
+          title: 'Error!',
+          text: 'Es obligatorio seleccionar una provincia y un deporte para crear el reporte.',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        })
       }
     }
   }

@@ -13,7 +13,7 @@
           }
           <form [formGroup]="reportForm" name="reportForm" (ngSubmit)="onSubmit()" class="mt-4">
             <div class="row mb-3">
-              <div class="col-3">
+              <div class="col-2">
                 <label for="afiliacionId" class="form-label">ID de Afiliación</label>
                 <input id="afiliacionId" formControlName="afiliacionId" type="text"
                   class="form-control">
@@ -22,24 +22,23 @@
                   <label for="nombre" class="form-label">Nombre</label>
                   <input id="nombre" formControlName="nombre" type="text" class="form-control">
                 </div>
-                <div class="col-6">
+                <div class="col-5">
                   <label for="apellidos" class="form-label">Apellidos</label>
                   <input id="apellidos" formControlName="apellidos" type="text" class="form-control">
+                </div>
+                <div class="col-2">
+                  <label for="telefono" class="form-label">Teléfono</label>
+                  <input id="telefono" formControlName="telefono" type="text" class="form-control">
                 </div>
               </div>
 
               <div class="row mb-3">
-                <div class="col-3">
-                  <label for="telefono" class="form-label">Teléfono</label>
-                  <input id="telefono" formControlName="telefono" type="text" class="form-control">
-                </div>
-                <div class="col-9">
+                
+                <div class="col-5">
                   <label for="email" class="form-label">Email</label>
                   <input id="email" formControlName="email" type="text" class="form-control">
                 </div>
-              </div>
-              <div class="row mb-3">
-                <div class="col-6">
+                <div class="col-3">
                   <label for="">Provincia</label>
                   <select formControlName="provincia" [(value)]="selectedProvincia" class="form-select"
                     placeholder="Provincia"><!-- (selectionChange)="updateLocalidades($event.value)" -->
@@ -50,7 +49,7 @@
                     }
                   </select>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                   <label for="">Deportes</label>
                   <select formControlName="deporte" [(value)]="selectedDeporte" class="form-select"
                     placeholder="Deportes"><!-- (selectionChange)="updateLocalidades($event.value)" -->

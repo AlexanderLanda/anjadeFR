@@ -1,6 +1,7 @@
 
 .formulario-container {
-  margin-top: 80px; /* Ajusta el valor según sea necesario para dejar espacio entre el navbar y el formulario */
+  background-color: #f8f9fa;
+  margin-top: 80px;
 }
 
 .card-header {
@@ -10,7 +11,13 @@
   background-color: #1d1d1d;
   color: white;
 }
-
+.card-header-sub {
+  display: grid; /* Usa CSS Grid */
+  place-items: center; /* Centra el contenido tanto horizontal como verticalmente */
+  width: 100%;
+  background-color: #7e7d86;
+  color: white;
+}
 /* Media Queries para móviles */
 @media (max-width: 768px) {
   .col-md-8 {

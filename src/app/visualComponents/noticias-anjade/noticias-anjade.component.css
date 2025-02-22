@@ -2,6 +2,12 @@
   margin-top: 80px; /* Ajusta el valor según sea necesario */
 }
 
+.formulario-container {
+  background-color: #f8f9fa;
+  margin-top: 20px;
+  border-radius: 18px;
+}
+
 .carousel-inner img {
   width: 100%;
   height: 300px; /* Ajusta la altura según tus necesidades */

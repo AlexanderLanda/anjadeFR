@@ -1,4 +1,6 @@
 .formulario-container {
+  background-color: #f8f9fa;
+
     margin-top: 80px; /* Ajusta el valor según sea necesario para dejar espacio entre el navbar y el formulario */
   }
 
