@@ -1,14 +1,14 @@
-
-<div class="modal-header">  <!-- Mostrar comentarios si existen -->
-  <h2 class="modal-title">Comentarios</h2>
+<div class="modal-header">Comentarios <!-- Mostrar comentarios si existen -->
   <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
 </div>
 <div class="modal-body">
   <div *ngIf="comentarios && comentarios.length > 0">
     <div *ngFor="let comentario of comentarios; trackBy: trackComentario">
       <div class="comentario">
-        <div style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; position: relative; max-width: 100%; margin-top: 20px;">
-          <div style="position: absolute; top: -12px; left: 16px; background-color: white; padding: 0 8px; font-weight: bold; color: #333;">
+        <div
+          style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; position: relative; max-width: 100%; margin-top: 20px;">
+          <div
+            style="position: absolute; top: -12px; left: 16px; background-color: white; padding: 0 8px; font-weight: bold; color: #333;">
             {{ comentario.nombre }}
           </div>
           <p style="margin: 16px 0 0; font-size: 16px; color: #555;">
@@ -19,30 +19,24 @@
       </div>
     </div>
   </div>
-
-  <!-- Mensaje si no hay comentarios -->
   <div *ngIf="comentarios.length === 0">
     <p>No hay comentarios para esta publicación.</p>
   </div>
+</div>
 
-  <!-- Formulario para agregar comentario -->
-  <div *ngIf="crearComentario">
-    <div class="mt-3">
-      <textarea [(ngModel)]="comentarioTexto" class="form-control" rows="3" placeholder="Escribe tu comentario aquí"></textarea>
-      
-      <!-- Campo para el idAfiliacion si el usuario no está logueado -->
+<div class="modal-footer"> 
+  <div class="comentarios" *ngIf="crearComentario">
+    <div class="row mt-2">
+      <textarea [(ngModel)]="comentarioTexto" class="form-control" rows="3"
+        placeholder="Escribe tu comentario aquí"></textarea>
       <div *ngIf="!isUserLoggedIn" class="mt-2">
         <input [(ngModel)]="idAfiliacion" class="form-control" placeholder="Número de afiliación" />
       </div>
-
       <button class="btn btn-sm btn-success mt-2" (click)="agregarComentario(noticiaId)" [disabled]="isSendingComment">
         <mat-spinner *ngIf="isSendingComment" diameter="20" class="mr-2"></mat-spinner>
         Enviar comentario
       </button>
     </div>
   </div>
-</div>
-
-<div class="modal-footer">
-  <button class="btn btn-sm btn-primary" (click)="toggleComentarioForm()">Comentar</button>
+  <button *ngIf="!crearComentario" class="btn btn-sm btn-primary" (click)="toggleComentarioForm()">Comentar</button>
 </div>

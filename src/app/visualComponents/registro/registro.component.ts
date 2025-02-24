@@ -390,7 +390,7 @@ export class RegistroComponent {
           const nombreCampo = this.camposLegibles[campoInvalido];
           Swal.fire({
             title: 'Error!',
-            text: `Error: El campo " ${nombreCampo} " tiene error o esta vacio.`,
+            text: `El campo " ${nombreCampo} " tiene error o esta vacio.`,
             icon: 'error',
             confirmButtonText: 'Ok'
           })
@@ -398,7 +398,7 @@ export class RegistroComponent {
         else {
           Swal.fire({
             title: 'Error!',
-            text: 'Error: El formulario no es válido, Debe completar todos los datos de caracter obligatorios(*) o el correo ya existe.',
+            text: 'El formulario no es válido, Debe completar todos los datos de caracter obligatorios(*) o el correo ya existe.',
             icon: 'error',
             confirmButtonText: 'Ok'
           })

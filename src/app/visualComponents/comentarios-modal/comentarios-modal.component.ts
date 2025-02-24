@@ -13,6 +13,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2'
+
 
 
 @Component({
@@ -107,12 +109,22 @@ export class ComentariosModalComponent implements OnInit {
   agregarComentario(idNoticia: number) {
     // Validar que el comentario no está vacío y el idAfiliacion esté presente si el usuario no está logueado
     if (!this.comentarioTexto || (this.comentarioTexto.trim() === '')) {
-      alert("El comentario es obligatorio.");
+      Swal.fire({
+                                            title: 'Error!',
+                                            text: 'El comentario es obligatorio.',
+                                            icon: 'error',
+                                            confirmButtonText: 'Ok'
+                                          })
       return;
     }
 
     if (!this.isUserLoggedIn && (!this.idAfiliacion || this.idAfiliacion.trim() === '')) {
-      alert("El idAfiliacion es obligatorio.");
+      Swal.fire({
+        title: 'Error!',
+        text: 'El "Número de Afiliación" es obligatorio.',
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
       return;
     }
 

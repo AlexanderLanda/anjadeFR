@@ -12,7 +12,7 @@
 
     <div class="container-md py-4 formulario-container">
     @for (noticia of noticias; track noticia) {
-      <div class="container py-4">
+      <div class="container py-2">
         <div class="noticia">
           <div class="row">
             <div class="col-md-4">
@@ -58,7 +58,7 @@
                         <div style="position: absolute; top: -12px; left: 16px; background-color: white; padding: 0 8px; font-weight: bold; color: #333;">
                           Comentarios
                         </div>
-                        <p style="margin: 16px 0 0; font-size: 16px; color: #555;">
+                        <p style="margin: 26px 0 0; font-size: 16px; color: #555;">
                           {{ noticia.comentarios?.[0]?.texto || 'No hay comentarios disponibles.' }}
                         </p>
                       </div>

@@ -4,7 +4,6 @@
 
 .formulario-container {
   background-color: #f8f9fa;
-  margin-top: 20px;
   border-radius: 18px;
 }
 
@@ -38,8 +37,7 @@
 .noticia {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 10px; /* Combina con el borde redondeado */
-  padding: 15px;
-  margin-bottom: 20px;
+  padding: 10px;
   background-color: #fff; /* Agrega un fondo blanco para destacar */
 }
 
@@ -48,7 +46,6 @@
 .noticia-footer {
   display: flex;
   justify-content: flex-end; /* Solo muestra la fecha alineada a la derecha */
-  margin-top: 15px;
 }
 
 
