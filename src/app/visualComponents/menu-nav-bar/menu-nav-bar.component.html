@@ -60,12 +60,14 @@
           <a class="nav-link" routerLink="/delegaciones" (click)="collapseNavbar()">Delegaciones</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/comisiones" (click)="collapseNavbar()">Comisiones</a>
+          <a class="nav-link" routerLink="/admin-main" (click)="collapseNavbar()">ADmin Main</a>
         </li>
         -->
+
         <li class="nav-item">
           <a class="nav-link" (click)="scrollToFooter()">Contacto</a>
         </li>
+        
         @if (loggedIn && isAdmin) {
           <li class="nav-item dropdown" ngbDropdown>
             <a class="nav-link dropdown-toggle" ngbDropdownToggle id="navbarDropdownAdmin">

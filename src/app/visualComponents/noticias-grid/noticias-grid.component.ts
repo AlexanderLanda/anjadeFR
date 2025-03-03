@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Noticia } from '../../Core/Model/NoticiaDto';
 import { AuthService } from '../../Core/Service/Implements/AuthService';
 import { NoticiaServiceImpl } from '../../Core/Service/Implements/NoticiaServiceImpl';
@@ -10,12 +10,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-noticias-grid',
   standalone: true,
   imports: [
-    // Lista de componentes, directivas y pipes que este componente utiliza
-    // Por ejemplo:
     CommonModule,
-    // OtroComponente,
-    // OtraDirectiva,
-    // OtroPipe
   ],
   templateUrl: './noticias-grid.component.html',
   styleUrls: ['./noticias-grid.component.css'],
@@ -25,6 +20,7 @@ export class NoticiasGridComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private authService = inject(AuthService);
   private dialog = inject(MatDialog);
+  private router = inject(Router);
 
   noticias: Noticia[] = [];
   paginaActual = 0;
@@ -33,6 +29,8 @@ export class NoticiasGridComponent implements OnInit {
   noticiasPaginadas: Noticia[] = [];
   tipoNoticia = '';
   paginas: number[] = [];
+
+  
 
   ngOnInit(): void {
     this.route.data.subscribe((data) => {
@@ -88,7 +86,6 @@ export class NoticiasGridComponent implements OnInit {
       if (imagen.urlImagen) {
         return imagen.urlImagen;
       } else if (imagen.name) {
-        console.log(imagen.name)
         return `imagen/noticias/${imagen.name}`;
       }
     }
@@ -108,5 +105,11 @@ export class NoticiasGridComponent implements OnInit {
   }
   trackQuestion(index: number, question: any) {
     return question.id; // Retorna un identificador único para cada pregunta
+  }
+
+  viewDetails(event: Event, id: number) {
+    event.preventDefault();
+    console.log(id)
+    this.router.navigate(['/noticias-reader', id]);
   }
 }

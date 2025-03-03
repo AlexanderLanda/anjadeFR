@@ -4,15 +4,15 @@ import { ReportServiceImpl } from '../../Core/Service/Implements/ReportServiceIm
 import * as pdfjsLib from 'pdfjs-dist';
 import { CommonModule, Location } from '@angular/common';
 import { inject } from '@angular/core';
-import { ReportEditComponent } from '../report-edit/report-edit.component';
 import { ReportDto } from '../../Core/Model/ReportDto';
+import { ReportEditComponent } from "../report-edit/report-edit.component";
 
 @Component({
   selector: 'app-report-details',
   templateUrl: './report-details.component.html',
   styleUrls: ['./report-details.component.css'],
   standalone: true,
-  imports:[ReportEditComponent,CommonModule]
+  imports: [CommonModule, ReportEditComponent]
 })
 export class ReportDetailsComponent implements OnInit {
   report: any;

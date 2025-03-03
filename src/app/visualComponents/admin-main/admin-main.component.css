@@ -1,0 +1,108 @@
+.formulario-container {
+    background-color: #f8f9fa;
+    margin-top: 80px;
+}
+.container {
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 80 auto;
+  }
+  
+  .slot.top {
+    height: 200px;
+  }
+  
+  .middle {
+    height: 250px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .slot.middle-left {
+    height: 100%;
+    flex: 1;
+  }
+  
+  .slot.middle-right {
+    height: 100%;
+    flex: 2;
+  }
+  
+  .slot.bottom {
+    height: 150px;
+  }
+  
+  .slot {
+    border-radius: 10px;
+  }
+  .slot[data-swapy-highlighted] {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .item {
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .item-a {
+    background: rgba(255, 0, 0, 0.5);
+  }
+  
+  .card {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .item-a {
+    background: #10b981;
+    background-image: url(../../../../public/imagen/capturas/crear_noticias_captura.png);
+
+  }
+  
+  .item-b {
+    background: #be123c;
+        background-image: url(../../../../public/imagen/capturas/listausuarios_cacptura.png);
+
+  }
+  
+  .item-c {
+    background: #4338ca;
+    background-image: url(../../../../public/imagen/capturas/report_captura.png);
+
+  }
+  
+  .item-d {
+    
+    background: #7e22ce;
+    background-image: url(../../../../public/imagen/capturas/report_captura.png);
+  }
+  
+  .item:has(.handle) {
+    position: relative;
+  }
+  
+  .handle {
+    cursor: grab;
+    width: 24px;
+    height: 24px;
+    background-image: url(../../../../public/imagen/capturas/listausuarios_cacptura.png);
+    opacity: 0.5;
+    position: absolute;
+    top: 14px;
+    left: 10px;
+  }
