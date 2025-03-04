@@ -55,7 +55,6 @@ export class ReportEditComponent implements OnChanges {
       attachments: [this.report?.attachments || []] // Asegura que attachments no sea undefined
     });
     this.attachments = this.report?.attachments || [];
-    console.log(this.attachments)
     this.generateThumbnails();
   }
 
@@ -94,8 +93,6 @@ export class ReportEditComponent implements OnChanges {
     } else {
       formData.append("files", new Blob([], { type: "application/json" }));
     }
-  
-    console.log("Datos enviados al backend:", formData);
   
     this.reportService.updateReport(formData).subscribe({
       next: (res) => {
@@ -168,7 +165,6 @@ export class ReportEditComponent implements OnChanges {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     //this.paginatedFiles = this.attachments.slice(startIndex, startIndex + this.pageSize);
     this.paginatedFiles = this.attachments.slice(startIndex, startIndex + this.pageSize) || [];
-    console.log("attachments" + this.paginatedFiles)
   }
 
   nextPage() {

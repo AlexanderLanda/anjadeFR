@@ -1,34 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NoticiaServiceImpl } from '../../Core/Service/Implements/NoticiaServiceImpl';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { QuillModule } from 'ngx-quill';
+import { NoticiasDescripcionComponent } from "../noticias-descripcion/noticias-descripcion.component";
 
 
 @Component({
   selector: 'app-crear-noticias',
   templateUrl: './crear-noticias.component.html',
   styleUrls: ['./crear-noticias.component.css'],standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,FormsModule, QuillModule]
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NoticiasDescripcionComponent]
 })
 export class CrearNoticiasComponent implements OnInit {
+
   noticiaForm: FormGroup;
   archivos: File[] = []; // Almacena los archivos seleccionados
   cargando = false; // Indicador de carga
   mensajeExito = ''; // Mensaje de éxito
   isChecked: boolean = false;
+  isEditing = false;
+  updateDescripcion = '';
 
-  quillConfig = {
-    toolbar: [
-      ['bold', 'italic', 'underline'], // Negrita, cursiva y subrayado
-      [{ list: 'ordered' }, { list: 'bullet' }], // Listas ordenadas y desordenadas
-      ['link'], // Agregar enlaces
-      ['clean'] // Botón para limpiar formato
-    ]
-  };
-  
 
+  private modalInstance: any;
   
 
   constructor(
@@ -56,6 +52,10 @@ export class CrearNoticiasComponent implements OnInit {
       this.noticiaForm.get('linkOriginal')?.updateValueAndValidity();
       this.noticiaForm.get('descripcion')?.updateValueAndValidity();
     });
+    const modalElement = document.getElementById('descripcionModal');
+    if (modalElement) {
+      //this.modalInstance = new bootstrap.Modal(modalElement);
+    }
   }
 
   onSubmit() {
@@ -114,4 +114,17 @@ export class CrearNoticiasComponent implements OnInit {
       // Realiza acciones cuando el checkbox está desmarcado
     }
   }
+  abrirModal() {
+    // Pasar la descripción actual al modal
+    this.modalInstance.show();
+  }
+
+  handleReportUpdated(updatedReport: any | null) {
+      if (updatedReport) {
+        this.updateDescripcion = updatedReport;
+        this.noticiaForm.get('descripcion')?.setValue(this.updateDescripcion);
+      }
+      this.isEditing = false;
+    }
+ 
 }

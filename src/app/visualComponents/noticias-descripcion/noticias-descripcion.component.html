@@ -1,0 +1,21 @@
+<div class="modal fade show d-block" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header card-header">
+        <dt class="card-header text-center justify-content-center">Descripción</dt>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <div class="row  ">
+            <quill-editor [(ngModel)]="descripcionTemporal" [modules]="quillConfig" placeholder="Escribe la descripción aquí..."
+            ></quill-editor>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="reportUpdated.emit(undefined)">Cancelar</button>
+        <button class="btn btn-primary" (click)="reportUpdated.emit(descripcionTemporal)">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

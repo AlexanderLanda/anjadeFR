@@ -1,0 +1,74 @@
+
+.formulario-container {
+  background-color: #f8f9fa;
+  margin-top: 80px;
+}
+
+.card {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.modal-header {
+  background-color: #141414;
+  color: white;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+
+
+.ql-container {
+  font-size: 16px; /* Ajusta el tamaño del texto */
+  min-height: 150px; /* Altura mínima */
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+.ql-toolbar {
+  border-radius: 5px 5px 0 0; /* Bordes redondeados en la parte superior */
+  background-color: #f8f9fa; /* Color de fondo */
+}
+
+.ql-editor {
+  min-height: 450px; /* Evita que sea muy pequeño */
+  max-height: 600px; /* Evita que crezca demasiado */
+  overflow-y: scroll; /* Permite desplazamiento si hay mucho texto */
+}
+
+.ql-editor p {
+  margin-bottom: 10px; /* Agrega espaciado entre párrafos */
+}
+
+button.form-control {
+  text-align: left;
+  background-color: white;
+  border: 1px solid #ced4da;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button.form-control:hover {
+  background-color: #f8f9fa;
+}
+.modal-footer {
+  display: flex;
+  justify-content: space-between; /* Un botón a la izquierda y otro a la derecha */
+  align-items: center;
+  background-color: #f8f9fa; /* Ajusta según el diseño */
+  padding-top: 10px;
+}
+.modal-content{
+  min-height: 350px;
+}
+.modal-body{
+  padding-bottom: 10px;
+  
+}
