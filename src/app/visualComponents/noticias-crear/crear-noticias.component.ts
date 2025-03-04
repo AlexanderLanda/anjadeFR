@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NoticiaServiceImpl } from '../../Core/Service/Implements/NoticiaServiceImpl';
 import { CommonModule } from '@angular/common';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import { QuillModule } from 'ngx-quill';
 
 
 @Component({
   selector: 'app-crear-noticias',
   templateUrl: './crear-noticias.component.html',
   styleUrls: ['./crear-noticias.component.css'],standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,FormsModule]
+  imports: [CommonModule, ReactiveFormsModule,FormsModule, QuillModule]
 })
 export class CrearNoticiasComponent implements OnInit {
   noticiaForm: FormGroup;
@@ -17,6 +18,16 @@ export class CrearNoticiasComponent implements OnInit {
   cargando = false; // Indicador de carga
   mensajeExito = ''; // Mensaje de éxito
   isChecked: boolean = false;
+
+  quillConfig = {
+    toolbar: [
+      ['bold', 'italic', 'underline'], // Negrita, cursiva y subrayado
+      [{ list: 'ordered' }, { list: 'bullet' }], // Listas ordenadas y desordenadas
+      ['link'], // Agregar enlaces
+      ['clean'] // Botón para limpiar formato
+    ]
+  };
+  
 
   
 

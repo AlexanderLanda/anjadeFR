@@ -1,10 +1,9 @@
 .tabla-container {
     margin-top: 20px;
-
   }
   .noticia-card{
     background-color: #dcdfe2;
-
+    border-radius: 8px;
   }
   
   .filtro-card {

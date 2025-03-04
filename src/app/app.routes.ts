@@ -4,7 +4,7 @@ import { RegistroComponent } from './visualComponents/registro/registro.componen
 import FailureComponent from './Core/Service/failure.component';
 import SuccessComponent from './Core/Service/success.component';
 import { AlertaSafariComponent } from './visualComponents/alerta-safari/alerta-safari.component';
-import { CrearNoticiasComponent } from './visualComponents/crear-noticias/crear-noticias.component';
+import { CrearNoticiasComponent } from './visualComponents/noticias-crear/crear-noticias.component';
 import { ForbbidenComponent } from './visualComponents/forbbiden/forbbiden.component';
 import { FormularioComponent } from './visualComponents/formulario/formulario.component';
 import { HomeComponentComponent } from './visualComponents/home-component/home-component.component';
@@ -22,6 +22,8 @@ import { UserCuestionarioDetailsComponent } from './visualComponents/user-cuesti
 import { UserDetailsComponent } from './visualComponents/user-details/user-details.component';
 import { UsuariosTablaComponent } from './visualComponents/usuarios-tabla/usuarios-tabla.component';
 import { EstatutosComponent } from './visualComponents/estatutos/estatutos.component';
+import { NoticiasReaderComponent } from './visualComponents/noticias-reader/noticias-reader.component';
+import { AdminMainComponent } from './visualComponents/admin-main/admin-main.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -55,6 +57,10 @@ export const routes: Routes = [
     component: NoticiasAnjadeComponent,
     data: { tipoNoticia: 'INCIDENCIAS' }
   },
+  { 
+    path: 'noticias-reader/:id', 
+    component: NoticiasReaderComponent,
+  },
   { path: 'create-report', component: ReportFormComponent },
   { 
     path: 'reports', 
@@ -73,6 +79,7 @@ export const routes: Routes = [
   { path: 'user-details/:id', component: UserDetailsComponent },
   { path: 'user-cuestionario/:id', component: UserCuestionarioDetailsComponent },
   { path: 'reenviarPago', component: ReenviarPagoComponent },
+  { path: 'admin-main', component: AdminMainComponent },
   { 
     path: 'crear-noticia', 
     component: CrearNoticiasComponent,

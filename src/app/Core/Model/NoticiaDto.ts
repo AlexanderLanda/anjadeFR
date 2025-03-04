@@ -13,4 +13,5 @@ export interface Noticia {
     nuevoComentario?: string; // Almacena el texto del nuevo comentario que se está escribiendo
     idAfiliacion?: string; // Número de afiliación ingresado para identificar al usuario que comenta
     descripcion?: string;
+    propia: boolean;
   }

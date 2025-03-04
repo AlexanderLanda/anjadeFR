@@ -22,3 +22,24 @@
     border-color: #0056b3;
 }
 
+.ql-container {
+    font-size: 16px; /* Ajusta el tamaño del texto */
+    min-height: 150px; /* Altura mínima */
+    border-radius: 5px; /* Bordes redondeados */
+  }
+  
+  .ql-toolbar {
+    border-radius: 5px 5px 0 0; /* Bordes redondeados en la parte superior */
+    background-color: #f8f9fa; /* Color de fondo */
+  }
+  
+  .ql-editor {
+    min-height: 150px; /* Evita que sea muy pequeño */
+    max-height: 300px; /* Evita que crezca demasiado */
+    overflow-y: auto; /* Permite desplazamiento si hay mucho texto */
+  }
+  
+  .ql-editor p {
+    margin-bottom: 10px; /* Agrega espaciado entre párrafos */
+  }
+  

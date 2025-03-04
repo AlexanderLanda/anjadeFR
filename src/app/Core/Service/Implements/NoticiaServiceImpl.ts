@@ -31,6 +31,11 @@ export class NoticiaServiceImpl {
     return this.http.get<any>(this.apiUrl, { params });
   }
 
+  obtenerNoticiasByID(noticiaId: number): Observable<Noticia> {
+    const url = `${this.apiUrl}/${noticiaId}`;
+    return this.http.get<any>(url);
+  }
+
   obtenerComentarios(noticiaId: number): Observable<Comentario[]> {
     const url = `${this.apiUrl}/${noticiaId}/comentarios`;
     return this.http.get<Comentario[]>(url);

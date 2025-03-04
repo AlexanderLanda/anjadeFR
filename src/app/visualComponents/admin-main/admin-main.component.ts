@@ -7,7 +7,7 @@ import { CrearNoticiasComponent } from "../noticias-crear/crear-noticias.compone
 
 @Component({
   selector: 'app-admin-main',
-  imports: [UsuariosTablaComponent, ReportListComponent, CrearNoticiasComponent],
+  imports: [],
   templateUrl: './admin-main.component.html',
   styleUrl: './admin-main.component.css'
 })
