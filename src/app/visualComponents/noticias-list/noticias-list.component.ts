@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -26,7 +26,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
   templateUrl: './noticias-list.component.html',
   styleUrl: './noticias-list.component.css'
 })
-export class NoticiasListComponent {
+export class NoticiasListComponent implements AfterViewInit{
 
 
    noticias: any[] = [];
@@ -60,7 +60,21 @@ export class NoticiasListComponent {
       this.dataSource.sort = this.sort;
     }
   
-   
+    cargarListadoDeNoticias() {
+      this.noticiaService.obtenerTodasNoticias().subscribe(news => {
+        this.listadoNoticias = news;
+        this.dataSource.data = this.listadoNoticias;
+        this.dataSource.paginator = this.paginator; // Asegúrate de actualizar el paginador después de cargar los datos
+        this.dataSource.sort = this.sort; // Asegúrate de actualizar el ordenamiento después de cargar los datos
+      });
+    }
+
+    onPaginateChange(event: any) {
+      this.paginator.pageIndex = event.pageIndex;
+      this.paginator.pageSize = event.pageSize;
+      this.getPaginatedData();
+    }
+    
   
     createFilter(): (data: any, filter: string) => boolean {
       let filterFunction = function (data: any, filter: string): boolean {
@@ -94,14 +108,7 @@ export class NoticiasListComponent {
       return this.dataSource.filteredData.slice(startIndex, endIndex);
     }
   
-    cargarListadoDeNoticias() {
-      this.noticiaService.obtenerTodasNoticias().subscribe(news => {
-        this.listadoNoticias = news;
-        this.dataSource.data = this.listadoNoticias;
-        this.dataSource.paginator = this.paginator; // Asegúrate de actualizar el paginador después de cargar los datos
-        this.dataSource.sort = this.sort; // Asegúrate de actualizar el ordenamiento después de cargar los datos
-      });
-    }
+    
   
     
     toggleSelectAll(event: Event): void {

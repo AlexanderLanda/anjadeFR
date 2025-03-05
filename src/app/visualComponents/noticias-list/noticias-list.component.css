@@ -24,4 +24,25 @@
     cursor: pointer;
     font-size: 20px;
   }
-  
+  /* Botones de acciones en una sola línea */
+td.actions {
+  display: flex;
+  justify-content: space-between; /* Espaciado entre los botones */
+  align-items: center;
+}
+
+td.actions button {
+  margin-right: 5px; /* Espacio entre los botones */
+}
+
+/* Limitar el ancho de la columna de Título */
+th, td {
+  white-space: nowrap; /* Evitar que el texto se ajuste */
+  overflow: hidden;     /* Ocultar el texto que desborda */
+  text-overflow: ellipsis; /* Agregar '...' al final si el texto es muy largo */
+}
+
+/* Definir un ancho fijo para la columna del título */
+th:nth-child(1), td:nth-child(1) {
+  width: 150px; /* Ajusta este valor según el tamaño que necesites */
+}

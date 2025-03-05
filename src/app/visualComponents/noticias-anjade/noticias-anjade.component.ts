@@ -122,11 +122,6 @@ export class NoticiasAnjadeComponent {
           comentarios: comentarios,
           noticiaId: noticia.id
         };
-        
-/*
-        this.dialog.open(ComentariosModalComponent, {
-          data: { comentarios: comentarios, noticiaId: noticia.id },
-        });*/
       } else {
         alert('No hay comentarios para esta publicación.');
       }

@@ -3,7 +3,7 @@
 </div>
 <div class="modal-body">
   <div *ngIf="comentarios && comentarios.length > 0">
-    <div *ngFor="let comentario of comentarios; trackBy: trackComentario">
+    <div *ngFor="let comentario of comentarios; trackBy: trackComentario;let i = index">
       <div class="comentario">
         <div
           style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; position: relative; max-width: 100%; margin-top: 20px;">
@@ -11,11 +11,21 @@
             style="position: absolute; top: -12px; left: 16px; background-color: white; padding: 0 8px; font-weight: bold; color: #333;">
             {{ comentario.nombre }}
           </div>
-          <p style="margin: 16px 0 0; font-size: 16px; color: #555;">
-            {{ comentario.texto || 'No hay comentarios disponibles.' }}
-          </p>
+          @if (esEdicion) {
+            <input [(ngModel)]="comentario.texto" class="form-control me-2" />
+          }
+          @if (!esEdicion){
+            <p style="margin: 16px 0 0; font-size: 16px; color: #555;">
+              {{ comentario.texto || 'No hay comentarios disponibles.' }}
+            </p>
+          }
+          
         </div>
-        <span class="fechaComentario">{{ comentario.fechaComentario | date: 'short' }}</span>
+        <div class="comentario d-flex justify-content-between align-items-center mt-2">
+          <button *ngIf="esEdicion" class="btn btn-danger btn-sm" (click)="eliminarComentario(comentario.id||0)">Eliminar</button>
+          <span class="fechaComentario text-end">{{ comentario.fechaComentario | date: 'short' }}</span>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -32,11 +42,18 @@
       <div *ngIf="!isUserLoggedIn" class="mt-2">
         <input [(ngModel)]="idAfiliacion" class="form-control" placeholder="Número de afiliación" />
       </div>
+      
       <button class="btn btn-sm btn-success mt-2" (click)="agregarComentario(noticiaId)" [disabled]="isSendingComment">
         <mat-spinner *ngIf="isSendingComment" diameter="20" class="mr-2"></mat-spinner>
         Enviar comentario
       </button>
     </div>
   </div>
-  <button *ngIf="!crearComentario" class="btn btn-sm btn-primary" (click)="toggleComentarioForm()">Comentar</button>
+  @if (esEdicion) {
+    <button  class="btn btn-sm btn-primary" (click)="actualizarComentarios()">Actualizar</button>
+  }
+  @if (!esEdicion) {
+    <button *ngIf="!crearComentario" class="btn btn-sm btn-primary" (click)="toggleComentarioForm()">Comentar</button>
+
+  }
 </div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NoticiaServiceImpl } from '../../Core/Service/Implements/NoticiaServiceImpl';
 import { CommonModule } from '@angular/common';
@@ -7,6 +7,10 @@ import { QuillModule } from 'ngx-quill';
 import { NoticiasDescripcionComponent } from "../noticias-descripcion/noticias-descripcion.component";
 import { Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { Noticia } from '../../Core/Model/NoticiaDto';
+import { ComentariosModalComponent } from '../comentarios-modal/comentarios-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Comentario } from '../../Core/Model/ComentarioDto';
 
 
 
@@ -14,15 +18,16 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/materia
   selector: 'app-crear-noticias',
   templateUrl: './crear-noticias.component.html',
   styleUrls: ['./crear-noticias.component.css'], standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, NoticiasDescripcionComponent,MatDialogModule]
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NoticiasDescripcionComponent, MatDialogModule]
 })
 export class CrearNoticiasComponent implements OnInit {
 
   @Input() noticiaAEditar: any; // Recibe la noticia para editar
   @Output() formularioCerrado = new EventEmitter<void>(); // Evento para notificar al padre
+  comentarios: Comentario[] = [];  // Comentarios de la noticia
   esEdicion: boolean = false; // Saber si está en modo edición
-
-
+  mostrarComentarios = false; // Muestra el formulario de comentarios
+  comentariosSeleccionados : any;
   noticiaForm: FormGroup;
   archivos: File[] = []; // Almacena los archivos seleccionados
   cargando = false; // Indicador de carga
@@ -31,7 +36,7 @@ export class CrearNoticiasComponent implements OnInit {
   isEditing = false;
   updateDescripcion = '';
 
-
+  private modalService = inject(NgbModal);
   private modalInstance: any;
 
 
@@ -51,7 +56,6 @@ export class CrearNoticiasComponent implements OnInit {
   }
   ngOnInit(): void {
     if (this.noticiaAEditar) {
-      console.log(this.noticiaAEditar.comentarios.length)
       this.esEdicion = true;
       this.noticiaForm.patchValue(this.noticiaAEditar);
       this.noticiaForm.get('imagenesLinks')?.setValue(this.noticiaAEditar.imagenes[0].urlImagen) // Llena el formulario con los datos
@@ -158,8 +162,44 @@ export class CrearNoticiasComponent implements OnInit {
     }
     this.isEditing = false;
   }
-  editarComentarios(noticia: any) {
-    console.log('Editar comentarios de:', noticia);
-    // Aquí puedes abrir un modal o mostrar un formulario para editar los comentarios
+
+  
+  cerrarFormulario() {
+    this.mostrarComentarios = false; // Cierra el formulario al recibir el evento
+  
   }
+
+  editarComentarios(noticia: Noticia): void {
+    console.log(noticia.id)
+      if (!noticia.id) {
+        console.error('La noticia no tiene un ID válido.');
+        return;
+      }
+      this.noticiaService.obtenerComentarios(noticia.id).subscribe((comentarios) => {
+        if (comentarios.length > 0) {
+          const modalRef = this.modalService.open(ComentariosModalComponent, {
+            size: 'lg' // Aquí puedes especificar el tamaño u otras opciones de configuración.
+          });
+          
+          // Luego, pasas los datos al modalRef
+          modalRef.componentInstance.data = {
+            comentarios: comentarios,
+            noticiaId: noticia.id,
+            esEdicion : true
+          };
+          // Aquí capturamos el evento que se emite cuando se actualizan los comentarios
+        modalRef.componentInstance.comentariosEditados.subscribe(() => {
+          // Actualizamos los comentarios después de la edición
+        });
+        } else {
+          alert('No hay comentarios para esta publicación.');
+        }
+      });
+    }
+
+    actualizarComentariosEnVista(noticiaId: number): void {
+      this.noticiaService.obtenerComentarios(noticiaId).subscribe((comentarios) => {
+        this.comentarios = comentarios;  // Actualizamos los comentarios en la vista
+      });
+    }
 }

@@ -9,6 +9,8 @@ import { Comentario } from '../../Model/ComentarioDto';
   providedIn: 'root'
 })
 export class NoticiaServiceImpl {
+  
+  
   private apiUrl = environment.apiUrl + 'api/v1/noticias';
 
   constructor(private http: HttpClient) { }
@@ -58,6 +60,17 @@ export class NoticiaServiceImpl {
   }
   actualizarNoticia(id: number, noticia: any) {
     return this.http.put(`${this.apiUrl}/${id}`, noticia);
+  }
+
+  actualizarComentarios(noticiaId: number, comentarios: Comentario[]) {
+    const url = `${this.apiUrl}/${noticiaId}/comentarios`;
+    console.log("COmentario a back:  "+comentarios)
+    return this.http.put<Comentario[]>(url, comentarios);
+  }
+
+  deleteComentarios(id: number) : Observable<any> {
+    const url = `${this.apiUrl}/${id}/comentarios`;
+    return this.http.delete<Comentario>(url);
   }
   
 }
