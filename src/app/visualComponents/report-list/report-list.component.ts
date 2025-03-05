@@ -104,6 +104,29 @@ export class ReportListComponent implements OnInit {
     this.router.navigate(['/report-details', reportId]);
   }
 
+  eliminarReporte(id: number) {
+        Swal.fire({
+          title: '¿Estás seguro?',
+          text: 'Esta acción no se puede deshacer.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Sí, eliminar',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+                if (result.isConfirmed) {
+                  this.reportService.eliminarReporte(id).subscribe({
+                    next: (response) => {
+                      Swal.fire('Eliminado', response.mensaje, 'success');
+                      this.cargarListadoDeReportes();
+                    },
+                    error: (error) => {
+                      Swal.fire('Error', 'No se pudo eliminar el reporte', 'error');
+                    }
+                  });
+                }
+              });
+      }
+
   createFilter(): (data: any, filter: string) => boolean {
     let filterFunction = function (data: any, filter: string): boolean {
       const searchTerms = filter.toLowerCase();

@@ -31,6 +31,12 @@ export class NoticiaServiceImpl {
     return this.http.get<any>(this.apiUrl, { params });
   }
 
+  // Método para obtener todas las noticias
+  obtenerTodasNoticias(): Observable<any> {
+    const url = `${this.apiUrl}/all`;
+    return this.http.get<any>(url);
+  }
+
   obtenerNoticiasByID(noticiaId: number): Observable<Noticia> {
     const url = `${this.apiUrl}/${noticiaId}`;
     return this.http.get<any>(url);
@@ -46,4 +52,12 @@ export class NoticiaServiceImpl {
     console.log("COmentario a back:  "+comentario)
     return this.http.post<Comentario>(url, comentario);
   }
+
+  eliminarNoticia(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'json' });
+  }
+  actualizarNoticia(id: number, noticia: any) {
+    return this.http.put(`${this.apiUrl}/${id}`, noticia);
+  }
+  
 }

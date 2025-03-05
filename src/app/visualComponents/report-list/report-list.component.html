@@ -41,6 +41,7 @@
                     <th scope="col">Provincia</th>
                     <th scope="col">Deportes</th>
                     <th scope="col">Ver</th>
+                    <th scope="col">Acciones</th>
 
                   </tr>
                 </thead>
@@ -61,6 +62,12 @@
                           <i class="fas fa-eye"></i>
                         </button>
                       </td>
+                      <td>
+                        <!-- Botón de Eliminar -->
+                        <button class="btn btn-danger btn-sm" (click)="eliminarReporte(report.id)">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </button>
+                    </td>
                     </tr>
                   }
                 </tbody>

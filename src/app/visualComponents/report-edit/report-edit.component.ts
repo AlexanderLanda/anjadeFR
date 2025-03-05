@@ -5,12 +5,13 @@ import { ReportServiceImpl } from '../../Core/Service/Implements/ReportServiceIm
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import * as pdfjsLib from 'pdfjs-dist';
+import { QuillModule } from 'ngx-quill';
 
 
 @Component({
   selector: 'app-report-edit',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule,QuillModule],
   templateUrl: './report-edit.component.html',
   styleUrl: './report-edit.component.css'
 })
@@ -33,6 +34,16 @@ export class ReportEditComponent implements OnChanges {
   totalPages: number = 0;
   notificationMessage: any;
   notificationType: any;
+
+  quillConfig = {
+    theme: 'snow', // Asegura que el tema de Quill sea el correcto
+      toolbar: [
+        ['bold', 'italic', 'underline'], // Negrita, cursiva y subrayado
+        [{ list: 'ordered' }, { list: 'bullet' }], // Listas ordenadas y desordenadas
+        ['link'], // Agregar enlaces
+        ['clean'] // Botón para limpiar formato
+      ]
+    };
 
 
   constructor(private fb: FormBuilder, private reportService: ReportServiceImpl) { }

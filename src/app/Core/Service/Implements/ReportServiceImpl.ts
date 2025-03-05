@@ -56,6 +56,8 @@ export class ReportServiceImpl {
     return this.http.put<ReportDto>(`${this.apiUrl}/update`, formData);
   }
 
+  eliminarReporte(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'json' });  }
 
   async generateAndDownloadReport(
     dataSource: MatTableDataSource<ReportDto>,

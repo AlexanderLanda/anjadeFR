@@ -18,7 +18,7 @@ export class NoticiasDescripcionComponent implements OnChanges{
 
   descripcionTemporal: string = ''; // Variable para la descripción en el modal
   quillConfig = {
-    theme: 'snow', // Asegura que el tema de Quill sea el correcto
+   // theme: 'snow', // Asegura que el tema de Quill sea el correcto
       toolbar: [
         ['bold', 'italic', 'underline'], // Negrita, cursiva y subrayado
         [{ list: 'ordered' }, { list: 'bullet' }], // Listas ordenadas y desordenadas

@@ -10,7 +10,8 @@
           <div class="mb-3">
             <div class="row card filtro-card ">
               <dt class="card-header text-center justify-content-center">Descripción</dt>
-              <textarea class="form-control" formControlName="descripcion" rows="13"></textarea>
+              <quill-editor formControlName="descripcion" [modules]="quillConfig" placeholder="Escribe la descripción aquí..."
+              ></quill-editor>
             </div>
           </div>
           <div class="accordion" id="accordionExample">

@@ -14,4 +14,6 @@ export interface Noticia {
     idAfiliacion?: string; // Número de afiliación ingresado para identificar al usuario que comenta
     descripcion?: string;
     propia: boolean;
+    selected?: boolean; // Propiedad para el checkbox
+
   }

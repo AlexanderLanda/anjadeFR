@@ -24,6 +24,7 @@ import { UsuariosTablaComponent } from './visualComponents/usuarios-tabla/usuari
 import { EstatutosComponent } from './visualComponents/estatutos/estatutos.component';
 import { NoticiasReaderComponent } from './visualComponents/noticias-reader/noticias-reader.component';
 import { AdminMainComponent } from './visualComponents/admin-main/admin-main.component';
+import { NoticiasListComponent } from './visualComponents/noticias-list/noticias-list.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -83,6 +84,12 @@ export const routes: Routes = [
   { 
     path: 'crear-noticia', 
     component: CrearNoticiasComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['presidente', 'comisionados', 'secretario', 'administrador', 'abogados'] }
+  },
+  { 
+    path: 'admin-noticia', 
+    component: NoticiasListComponent,
     canActivate: [AuthGuard],
     data: { roles: ['presidente', 'comisionados', 'secretario', 'administrador', 'abogados'] }
   },
