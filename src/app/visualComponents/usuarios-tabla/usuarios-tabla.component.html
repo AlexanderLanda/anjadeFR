@@ -47,7 +47,7 @@
                   <th scope="col">Estado cuenta</th>
                   <th scope="col">Rol de Afiliado</th>
                   <th scope="col">Detalles</th>
-                  <th scope="col">Editar</th>
+                  <th scope="col">Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -65,13 +65,13 @@
                     <td>{{element.estadoCuenta.estado}}</td>
                     <td>{{element.usuariorol.descripcion}}</td>
                     <td>
-                      <button (click)="viewUserDetails(element.id_user)" class="btn btn-link">
+                      <button (click)="viewUserDetails(element.id_user)" class="btn btn-outline-primary btn-sm">
                         <i class="fas fa-eye"></i>
                       </button>
                     </td>
                     <td>
-                      <button class="btn btn-outline-primary btn-sm" (click)="editarFila(element)">
-                        <i class="bi bi-pencil"></i>
+                      <button class="btn btn-warning btn-sm me-2" (click)="editarFila(element)">
+                        <i class="bi bi-pencil"></i> Editar
                       </button>
                     </td>
                   </tr>

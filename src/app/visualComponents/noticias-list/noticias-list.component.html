@@ -6,22 +6,22 @@
 
     <div class="row">
         <!-- Columna de botones (col-3) -->
-      <div class="col-md-3 pe-0 order-1 order-md-0">
-        <div class="card p-3 mb-3">
-          <h5 class="text-center">Filtro</h5>
-          <input type="text" class="form-control" id="filtro" (keyup)="filtrar($event)"
-            placeholder="Teclee el valor de la columna por la que desee filtrar" required />
+        <div class="col-md-2 pe-0 order-1 order-md-0">
+            <div class="card p-3 mb-3">
+                <h5 class="text-center">Filtro</h5>
+                <input type="text" class="form-control" id="filtro" (keyup)="filtrar($event)"
+                    placeholder="Teclee el valor de la columna por la que desee filtrar" required />
+            </div>
+            <div class="card p-3 mb-3">
+                <button class="btn btn-success w-100 mb-2" (click)="insertarNoticia()">
+                    <i class="fas fa-plus me-2"></i> Crear nueva Noticia
+                </button>
+
+            </div>
         </div>
-        <div class="card p-3 mb-3">
-          <button class="btn btn-success w-100 mb-2" (click)="insertarNoticia()">
-            <i class="fas fa-plus me-2"></i> Crear nueva Noticia 
-          </button>
-          
-        </div>
-      </div>
-      
+
         <!-- Columna de la tabla (col-9) -->
-        <div class="col-md-9 order-0 order-md-1">
+        <div class="col-md-10 order-0 order-md-1">
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -47,8 +47,7 @@
                                     <td>{{ noticia.tipo }}</td>
                                     <td>{{ noticia.propia ? 'Propia' : 'Externa' }}</td>
                                     <td>
-                                        <button class="btn btn-outline-primary btn-sm"
-                                            (click)="viewDetails(noticia)">
+                                        <button class="btn btn-outline-primary btn-sm" (click)="viewDetails(noticia)">
                                             <i class="fas fa-eye"></i>
                                         </button>
                                     </td>
@@ -70,20 +69,16 @@
                     </div>
                     <nav aria-label="Page navigation">
                         <mat-paginator [length]="dataSource.filteredData.length" [pageSize]="10"
-                          [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-                      </nav>
-                      
+                        [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+                    </nav>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
-    <div class="d-flex justify-content-between align-items-center mb-3 modal-crear">
-      <app-crear-noticias 
-        *ngIf="mostrarFormulario" 
-        [noticiaAEditar]="noticiaSeleccionada"
-        (formularioCerrado)="cerrarFormulario()"
-        class="w-100"
-      ></app-crear-noticias>
-    </div>
-  
+<div class="d-flex justify-content-between align-items-center mb-3 modal-crear">
+    <app-crear-noticias *ngIf="mostrarFormulario" [noticiaAEditar]="noticiaSeleccionada"
+        (formularioCerrado)="cerrarFormulario()" class="w-100"></app-crear-noticias>
+</div>

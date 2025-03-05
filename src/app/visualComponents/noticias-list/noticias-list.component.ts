@@ -59,15 +59,22 @@ export class NoticiasListComponent implements AfterViewInit{
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
+    
+    
   
     cargarListadoDeNoticias() {
       this.noticiaService.obtenerTodasNoticias().subscribe(news => {
         this.listadoNoticias = news;
         this.dataSource.data = this.listadoNoticias;
-        this.dataSource.paginator = this.paginator; // Asegúrate de actualizar el paginador después de cargar los datos
-        this.dataSource.sort = this.sort; // Asegúrate de actualizar el ordenamiento después de cargar los datos
+        
+        // Esperar al siguiente ciclo del DOM para asignar el paginador
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        });
       });
     }
+    
 
     onPaginateChange(event: any) {
       this.paginator.pageIndex = event.pageIndex;
@@ -106,6 +113,10 @@ export class NoticiasListComponent implements AfterViewInit{
       const startIndex = this.paginator ? this.paginator.pageIndex * this.paginator.pageSize : 0;
       const endIndex = startIndex + (this.paginator ? this.paginator.pageSize : 10);
       return this.dataSource.filteredData.slice(startIndex, endIndex);
+    }
+    
+    areAllVisibleRowsSelected(): boolean {
+      return this.getPaginatedData().every(row => row.selected);
     }
   
     

@@ -40,8 +40,8 @@
                       (click)="editarComentarios(noticiaAEditar)">
                       <i class="bi bi-pencil"></i> Editar Comentarios
                     </button>
-                    @if (!isEditing){
-                    <label *ngIf="!isEditing" class="form-check-label me-2" for="isPropia"
+                    @if (!esEdicion){
+                    <label *ngIf="!esEdicion" class="form-check-label me-2" for="isPropia"
                       placeholder="Marque la casilla si la noticia es nuestra.">
                       Fuente Propia
                     </label>

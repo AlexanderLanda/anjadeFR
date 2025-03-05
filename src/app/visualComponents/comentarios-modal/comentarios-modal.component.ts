@@ -63,6 +63,7 @@ export class ComentariosModalComponent implements OnInit {
  */ ) { }
 
   ngOnInit() {
+    this.isSendingComment = true;
     this.isUserLoggedIn = this.authService.isUserLoggedIn();
     // Si está logueado, obtenemos el idAfiliacion del usuario
     if (this.isUserLoggedIn) {
@@ -100,6 +101,8 @@ export class ComentariosModalComponent implements OnInit {
         this.comentariosConNombres = [];
       }
     }
+    this.isSendingComment = false;
+
   }
 
   // Cerrar la modal
