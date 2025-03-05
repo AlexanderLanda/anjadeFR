@@ -1,7 +1,7 @@
 <!-- Botón flotante de ayuda -->
 @if (ayudas.length > 0) {
   <div  id="help-button" (click)="toggleChatbot()">
-    <i class="fa fa-question-circle"></i>
+    <i class="fa fa-question-circle" data-bs-toggle="tooltip" title="Ayudas"></i>
   </div>
 }
 
@@ -10,7 +10,7 @@
   <div id="chatbot-container">
     <div id="chatbot-header">
       <span>Centro de Ayuda</span>
-      <button (click)="toggleChatbot()">X</button>
+      <button (click)="toggleChatbot()" >X</button>
     </div>
     <div id="chatbot-body">
       <ul>

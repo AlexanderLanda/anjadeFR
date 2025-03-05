@@ -48,7 +48,6 @@
                   <h3 class="noticia-titulo">
                     <a [href]="noticia.linkOriginal" target="_blank">{{ noticia.titulo }}</a>
                   </h3>
-                  <p>{{ noticia.descripcion }}</p>
                   <div class="noticia-footer">
                     <span class="fecha-noticia">{{ noticia.fechaInsercion | date: 'longDate' }}</span>
                   </div>
@@ -63,8 +62,8 @@
                         </p>
                       </div>
                       @if ((noticia.comentarios?.length ?? 0) > 0) {
-                        <button class="btn btn-sm btn-primary comentario" (click)="mostrarComentarios(noticia)">
-                          Ver todos los comentarios ({{ noticia.comentarios?.length }})
+                        <button class="btn btn-sm btn-primary comentario" (click)="mostrarComentarios(noticia)" data-bs-toggle="tooltip" title="Ver Comentarios">
+                          <i class="fas fa-comment"></i>({{ noticia.comentarios?.length }})
                         </button>
                       }
                       <!-- Mostrar "Agregar comentario" si no hay comentarios -->

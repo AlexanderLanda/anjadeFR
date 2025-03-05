@@ -17,6 +17,7 @@ import { EmailModalComponent } from '../email-modal/email-modal.component';
 import { SendEmailServiceImpl } from '../../Core/Service/Implements/SendEmailServiceImpl';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import Swal from 'sweetalert2'
+import { ReportEditComponent } from "../report-edit/report-edit.component";
 
 
 @Component({
@@ -27,10 +28,12 @@ import Swal from 'sweetalert2'
   imports: [CommonModule, MatPaginatorModule, MatTableModule,
     MatSortModule,
     MatInputModule,
-    FormsModule,MatProgressBarModule
-  ]
+    FormsModule, MatProgressBarModule, ]
 })
 export class ReportListComponent implements OnInit {
+  report: any;
+  isEditing = false;
+
   reports: any[] = [];
   dataSource: MatTableDataSource<ReportDto>;
 
@@ -226,5 +229,12 @@ export class ReportListComponent implements OnInit {
         }
         this.isLoading=false;
       });
+    }
+    handleReportUpdated(updatedReport: ReportDto | null) {
+      if (updatedReport) {
+        this.report = updatedReport;
+        location.reload(); // Recarga la página completamente
+      }
+      this.isEditing = false;
     }
 }

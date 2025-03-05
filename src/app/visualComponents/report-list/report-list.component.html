@@ -40,11 +40,11 @@
                     <th scope="col">Teléfono</th>
                     <th scope="col">Provincia</th>
                     <th scope="col">Deportes</th>
-                    <th scope="col">Ver</th>
                     <th scope="col">Acciones</th>
 
                   </tr>
                 </thead>
+                
                 <tbody>
                   @for (report of getPaginatedData(); track report) {
                     <tr>
@@ -58,15 +58,15 @@
                       <td>{{ report.provincia?.descripcion}}</td>
                       <td>{{ report.deporte?.nombre }}</td>
                       <td>
-                        <button class="btn btn-outline-primary btn-sm" (click)="viewDetails(report.id)">
+                        <div class="d-flex justify-content-start">
+                        <button class="btn btn-outline-primary btn-sm me-2" (click)="viewDetails(report.id)">
                           <i class="fas fa-eye"></i>
                         </button>
-                      </td>
-                      <td>
                         <!-- Botón de Eliminar -->
-                        <button class="btn btn-danger btn-sm" (click)="eliminarReporte(report.id)">
-                            <i class="bi bi-trash"></i> Eliminar
+                        <button class="btn btn-danger btn-sm me-2" (click)="eliminarReporte(report.id)">
+                            <i class="fas fa-trash"></i> 
                         </button>
+                        </div>
                     </td>
                     </tr>
                   }
