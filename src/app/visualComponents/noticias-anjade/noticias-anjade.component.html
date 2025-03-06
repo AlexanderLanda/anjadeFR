@@ -45,9 +45,15 @@
                   }
                 </div>
                 <div class="col-md-8">
-                  <h3 class="noticia-titulo">
-                    <a [href]="noticia.linkOriginal" target="_blank">{{ noticia.titulo }}</a>
-                  </h3>
+                  @if (noticia.propia) {
+                    <h3 class="noticia-titulo">
+                      <a (click)="viewDetails($event, noticia.id ? noticia.id : 1)">{{ noticia.titulo }}</a>
+                    </h3>
+                  }@else{
+                    <h3 class="noticia-titulo">
+                      <a [href]="noticia.linkOriginal" target="_blank">{{ noticia.titulo }}</a>
+                    </h3>
+                  }
                   <div class="noticia-footer">
                     <span class="fecha-noticia">{{ noticia.fechaInsercion | date: 'longDate' }}</span>
                   </div>

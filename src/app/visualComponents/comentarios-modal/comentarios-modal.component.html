@@ -6,7 +6,7 @@
 <div class="modal-body">
   <div *ngIf="comentarios && comentarios.length > 0">
     <div *ngFor="let comentario of comentarios; trackBy: trackComentario;let i = index">
-      <div class="comentario">
+      <div class=" row comentario">
         <div
           style="border: 1px solid #ccc; border-radius: 8px; padding: 16px; position: relative; max-width: 100%; margin-top: 20px;">
           <div
@@ -14,20 +14,25 @@
             {{ comentario.nombre }}
           </div>
           @if (esEdicion) {
-            <input [(ngModel)]="comentario.texto" class="form-control me-2" />
-          }
+          <div class="row">
+            <div class="col-11">
+              <input [(ngModel)]="comentario.texto" class="form-control me-2" />
+            </div>
+            <div class=" col-1 comentario d-flex justify-content-between align-items-center mt-2">
+              <button *ngIf="esEdicion" class="btn btn-danger btn-sm me-2" (click)="eliminarComentario(comentario.id||0)"><i
+                  class="fas fa-trash"></i></button>
+            </div>
+          </div>
+        }
           @if (!esEdicion){
-            <p style="margin: 16px 0 0; font-size: 16px; color: #555;">
-              {{ comentario.texto || 'No hay comentarios disponibles.' }}
-            </p>
+          <p style="margin: 16px 0 0; font-size: 16px; color: #555;">
+            {{ comentario.texto || 'No hay comentarios disponibles.' }}
+          </p>
           }
           
         </div>
-        <div class="comentario d-flex justify-content-between align-items-center mt-2">
-          <button *ngIf="esEdicion" class="btn btn-danger btn-sm" (click)="eliminarComentario(comentario.id||0)">Eliminar</button>
-          <span class="fechaComentario text-end">{{ comentario.fechaComentario | date: 'short' }}</span>
-        </div>
-        
+        <span class="fechaComentario text-end">{{ comentario.fechaComentario | date: 'short' }}</span>
+
       </div>
     </div>
   </div>
@@ -36,7 +41,7 @@
   </div>
 </div>
 
-<div class="modal-footer"> 
+<div class="modal-footer">
   <div class="comentarios" *ngIf="crearComentario">
     <div class="row mt-2">
       <textarea [(ngModel)]="comentarioTexto" class="form-control" rows="3"
@@ -44,7 +49,7 @@
       <div *ngIf="!isUserLoggedIn" class="mt-2">
         <input [(ngModel)]="idAfiliacion" class="form-control" placeholder="Número de afiliación" />
       </div>
-      
+
       <button class="btn btn-sm btn-success mt-2" (click)="agregarComentario(noticiaId)" [disabled]="isSendingComment">
         <mat-spinner *ngIf="isSendingComment" diameter="20" class="mr-2"></mat-spinner>
         Enviar comentario
@@ -52,10 +57,10 @@
     </div>
   </div>
   @if (esEdicion) {
-    <button  class="btn btn-sm btn-primary" (click)="actualizarComentarios()">Actualizar</button>
+  <button class="btn btn-sm btn-primary" (click)="actualizarComentarios()">Actualizar <i class="fas fa-save"></i></button>
   }
   @if (!esEdicion) {
-    <button *ngIf="!crearComentario" class="btn btn-sm btn-primary" (click)="toggleComentarioForm()">Comentar</button>
+  <button *ngIf="!crearComentario" class="btn btn-sm btn-primary" (click)="toggleComentarioForm()">Comentar</button>
 
   }
 </div>

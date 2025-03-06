@@ -13,6 +13,14 @@
                     <small class="text-muted">
                         <i class="bi bi-calendar"></i> {{ noticia.fechaInsercion | date:'MMMM d, y' }}
                     </small>
+                    <button *ngIf="noticia.tipo === 'INCIDENCIAS'" 
+        class="btn btn-sm btn-primary comentario" 
+        (click)="mostrarComentarios(noticia)" 
+        data-bs-toggle="tooltip" 
+        title="Ver Comentarios">
+    <i class="fas fa-comment"></i>({{ noticia.comentarios?.length }})
+</button>
+
                 </div>
                 <h1 class="card-title">{{ noticia.titulo }}</h1>
 

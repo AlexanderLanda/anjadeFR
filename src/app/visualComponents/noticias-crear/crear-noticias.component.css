@@ -1,6 +1,5 @@
 .formulario-container {
     background-color: #f8f9fa;
-    margin-top: 80px;
 }
 
 .card {
@@ -34,7 +33,6 @@
   }
   .modal-container {
     width: auto;
-    padding: 20px;
     background: white;
     border-radius: 8px;
   }

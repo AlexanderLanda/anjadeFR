@@ -56,10 +56,12 @@ export class CrearNoticiasComponent implements OnInit {
   }
   ngOnInit(): void {
     if (this.noticiaAEditar) {
+      console.log(this.noticiaAEditar)
       this.esEdicion = true;
       this.noticiaForm.patchValue(this.noticiaAEditar);
       this.noticiaForm.get('imagenesLinks')?.setValue(this.noticiaAEditar.imagenes[0].urlImagen) // Llena el formulario con los datos
-      this.isChecked = this.noticiaAEditar.isPropia;
+      this.noticiaForm.get('descripcion')?.setValue(this.noticiaAEditar.descripcion || '');
+      this.isChecked = this.noticiaAEditar.propia;
     }
 
     this.noticiaForm.get('fuentePropia')?.valueChanges.subscribe(value => {
@@ -201,5 +203,13 @@ export class CrearNoticiasComponent implements OnInit {
       this.noticiaService.obtenerComentarios(noticiaId).subscribe((comentarios) => {
         this.comentarios = comentarios;  // Actualizamos los comentarios en la vista
       });
+    }
+    goBack(){
+      if(this.esEdicion){
+        window.location.reload();
+      }
+      this.router.navigate(['/admin-noticia']); 
+
+
     }
 }

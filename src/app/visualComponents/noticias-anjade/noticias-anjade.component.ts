@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NoticiaServiceImpl } from '../../Core/Service/Implements/NoticiaServiceImpl';
 import { AuthService } from '../../Core/Service/Implements/AuthService';
@@ -26,6 +26,9 @@ export class NoticiasAnjadeComponent {
   private route = inject(ActivatedRoute);
   private authService = inject(AuthService);
   private dialog = inject(MatDialog);
+  private router = inject(Router);
+  private modalService = inject(NgbModal);
+
 
   noticias: Noticia[] = [];
   paginaActual = 0;
@@ -40,7 +43,6 @@ export class NoticiasAnjadeComponent {
   comentarioTexto = '';
   idAfiliacion = '';
   isUserLoggedIn = false;
-  private modalService = inject(NgbModal);
 
 
   constructor() {
@@ -168,5 +170,11 @@ export class NoticiasAnjadeComponent {
         console.error('Error al agregar comentario', error);
       }
     );
+  }
+
+  viewDetails(event: Event, id: number) {
+    event.preventDefault();
+    console.log(id)
+    this.router.navigate(['/noticias-reader', id]);
   }
 }

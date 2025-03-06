@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
 import { ReportDto } from '../../Core/Model/ReportDto';
@@ -13,7 +13,8 @@ import { ReportDto } from '../../Core/Model/ReportDto';
 })
 export class NoticiasDescripcionComponent implements OnChanges{
 
-    @Output() reportUpdated = new EventEmitter<string>();
+  @Input() descripcion: string = ''; // Recibe la descripción inicial
+  @Output() reportUpdated = new EventEmitter<string>();
   
 
   descripcionTemporal: string = ''; // Variable para la descripción en el modal
@@ -34,11 +35,13 @@ export class NoticiasDescripcionComponent implements OnChanges{
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-      throw new Error('Method not implemented.');
+      if (changes['descripcion']) {
+        console.log("Nueva descripción:", this.descripcion);
+      }
     }
 
     guardarDescripcion() {
-      this.reportUpdated.emit(this.descripcionTemporal);
+      this.reportUpdated.emit(this.descripcion);
 
       // Guardar el contenido del modal en el formulario
      // this.noticiaForm.patchValue({ descripcion: this.descripcionTemporal });

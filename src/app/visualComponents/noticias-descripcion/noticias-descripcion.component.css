@@ -19,24 +19,11 @@
   border-color: #0056b3;
 }
 
-
-
-.ql-container {
-  font-size: 16px; /* Ajusta el tamaño del texto */
-  min-height: 150px; /* Altura mínima */
-  border-radius: 5px; /* Bordes redondeados */
-}
-
 .ql-toolbar {
   border-radius: 5px 5px 0 0; /* Bordes redondeados en la parte superior */
   background-color: #f8f9fa; /* Color de fondo */
 }
 
-.ql-editor {
-  min-height: 150px; /* Evita que sea muy pequeño */
-  max-height: 300px; /* Evita que crezca demasiado */
-  overflow-y: scroll; /* Permite desplazamiento si hay mucho texto */
-}
 
 .ql-editor p {
   margin-bottom: 10px; /* Agrega espaciado entre párrafos */
@@ -61,3 +48,36 @@ button.form-control:hover {
   background-color: #f8f9fa; /* Ajusta según el diseño */
   padding-top: 10px;
 }
+.modal-full-height {
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-container {
+  flex-grow: 1; /* Hace que el contenido crezca */
+  display: flex;
+  flex-direction: column;
+}
+
+.ql-container {
+  flex-grow: 1;
+  height: 100%; /* Ocupará todo el espacio disponible */
+}
+
+.ql-editor {
+  overflow-y: auto;
+  
+}
+

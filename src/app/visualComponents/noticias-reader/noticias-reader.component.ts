@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { NoticiaServiceImpl } from '../../Core/Service/Implements/NoticiaServiceImpl';
 import { Noticia } from '../../Core/Model/NoticiaDto';
 import { CommonModule,Location } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ComentariosModalComponent } from '../comentarios-modal/comentarios-modal.component';
 
 @Component({
   selector: 'app-noticias-reader',
@@ -17,6 +19,7 @@ export class NoticiasReaderComponent {
   private noticiaService = inject(NoticiaServiceImpl);
   private route = inject(ActivatedRoute);
   private location = inject(Location);
+  private modalService = inject(NgbModal);
 
 
   constructor() { }
@@ -68,4 +71,25 @@ export class NoticiasReaderComponent {
 
 }
 
+mostrarComentarios(noticia: Noticia): void {
+    if (!noticia.id) {
+      console.error('La noticia no tiene un ID válido.');
+      return;
+    }
+    this.noticiaService.obtenerComentarios(noticia.id).subscribe((comentarios) => {
+      if (comentarios.length > 0) {
+        const modalRef = this.modalService.open(ComentariosModalComponent, {
+          size: 'lg' // Aquí puedes especificar el tamaño u otras opciones de configuración.
+        });
+        
+        // Luego, pasas los datos al modalRef
+        modalRef.componentInstance.data = {
+          comentarios: comentarios,
+          noticiaId: noticia.id
+        };
+      } else {
+        alert('No hay comentarios para esta publicación.');
+      }
+    });
+  }
 }
