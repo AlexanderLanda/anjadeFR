@@ -23,6 +23,8 @@ export class NoticiasGridComponent implements OnInit {
   private router = inject(Router);
 
   noticias: Noticia[] = [];
+  noticiasOriginales: Noticia[] = []; // Copia de la lista original
+
   paginaActual = 0;
   noticiasPorPagina = 9;
   totalPaginas = 0;
@@ -47,7 +49,7 @@ export class NoticiasGridComponent implements OnInit {
       .subscribe(
         (response: any) => {
           this.noticias = response.content;
-          console.log(this.noticias);
+          this.noticiasOriginales = [...response.content]; // ✅ Guardamos la copia original
           this.noticiasPaginadas = this.noticias.slice(0, 8);
         },
         (error) => {
@@ -112,4 +114,19 @@ export class NoticiasGridComponent implements OnInit {
     console.log(id)
     this.router.navigate(['/noticias-reader', id]);
   }
+
+  // 🔹 Método para filtrar dinámicamente sin perder datos originales
+filtrar(event: Event) {
+  const filtro = (event.target as HTMLInputElement).value.toLowerCase();
+
+  if (filtro.trim() === '') {
+    this.noticias = [...this.noticiasOriginales]; // ✅ Restauramos la lista original
+    return;
+  }
+
+  this.noticias = this.noticiasOriginales.filter(noticia =>
+    noticia.titulo.toLowerCase().includes(filtro) ||
+    noticia.descripcion?.toLowerCase().includes(filtro)
+  );
+}
 }

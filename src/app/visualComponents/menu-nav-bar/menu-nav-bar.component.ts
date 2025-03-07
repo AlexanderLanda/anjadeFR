@@ -70,7 +70,7 @@ export class MenuNavBarComponent implements OnInit, OnDestroy {
   }
 
   downloadEstatutos() {
-    const url = 'documentos/estatutos.docx';
+    const url = 'ficheros/documentos/estatutos.docx';
     window.location.href = url;
     console.log('Descarga realizada con éxito');
   }

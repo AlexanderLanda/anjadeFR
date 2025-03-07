@@ -1,15 +1,28 @@
 <div class="component-container">
   <div class="container">
-    <h2 class="mt-5 mb-4">
-      {{
-      tipoNoticia === 'PARTICULAR'
-      ? 'Últimas Noticias Anjade'
-      : tipoNoticia === 'GENERAL'
-      ? 'Últimas Noticias Deportivas'
-      : 'Últimas Noticias Incidencias'
-      }}
-    </h2>
-
+   
+    <div class="row">
+      <div class="col-6">
+        <!-- Título dinámico basado en el tipo de noticia -->
+        <h2 >
+          {{
+          tipoNoticia === 'PARTICULAR'
+          ? 'Últimas Noticias Anjade'
+          : tipoNoticia === 'GENERAL'
+          ? 'Últimas Noticias Deportivas'
+          : 'Noticias Incidencias'
+          }}
+        </h2>
+      </div>
+      <div class="col-6 text-end">
+        <div class="position-relative">
+          <input type="text" class="form-control pe-5" id="filtro" (keyup)="filtrar($event)"
+            placeholder="Teclee el título de la noticia" required />
+          <i class="fa fa-search position-absolute top-50 end-0 translate-middle-y me-3"></i>
+        </div>
+      </div>
+      
+    </div>
     <div class="container-md py-4 formulario-container">
     @for (noticia of noticias; track noticia) {
       <div class="container py-2">

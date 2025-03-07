@@ -31,6 +31,8 @@ export class NoticiasAnjadeComponent {
 
 
   noticias: Noticia[] = [];
+  noticiasOriginales: Noticia[] = []; // Copia de la lista original
+
   paginaActual = 0;
   tamanioPagina = 10;
   totalPaginas = 0;
@@ -65,7 +67,7 @@ export class NoticiasAnjadeComponent {
       .subscribe(
         (response: any) => {
           this.noticias = response.content;
-          console.log(this.noticias);
+          this.noticiasOriginales = [...response.content]; // ✅ Guardamos la copia original
         },
         (error) => {
           console.error('Error al cargar noticias', error);
@@ -177,4 +179,21 @@ export class NoticiasAnjadeComponent {
     console.log(id)
     this.router.navigate(['/noticias-reader', id]);
   }
+  filtrar(event: Event) {
+    const filtro = (event.target as HTMLInputElement).value.toLowerCase();
+    
+    if (filtro.trim() === '') {
+      this.noticias = [...this.noticiasOriginales]; // ✅ Restauramos la lista original
+      return;
+    }
+  
+    this.noticias = this.noticiasOriginales.filter(noticia =>
+      noticia.titulo.toLowerCase().includes(filtro) ||
+      noticia.descripcion?.toLowerCase().includes(filtro) ||
+      noticia.comentarios?.some(comentario =>
+        comentario.texto.toLowerCase().includes(filtro)
+      )
+    );
+  }
+  
 }
