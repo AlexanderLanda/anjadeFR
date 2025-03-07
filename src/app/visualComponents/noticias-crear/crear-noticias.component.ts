@@ -31,7 +31,7 @@ export class CrearNoticiasComponent implements OnInit {
   isImagenPropia: boolean = false;
   esEdicion: boolean = false; // Saber si está en modo edición
   mostrarComentarios = false; // Muestra el formulario de comentarios
-  comentariosSeleccionados : any;
+  comentariosSeleccionados: any;
   noticiaForm: FormGroup;
   archivos: File[] = []; // Almacena los archivos seleccionados
   cargando = false; // Indicador de carga
@@ -99,29 +99,34 @@ export class CrearNoticiasComponent implements OnInit {
           this.mensajeExito = '';
           const noticiaData = this.noticiaForm.value;
           noticiaData.isPropia = this.isChecked;
-          if(this.isImagenPropia){
+          if (this.isImagenPropia) {
             if (this.files.length > 0 && this.files[0]) {
-              const link = RUTAS_ARCHIVOS.NOTICIAS_URL+this.files[0].name;
+              const link = RUTAS_ARCHIVOS.NOTICIAS_URL + this.files[0].name;
               noticiaData.imagenesLinks = link;
-              this.uploadFilesService.uploadFiles(this.files,RUTAS_ARCHIVOS.NOTICIAS);
-              console.log("El archivo en la posición 0 existe:", this.files[0].name);
-          } else {
+              this.uploadFilesService.uploadFiles(this.files, RUTAS_ARCHIVOS.NOTICIAS).subscribe({
+                next: () => {
+                  Swal.fire("Imagen subida correctamente!", "", "success");
+                  this.files = [];
+                },
+                error: (err) => Swal.fire("Error al subir el archivo"+err, "", "error")
+              });
+            } else {
               Swal.fire("Error debe elegir alguna imagen para la portada de la noticia", "", "error");
               this.cargando = true;
               return;
-          }
+            }
           }
           const imagenesArray = noticiaData.imagenesLinks.split(',').map((link: string) => link.trim());
 
           if (this.esEdicion) {
             // Si está en modo edición
-            this.noticiaService.actualizarNoticia(this.noticiaAEditar.id,{ ...noticiaData, imagenes: imagenesArray }).subscribe(
+            this.noticiaService.actualizarNoticia(this.noticiaAEditar.id, { ...noticiaData, imagenes: imagenesArray }).subscribe(
               response => {
                 console.error('Noticia actualizada correctamente', response);
 
                 this.cargando = false;
                 Swal.fire("Noticia actualizada correctamente!", "", "success");
-                this.router.navigate(['/admin-noticia']); 
+                this.router.navigate(['/admin-noticia']);
                 this.formularioCerrado.emit();
               },
               error => {
@@ -156,7 +161,7 @@ export class CrearNoticiasComponent implements OnInit {
       } else if (result.isDenied) {
         Swal.fire("La noticia no ha sido publicada.", "", "info");
         this.formularioCerrado.emit();
-        this.isEditing=false
+        this.isEditing = false
       }
     });
 
@@ -199,51 +204,51 @@ export class CrearNoticiasComponent implements OnInit {
     this.isEditing = false;
   }
 
-  
+
   cerrarFormulario() {
     this.mostrarComentarios = false; // Cierra el formulario al recibir el evento
-  
+
   }
 
   editarComentarios(noticia: Noticia): void {
     console.log(noticia.id)
-      if (!noticia.id) {
-        console.error('La noticia no tiene un ID válido.');
-        return;
-      }
-      this.noticiaService.obtenerComentarios(noticia.id).subscribe((comentarios) => {
-        if (comentarios.length > 0) {
-          const modalRef = this.modalService.open(ComentariosModalComponent, {
-            size: 'lg' // Aquí puedes especificar el tamaño u otras opciones de configuración.
-          });
-          
-          // Luego, pasas los datos al modalRef
-          modalRef.componentInstance.data = {
-            comentarios: comentarios,
-            noticiaId: noticia.id,
-            esEdicion : true
-          };
-          // Aquí capturamos el evento que se emite cuando se actualizan los comentarios
+    if (!noticia.id) {
+      console.error('La noticia no tiene un ID válido.');
+      return;
+    }
+    this.noticiaService.obtenerComentarios(noticia.id).subscribe((comentarios) => {
+      if (comentarios.length > 0) {
+        const modalRef = this.modalService.open(ComentariosModalComponent, {
+          size: 'lg' // Aquí puedes especificar el tamaño u otras opciones de configuración.
+        });
+
+        // Luego, pasas los datos al modalRef
+        modalRef.componentInstance.data = {
+          comentarios: comentarios,
+          noticiaId: noticia.id,
+          esEdicion: true
+        };
+        // Aquí capturamos el evento que se emite cuando se actualizan los comentarios
         modalRef.componentInstance.comentariosEditados.subscribe(() => {
           // Actualizamos los comentarios después de la edición
         });
-        } else {
-          alert('No hay comentarios para esta publicación.');
-        }
-      });
-    }
-
-    actualizarComentariosEnVista(noticiaId: number): void {
-      this.noticiaService.obtenerComentarios(noticiaId).subscribe((comentarios) => {
-        this.comentarios = comentarios;  // Actualizamos los comentarios en la vista
-      });
-    }
-    goBack(){
-      if(this.esEdicion){
-        window.location.reload();
+      } else {
+        alert('No hay comentarios para esta publicación.');
       }
-      this.router.navigate(['/admin-noticia']); 
+    });
+  }
 
-
+  actualizarComentariosEnVista(noticiaId: number): void {
+    this.noticiaService.obtenerComentarios(noticiaId).subscribe((comentarios) => {
+      this.comentarios = comentarios;  // Actualizamos los comentarios en la vista
+    });
+  }
+  goBack() {
+    if (this.esEdicion) {
+      window.location.reload();
     }
+    this.router.navigate(['/admin-noticia']);
+
+
+  }
 }

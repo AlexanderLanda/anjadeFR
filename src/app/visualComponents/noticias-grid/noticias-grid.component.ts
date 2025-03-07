@@ -86,10 +86,10 @@ export class NoticiasGridComponent implements OnInit {
       if (imagen.urlImagen) {
         return imagen.urlImagen;
       } else if (imagen.name) {
-        return `ficheros/imagen/noticias/${imagen.name}`;
+        return `ficheros/noticias/${imagen.name}`;
       }
     }
-    return 'ficheros/imagen/noticias/anjade_icon.jpg';
+    return 'ficheros/noticias/anjade_icon.jpg';
   }
 
   handleImageError(noticia: any) {
