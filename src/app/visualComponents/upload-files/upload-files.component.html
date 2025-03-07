@@ -1,0 +1,13 @@
+<div class="upload-container">
+    <h2>Subir Archivos</h2>
+    <!--
+    <input type="file" (change)="onFileSelected($event)" multiple>
+    <button (click)="uploadFiles()">Subir</button>
+-->
+    <h3>Archivos Subidos:</h3>
+    <ul>
+        <li *ngFor="let file of uploadedFiles">
+            <a [href]="'ficheros/' + file" target="_blank">{{ file }}</a>
+        </li>
+    </ul>
+</div>

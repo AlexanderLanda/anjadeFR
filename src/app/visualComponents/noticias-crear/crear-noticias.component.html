@@ -26,7 +26,7 @@
             }
             <!-- Modal -->
             <div class="d-flex justify-content-between align-items-center mb-3">
-              <app-noticias-descripcion *ngIf="isEditing"  [descripcion]="noticiaForm.get('descripcion')?.value"
+              <app-noticias-descripcion *ngIf="isEditing" [descripcion]="noticiaForm.get('descripcion')?.value"
                 (reportUpdated)="handleReportUpdated($event)"></app-noticias-descripcion>
             </div>
             <form [formGroup]="noticiaForm" (ngSubmit)="onSubmit()">
@@ -74,31 +74,46 @@
                 <!-- Agregar campo de descripción -->
               </div>
               <div class="mb-3">
-                <label for="imagenesLinks" class="form-label">Links de Imágenes (separados por comas)</label>
-                <input id="imagenesLinks" formControlName="imagenesLinks" class="form-control">
-              </div>
-              <!-- Botón que actúa como input -->
-              <div class="mb-3" *ngIf="isChecked">
-                <label class="form-label">Descripción</label>
-                <button type="button" class="form-control text-start" (click)="isEditing = true">
-                  {{ noticiaForm.get('descripcion')?.value ? 'Editar Descripción' : 'Agregar Descripción' }}
-                </button>
-              </div>
+                <div class="row align-items-center">
+                  <div class="col-6">
+                    <label *ngIf="!isImagenPropia" for="imagenesLinks" class="form-label">Links de Imágenes (separados por comas)</label>
+                    <label *ngIf="isImagenPropia" for="imagenesLinks" class="form-label">Documentos Adjuntos</label>
+                  </div>
+                  <div class="col-6 text-end">
+                    @if (!esEdicion && isChecked){
+                    <label *ngIf="!esEdicion" class="form-check-label me-2" for="isPropia"
+                      placeholder="Marque la casilla si la noticia es nuestra.">
+                      Imagen Propia
+                    </label>
+                    <input class="form-check-input" type="checkbox" id="isPropia" (click)="onImagenCheckboxChange()">
+                    }
+                  </div>
+                </div>
+                  <input *ngIf="isImagenPropia" type="file" id="files" (change)="onFileChange($event)" multiple class="form-control">
+                  <input *ngIf="!isImagenPropia" id="imagenesLinks" formControlName="imagenesLinks" class="form-control">
+                </div>
+                <!-- Botón que actúa como input -->
+                <div class="mb-3" *ngIf="isChecked">
+                  <label class="form-label">Descripción</label>
+                  <button type="button" class="form-control text-start" (click)="isEditing = true">
+                    {{ noticiaForm.get('descripcion')?.value ? 'Editar Descripción' : 'Agregar Descripción' }}
+                  </button>
+                </div>
 
 
 
-              <div class="d-flex ">
-                <button type="submit" class="btn btn-primary" [disabled]="!noticiaForm.valid">
-                  {{
-                  esEdicion === true
-                  ? 'Actualizar ' 
-                  : 'Guardar '
+                <div class="d-flex ">
+                  <button type="submit" class="btn btn-primary" [disabled]="!noticiaForm.valid">
+                    {{
+                    esEdicion === true
+                    ? 'Actualizar '
+                    : 'Guardar '
 
-                  }}<i class="fas fa-save"></i>
+                    }}<i class="fas fa-save"></i>
 
 
-                </button>
-              </div>
+                  </button>
+                </div>
             </form>
           </div>
         </div>

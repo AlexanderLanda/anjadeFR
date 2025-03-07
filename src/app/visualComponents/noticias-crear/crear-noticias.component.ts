@@ -11,6 +11,8 @@ import { Noticia } from '../../Core/Model/NoticiaDto';
 import { ComentariosModalComponent } from '../comentarios-modal/comentarios-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Comentario } from '../../Core/Model/ComentarioDto';
+import { UploadFilesServiceImpl } from '../../Core/Service/Implements/UploadFilesServiceImpl';
+import { RUTAS_ARCHIVOS } from '../../constants/rutas-archivos.constants';
 
 
 
@@ -25,6 +27,8 @@ export class CrearNoticiasComponent implements OnInit {
   @Input() noticiaAEditar: any; // Recibe la noticia para editar
   @Output() formularioCerrado = new EventEmitter<void>(); // Evento para notificar al padre
   comentarios: Comentario[] = [];  // Comentarios de la noticia
+  files: File[] = [];
+  isImagenPropia: boolean = false;
   esEdicion: boolean = false; // Saber si está en modo edición
   mostrarComentarios = false; // Muestra el formulario de comentarios
   comentariosSeleccionados : any;
@@ -44,6 +48,7 @@ export class CrearNoticiasComponent implements OnInit {
     private formBuilder: FormBuilder,
     private noticiaService: NoticiaServiceImpl,
     private router: Router,
+    private uploadFilesService: UploadFilesServiceImpl
   ) {
     this.noticiaForm = this.formBuilder.group({
       titulo: ['', Validators.required],
@@ -94,6 +99,18 @@ export class CrearNoticiasComponent implements OnInit {
           this.mensajeExito = '';
           const noticiaData = this.noticiaForm.value;
           noticiaData.isPropia = this.isChecked;
+          if(this.isImagenPropia){
+            if (this.files.length > 0 && this.files[0]) {
+              const link = RUTAS_ARCHIVOS.NOTICIAS_URL+this.files[0].name;
+              noticiaData.imagenesLinks = link;
+              this.uploadFilesService.uploadFiles(this.files,RUTAS_ARCHIVOS.NOTICIAS);
+              console.log("El archivo en la posición 0 existe:", this.files[0].name);
+          } else {
+              Swal.fire("Error debe elegir alguna imagen para la portada de la noticia", "", "error");
+              this.cargando = true;
+              return;
+          }
+          }
           const imagenesArray = noticiaData.imagenesLinks.split(',').map((link: string) => link.trim());
 
           if (this.esEdicion) {
@@ -154,6 +171,23 @@ export class CrearNoticiasComponent implements OnInit {
       this.isChecked = false;
       console.log('Checkbox desmarcado');
       // Realiza acciones cuando el checkbox está desmarcado
+    }
+  }
+  onImagenCheckboxChange() {
+    if (!this.isImagenPropia) {
+      this.isImagenPropia = true;
+      console.log('Checkbox imagen marcado');
+      // Realiza acciones cuando el checkbox está marcado
+    } else {
+      this.isImagenPropia = false;
+      console.log('Checkbox imagen desmarcado');
+      // Realiza acciones cuando el checkbox está desmarcado
+    }
+  }
+
+  onFileChange(event: any) {
+    for (let i = 0; i < event.target.files.length; i++) {
+      this.files.push(event.target.files[i]);
     }
   }
 
