@@ -52,10 +52,10 @@ export class NoticiasReaderComponent {
       if (imagen.urlImagen) {
         return imagen.urlImagen;
       } else if (imagen.name) {
-        return `imagen/noticias/${imagen.name}`;
+        return `ficheros/noticias/${imagen.name}`;
       }
     }
-    return 'imagen/noticias/anjade_icon.jpg';
+    return 'ficheros/noticias/anjade_icon.jpg';
   }
 
   handleImageError(noticia: any) {
