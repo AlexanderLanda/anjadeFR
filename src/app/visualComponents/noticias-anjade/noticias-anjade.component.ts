@@ -83,11 +83,7 @@ export class NoticiasAnjadeComponent {
   }
 
   getImageUrl(noticia: any): string {
-    if (
-      noticia.imagenes &&
-      noticia.imagenes.length > 0 &&
-      noticia.imagenes[0].urlImagen
-    ) {
+    if (noticia.imagenes && noticia.imagenes.length > 0) {
       const imagen = noticia.imagenes[0];
       if (imagen.urlImagen) {
         return imagen.urlImagen;
@@ -95,7 +91,7 @@ export class NoticiasAnjadeComponent {
         return `ficheros/noticias/${imagen.name}`;
       }
     }
-    return 'ficheros/noticias/' + noticia.imagenes[0].name + '.jpg';
+    return 'ficheros/noticias/anjade_icon.jpg';
   }
 
   handleImageError(noticia: any) {
