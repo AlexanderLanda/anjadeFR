@@ -17,7 +17,7 @@ import { DeporteServiceImpl } from '../../Core/Service/Implements/DeporteService
 export class UploadFilesComponent implements OnInit {
   selectedFiles: File[] = [];
   uploadedFiles: string[] = [];
-  selectedProvincia = '';
+  selectedDeporte = '';
     deportes: DeportesDto[] =[];
   
 
@@ -45,16 +45,32 @@ export class UploadFilesComponent implements OnInit {
     const formData = new FormData();
     this.selectedFiles.forEach(file => formData.append('files[]', file));
   
-    // Subir archivos
+    // Subir los archivos al servidor
     this.fileService.uploadFiles(this.selectedFiles, RUTAS_ARCHIVOS.REGLAMENTOS).subscribe({
       next: () => {
         alert('Archivos subidos correctamente.');
-        this.updateFileList();
+  
+        // Preparar el objeto para actualizar el JSON
+        const newFileEntries = this.selectedFiles.map(file => ({
+          name: file.name,
+          type: file.type,
+          path: `/ficheros/documentos/reglamentos_deportivos/${file.name}`,
+          deporte: this.selectedDeporte // Deporte seleccionado en el combo
+        }));
+  
+        // Enviar la actualización al JSON
+        this.fileService.updateJsonFile({ files: newFileEntries }).subscribe({
+          next: () => console.log('JSON actualizado correctamente'),
+          error: err => console.error('Error al actualizar el JSON:', err)
+        });
+  
+        this.listFiles();
         this.selectedFiles = [];
       },
       error: (err) => console.error('Error al subir archivos:', err)
     });
   }
+  
   
   updateFileList(): void {
     const jsonFilePath = RUTAS_ARCHIVOS.REGLAMENTOS_JSON;
@@ -73,7 +89,7 @@ export class UploadFilesComponent implements OnInit {
             name: file.name,
             type: file.type,
             path: filePath,
-            deporte: this.selectedProvincia // El deporte seleccionado
+            deporte: this.selectedDeporte // El deporte seleccionado
           };
           fileList.files.push(newFile);
         });
@@ -102,4 +118,6 @@ export class UploadFilesComponent implements OnInit {
       this.deportes = deportes;
     })
   }
+
+  
 }

@@ -12,7 +12,7 @@
                             <label for="" class="form-label">Deportes</label>
                         </div>
                         <div class="col-9">
-                            <select formControlName="deporte" [(value)]="selectedProvincia"
+                            <select formControlName="deporte" [(value)]="selectedDeporte"
                                 class="form-select"><!-- (selectionChange)="updateLocalidades($event.value)" -->
                                 @for (option of deportes; track option) {
                                 <option [value]="option.id">{{ option.nombre }}
