@@ -1,7 +1,7 @@
 <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
 <div *ngIf="!mostrarFormulario" class="container-fluid mt-4 pt-5">
     <div class="row">
-        
+
         <h5 class="card-title filtro-card text-end">Listado de Noticias</h5>
     </div>
 
@@ -9,18 +9,22 @@
         <!-- Columna de botones (col-3) -->
         <div class="col-md-2 pe-0 order-1 order-md-0">
             <div class="card p-3 mb-3">
-                <h5 class="text-center">Filtro</h5>
                 <input type="text" class="form-control" id="filtro" (keyup)="filtrar($event)"
-                    placeholder="Teclee el valor de la columna por la que desee filtrar" required />
+                    placeholder="Buscar" required />
+                    <i class="fa fa-search position-absolute top-50 end-0 translate-middle-y me-3"></i>
             </div>
             <div class="card p-3 mb-3">
                 <button class="btn btn-success w-100 mb-2" (click)="insertarNoticia()">
                     <i class="fas fa-plus me-2"></i> Crear nueva Noticia
                 </button>
+                <button class="btn btn-primary w-100 mb-2" (click)="openFilePicker()">
+                    <i class="fa fa-upload me-2"></i> Subir imagen
+                </button>
+                <!-- Input oculto -->
+                <input type="file" #fileInput (change)="onFileChange($event)" hidden>
 
             </div>
         </div>
-
         <!-- Columna de la tabla (col-9) -->
         <div class="col-md-10 order-0 order-md-1">
             <div class="card">
@@ -43,23 +47,25 @@
                                     <td>{{ noticia.tipo }}</td>
                                     <td>{{ noticia.propia ? 'Propia' : 'Externa' }}</td>
                                     <td>
-                                    <!-- Botones de Acción en una fila (d-flex) -->
-                                    <div class="d-flex justify-content-start">
-                                        <!-- Botón Ver -->
-                                        <button class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="tooltip" title="Ver detalles"
-                                            (click)="viewDetails(noticia)">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <!-- Botón Editar -->
-                                        <button class="btn btn-warning btn-sm me-2" (click)="editarNoticia(noticia)" data-bs-toggle="tooltip" title="Editar">
-                                            <i class="fas fa-edit"></i> 
-                                        </button>
-                                        <!-- Botón Eliminar -->
-                                        <button class="btn btn-danger btn-sm" (click)="eliminarNoticia(noticia.id)" data-bs-toggle="tooltip" title="Eliminar">
-                                            <i class="fas fa-trash"></i> 
-                                        </button>
-                                    </div>
-                                </td>
+                                        <!-- Botones de Acción en una fila (d-flex) -->
+                                        <div class="d-flex justify-content-start">
+                                            <!-- Botón Ver -->
+                                            <button class="btn btn-outline-primary btn-sm me-2" data-bs-toggle="tooltip"
+                                                title="Ver detalles" (click)="viewDetails(noticia)">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <!-- Botón Editar -->
+                                            <button class="btn btn-warning btn-sm me-2" (click)="editarNoticia(noticia)"
+                                                data-bs-toggle="tooltip" title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <!-- Botón Eliminar -->
+                                            <button class="btn btn-danger btn-sm" (click)="eliminarNoticia(noticia.id)"
+                                                data-bs-toggle="tooltip" title="Eliminar">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
                                 </tr>
                                 }
                             </tbody>
@@ -68,9 +74,7 @@
                     <nav aria-label="Page navigation">
                         <mat-paginator [length]="dataSource.filteredData.length" [pageSize]="10"
                             [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-
                     </nav>
-
                 </div>
             </div>
         </div>
