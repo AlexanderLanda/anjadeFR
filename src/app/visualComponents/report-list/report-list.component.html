@@ -9,9 +9,9 @@
       <!-- Columna de botones (col-3) -->
       <div class="col-md-3 pe-0 order-1 order-md-0">
         <div class="card p-3 mb-3">
-          <h5 class="text-center">Filtro</h5>
           <input type="text" class="form-control" id="filtro" (keyup)="filtrar($event)"
-            placeholder="Teclee el valor de la columna por la que desee filtrar" required />
+            placeholder="Buscar" required />
+            <i class="fa fa-search position-absolute top-50 end-0 translate-middle-y me-3"></i>
         </div>
         <div class="card p-3 mb-3">
           <button class="btn btn-primary w-100 mb-2 "(click)="openEmailModal()">

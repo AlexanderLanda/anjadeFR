@@ -20,6 +20,7 @@
             <a ngbDropdownItem routerLink="/home" (click)="scrollToCartaPresentacion()">Carta de Presentación</a>
             <a ngbDropdownItem routerLink="/home" (click)="scrollToCartaArbitros()">Carta a Arbitros(a) y Jueces(a)</a>
             <a ngbDropdownItem routerLink="/junta" (click)="collapseNavbar()">Junta Directiva</a>
+              <a ngbDropdownItem routerLink="/reglamentos-deportivos" (click)="collapseNavbar()">Reglamentos Deportivos</a>
             <a ngbDropdownItem (click)="downloadEstatutos()">Estatutos <i class="fas fa-download"></i></a>
           </div>
         </li>
@@ -41,13 +42,14 @@
             <a ngbDropdownItem routerLink="/noticias-incidencias" (click)="collapseNavbar()">Noticias de Incidencias</a>
           </div>
         </li>
+                       <!--
         <li class="nav-item dropdown" ngbDropdown>
           <a class="nav-link dropdown-toggle" ngbDropdownToggle id="navbarDropdownJuridico">Deportes</a>
           <div ngbDropdownMenu aria-labelledby="navbarDropdownJuridico">
             <a ngbDropdownItem routerLink="/reglamentos-deportivos" (click)="collapseNavbar()">Reglamentos Deportivos</a>
           </div>
         </li>
-                <!--
+
 
         <li class="nav-item">
           <a class="nav-link" routerLink="/alert-safari" (click)="collapseNavbar()">Formación</a>
