@@ -1,13 +1,32 @@
-<div class="upload-container">
-    <h2>Subir Archivos</h2>
-    
-    <input type="file" (change)="onFileSelected($event)" multiple>
-    <button (click)="uploadFiles()">Subir</button>
+<div class="component-container">
+    <div class="container">
+        <div class="upload-container">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Subir Archivos</h2>
+                </div>
+                <div class="card-body">
 
-    <h3>Archivos Subidos:</h3>
-    <ul>
-        <li *ngFor="let file of uploadedFiles">
-            <a [href]="'ficheros/' + file" target="_blank">{{ file }}</a>
-        </li>
-    </ul>
-</div>
+                    <div class="mb-3 row">
+                        <div class="col-3">
+                            <label for="" class="form-label">Deportes</label>
+                        </div>
+                        <div class="col-9">
+                            <select formControlName="deporte" [(value)]="selectedProvincia"
+                                class="form-select"><!-- (selectionChange)="updateLocalidades($event.value)" -->
+                                @for (option of deportes; track option) {
+                                <option [value]="option.id">{{ option.nombre }}
+                                </option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <input type="file" (change)="onFileSelected($event)" multiple>
+                </div>
+                <div class="card-footer">
+                    <button (click)="uploadFiles()"><i class="fa fa-upload me-2"></i> Guardar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
