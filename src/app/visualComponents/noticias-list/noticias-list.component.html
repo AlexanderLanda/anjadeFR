@@ -9,9 +9,9 @@
         <!-- Columna de botones (col-3) -->
         <div class="col-md-2 pe-0 order-1 order-md-0">
             <div class="card p-3 mb-3">
-                <input type="text" class="form-control" id="filtro" (keyup)="filtrar($event)"
-                    placeholder="Buscar" required />
-                    <i class="fa fa-search position-absolute top-50 end-0 translate-middle-y me-3"></i>
+                <input type="text" class="form-control" id="filtro" (keyup)="filtrar($event)" placeholder="Buscar"
+                    required />
+                <i class="fa fa-search position-absolute top-50 end-0 translate-middle-y me-3"></i>
             </div>
             <div class="card p-3 mb-3">
                 <button class="btn btn-success w-100 mb-2" (click)="insertarNoticia()">
@@ -37,12 +37,12 @@
                                     <th scope="col">Tipo</th>
                                     <th>Fuente</th>
                                     <th scope="col">Acciones</th>
-
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (noticia of getPaginatedData(); track noticia) {
-                                <tr>
+                                @for (noticia of getPaginatedData(); track noticia) 
+                                {
+                                  <tr>
                                     <td>{{ noticia.titulo }}</td>
                                     <td>{{ noticia.tipo }}</td>
                                     <td>{{ noticia.propia ? 'Propia' : 'Externa' }}</td>
@@ -66,7 +66,7 @@
                                             </button>
                                         </div>
                                     </td>
-                                </tr>
+                                 </tr>
                                 }
                             </tbody>
                         </table>

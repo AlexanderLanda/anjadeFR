@@ -161,16 +161,12 @@ export class UsuariosTablaComponent implements AfterViewInit {
 
   }
 
-
-
   cargarFuncionesDeAfiliadosComboBox() {
 
     this.afiliadosFuncionService.getAfiliadosFuncion().subscribe(afiliadosRoles => {
       this.afiliadosFunciones = afiliadosRoles;
     })
   }
-
-
   /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
     // This example uses English messages. If your application supports

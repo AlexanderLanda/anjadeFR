@@ -1,27 +1,29 @@
-import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, inject, ViewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Noticia } from '../../Core/Model/NoticiaDto';
-import { ReportDto } from '../../Core/Model/ReportDto';
-import { ReportServiceImpl } from '../../Core/Service/Implements/ReportServiceImpl';
-import { SendEmailServiceImpl } from '../../Core/Service/Implements/SendEmailServiceImpl';
-import { NoticiaServiceImpl } from '../../Core/Service/Implements/NoticiaServiceImpl';
-import Swal from 'sweetalert2';
+import { CommonModule } from "@angular/common";
+import { Component, AfterViewInit, ViewChild, ElementRef, inject } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { MatDialogModule, MatDialog } from "@angular/material/dialog";
+import { MatInputModule } from "@angular/material/input";
+import { MatPaginatorModule, MatPaginator } from "@angular/material/paginator";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatSortModule, MatSort } from "@angular/material/sort";
+import { MatTableModule, MatTableDataSource } from "@angular/material/table";
+import { Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import Swal from "sweetalert2";
+import { RUTAS_ARCHIVOS } from "../../constants/rutas-archivos.constants";
+import { Noticia } from "../../Core/Model/NoticiaDto";
+import { DataService } from "../../Core/Service/Implements/DataService";
+import { NoticiaServiceImpl } from "../../Core/Service/Implements/NoticiaServiceImpl";
+import { SendEmailServiceImpl } from "../../Core/Service/Implements/SendEmailServiceImpl";
+import { UploadFilesServiceImpl } from "../../Core/Service/Implements/UploadFilesServiceImpl";
 import { CrearNoticiasComponent } from "../noticias-crear/crear-noticias.component";
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { UploadFilesServiceImpl } from '../../Core/Service/Implements/UploadFilesServiceImpl';
-import { RUTAS_ARCHIVOS } from '../../constants/rutas-archivos.constants';
+
 
 @Component({
   selector: 'app-noticias-list',
-  imports: [CommonModule, MatPaginatorModule, MatTableModule,
+  imports: [CommonModule,
+    MatPaginatorModule, 
+    MatTableModule,
     MatSortModule,
     MatInputModule,
     FormsModule, MatProgressBarModule, CrearNoticiasComponent, MatDialogModule],
@@ -35,14 +37,15 @@ export class NoticiasListComponent implements AfterViewInit {
   dataSource: MatTableDataSource<Noticia>;
   files: File[] = [];
 
-  displayedColumns: string[] = ['idAfiliacion', 'apellidos', 'nombre', 'funcion', 'estadoFuncion', 'categoria', 'deporte', 'provincia', 'estado', 'rolAfiliado', 'editar'];
-  listadoNoticias: Noticia[] = [];
+  displayedColumns: string[] = ['titulo', 'tipo', 'fuente', 'acciones'];
+  listadoNoticias: Noticia[] | undefined;
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort | null = null;
   private modalService = inject(NgbModal);
   private emailService = inject(SendEmailServiceImpl);
+  private dataService = inject(DataService);
 
   isLoading = false;
   mostrarFormulario = false;
@@ -56,6 +59,11 @@ export class NoticiasListComponent implements AfterViewInit {
   }
 
   ngOnInit() {
+    this.dataService.data$.subscribe((updated: any) => {
+      if (updated) {
+        this.cargarListadoDeNoticias();
+      }
+    });
     this.cargarListadoDeNoticias();
     this.dataSource.filterPredicate = this.createFilter();
 
@@ -68,17 +76,13 @@ export class NoticiasListComponent implements AfterViewInit {
   }
 
 
-
   cargarListadoDeNoticias() {
+    
     this.noticiaService.obtenerTodasNoticias().subscribe(news => {
       this.listadoNoticias = news;
       this.dataSource.data = this.listadoNoticias;
-
-      // Esperar al siguiente ciclo del DOM para asignar el paginador
-      setTimeout(() => {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      });
     });
   }
 
