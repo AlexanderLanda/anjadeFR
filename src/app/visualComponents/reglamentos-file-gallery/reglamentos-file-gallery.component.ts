@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import * as pdfjsLib from 'pdfjs-dist';
 import { ReglamentosFileServiceImpl } from '../../Core/Service/Implements/ReglamentosFileServiceImpl';
+import { ReglamentoDto } from '../../Core/Model/ReglamentoDto';
 
 @Component({
   selector: 'app-reglamentos-file-gallery',
@@ -11,6 +12,7 @@ import { ReglamentosFileServiceImpl } from '../../Core/Service/Implements/Reglam
 export class ReglamentosFileGalleryComponent implements OnInit {
   @ViewChild('topOfGallery') topOfGallery: ElementRef | undefined;
 
+  reglamentos: ReglamentoDto[] = [];
   files: any[] = [];
   filteredFiles: any[] = [];
   paginatedFiles: any[] = [];
@@ -22,25 +24,30 @@ export class ReglamentosFileGalleryComponent implements OnInit {
   loadingProgress: number = 0;
 
   // Inyección de servicios usando 'inject'
-  private fileService = inject(ReglamentosFileServiceImpl);
 
-  constructor() {
-    // Configuración de pdfjs para usar el trabajador global
-   // pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+  constructor(private fileService :  ReglamentosFileServiceImpl) {
    pdfjsLib.GlobalWorkerOptions.workerSrc = `./assets/pdf.worker.min.js`;
   }
 
   ngOnInit() {
     this.loadFiles();
+
   }
+
+  getReglamentos() {
+    this.fileService.getReglamentos().subscribe(data => {
+      this.reglamentos = data;
+    });
+  }
+
 
   // Cargar la lista de archivos
   loadFiles() {
     this.isLoading = true;
     this.loadingProgress = 0;
-    this.fileService.getFileList().subscribe(
+    this.fileService.getReglamentos().subscribe(
       (data: any) => {
-        this.files = data.files;
+        this.files = data;
         this.generateThumbnails();
       },
       (error) => {

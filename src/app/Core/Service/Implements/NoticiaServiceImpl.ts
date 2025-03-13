@@ -34,9 +34,9 @@ export class NoticiaServiceImpl {
   }
 
   // Método para obtener todas las noticias
-  obtenerTodasNoticias(): Observable<any> {
+  obtenerTodasNoticias(): Observable<Noticia[]> {
     const url = `${this.apiUrl}/all`;
-    return this.http.get<any>(url);
+    return this.http.get<Noticia[]>(url);
   }
 
   obtenerNoticiasByID(noticiaId: number): Observable<Noticia> {

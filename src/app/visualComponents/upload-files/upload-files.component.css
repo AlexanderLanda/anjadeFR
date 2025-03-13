@@ -1,8 +1,12 @@
 .component-container {
     margin-top: 80px; /* Ajusta el valor según sea necesario */
   }
+  .card-header {
+    background-color: #141414;
+    color: white;
+}
 .upload-container {
-    max-width: 400px;
+    max-width: 500px;
     margin: auto;
     padding: 20px;
     border: 1px solid #ddd;

@@ -25,6 +25,7 @@ import { EstatutosComponent } from './visualComponents/estatutos/estatutos.compo
 import { NoticiasReaderComponent } from './visualComponents/noticias-reader/noticias-reader.component';
 import { AdminMainComponent } from './visualComponents/admin-main/admin-main.component';
 import { NoticiasListComponent } from './visualComponents/noticias-list/noticias-list.component';
+import { UploadFilesComponent } from './visualComponents/upload-files/upload-files.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -92,6 +93,10 @@ export const routes: Routes = [
     component: NoticiasListComponent,
     canActivate: [AuthGuard],
     data: { roles: ['presidente', 'comisionados', 'secretario', 'administrador', 'abogados'] }
+  },
+  { 
+    path: 'admin-files', 
+    component: UploadFilesComponent,
   },
   { path: 'forbidden', component: ForbbidenComponent },
   { path: '**', redirectTo: '/home' }

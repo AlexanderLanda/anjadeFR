@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, TrackByFunction } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { UploadFilesServiceImpl } from '../../Core/Service/Implements/UploadFilesServiceImpl';
@@ -6,28 +6,43 @@ import { RUTAS_ARCHIVOS } from '../../constants/rutas-archivos.constants';
 import { DeportesDto } from '../../Core/Model/DeportesDto';
 import { DEPORTES } from '../../constants/deportes';
 import { DeporteServiceImpl } from '../../Core/Service/Implements/DeporteServiceImpl';
+import { ReglamentosFileServiceImpl } from '../../Core/Service/Implements/ReglamentosFileServiceImpl';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-upload-files',
   templateUrl: './upload-files.component.html',
   styleUrls: ['./upload-files.component.css'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule,FormsModule,ReactiveFormsModule]
 })
 export class UploadFilesComponent implements OnInit {
   selectedFiles: File[] = [];
   uploadedFiles: string[] = [];
   selectedDeporte = '';
-    deportes: DeportesDto[] =[];
+  deportes: DeportesDto[] =[];
+  deportesForm: FormGroup;
+  
   
 
   private deportesService = inject(DeporteServiceImpl);
 
-  constructor(private fileService: UploadFilesServiceImpl) {}
+  constructor(private fileService: UploadFilesServiceImpl, private reglamentosService: ReglamentosFileServiceImpl,    
+    private formBuilder: FormBuilder,
+  ) {
+    this.deportesForm = this.formBuilder.group({
+      deporte: ['']  // El campo "deporte" debe existir aquí
+    });
+    
+  }
  
   ngOnInit() {
-    this.listFiles();
+    //this.listFiles();
     this.cargarDeportesComboBox();
+    this.deportesForm.get('deporte')?.valueChanges.subscribe(value => {
+      this.selectedDeporte = value;
+    });
   }
 
   // Evento cuando se seleccionan archivos
@@ -38,31 +53,31 @@ export class UploadFilesComponent implements OnInit {
   // Subir archivos al servidor
   uploadFiles(): void {
     if (this.selectedFiles.length === 0) {
-      alert('Por favor, selecciona archivos.');
+       Swal.fire({
+              title: 'Error!',
+              text: 'Por favor, selecciona archivos.',
+              icon: 'error',
+              confirmButtonText: 'Ok'
+            })
       return;
     }
   
-    const formData = new FormData();
-    this.selectedFiles.forEach(file => formData.append('files[]', file));
-  
+    const formDatas = new FormData();
+    this.selectedFiles.forEach(file => formDatas.append('files', file,file.name));
+    const deporteData = this.deportesForm.value;
+
+    formDatas.append('deporte',this.selectedDeporte);
+        // Enviar la actualización al JSON
+        this.reglamentosService.saveReglamento(formDatas).subscribe({
+          next: () => console.log('JSON actualizado correctamente'),
+          error: err => console.error('Error al actualizar el JSON:', err)
+        });
+        
     // Subir los archivos al servidor
     this.fileService.uploadFiles(this.selectedFiles, RUTAS_ARCHIVOS.REGLAMENTOS).subscribe({
       next: () => {
         alert('Archivos subidos correctamente.');
-  
-        // Preparar el objeto para actualizar el JSON
-        const newFileEntries = this.selectedFiles.map(file => ({
-          name: file.name,
-          type: file.type,
-          path: `/ficheros/documentos/reglamentos_deportivos/${file.name}`,
-          deporte: this.selectedDeporte // Deporte seleccionado en el combo
-        }));
-  
-        // Enviar la actualización al JSON
-        this.fileService.updateJsonFile({ files: newFileEntries }).subscribe({
-          next: () => console.log('JSON actualizado correctamente'),
-          error: err => console.error('Error al actualizar el JSON:', err)
-        });
+
   
         this.listFiles();
         this.selectedFiles = [];
@@ -119,5 +134,9 @@ export class UploadFilesComponent implements OnInit {
     })
   }
 
+  trackByFn(index: number, item: DeportesDto) {
+    return item.id;
+  }
+  
   
 }
